@@ -34,9 +34,11 @@
 #include <xc.h>
 #include <pic12f1822.h>
 #define _XTAL_FREQ 500000
-#define LOW_TRESH 100
-#define HIGH_TRESH 100
-unsigned int timer;
+#define LOW_TRESH (int)((3200/3.2)*(float)(256/2048))
+#define HIGH_TRESH (int)((3750/3.2)*(float)(256/2048))
+unsigned long timer,pintimer;
+unsigned int laststate, actstate;
+unsigned char adcResetState,lastPinState;
 void main(void) {
     TRISAbits.TRISA2    = 0;//digital output
     TRISAbits.TRISA4    = 1;//analog input
@@ -51,20 +53,42 @@ void main(void) {
     while(1)
     {
         timer++;
+        pintimer++;
         if(timer > 100)
         {
             timer = 0;
-            if(ADRESH > 128)
+            if(ADRESH > 147)
             {
                 LATAbits.LATA2 = 1;
+                adcResetState = 0;//no reset from adc
             }
-            else
+            if(ADRESH < 125)
             {
                LATAbits.LATA2 = 0; 
+               adcResetState = 1;//reset by adc
             }
             ADCON0bits.ADGO = 1;
         }
         __delay_ms(1);
+        actstate = PORTAbits.RA5;
+        
+        if(laststate != actstate)
+        {
+            if((laststate == 0)&&(actstate == 1))
+            {
+                //do something
+                pintimer = 0;
+            }
+            laststate = actstate;
+        }
+        if(pintimer > 5000)
+        {
+            lastPinState = LATAbits.LATA2;
+            LATAbits.LATA2 = 0; 
+            __delay_ms(3000);
+            LATAbits.LATA2 = lastPinState; 
+            pintimer = 0;
+        }
     }
             
     return;
