@@ -121,11 +121,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2930
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic12f1822.h: 2930: extern volatile unsigned char SPBRGL __attribute__((address(0x19B)));
 [v _SPBRGL `Vuc ~T0 @X0 0 e@411 ]
-[v F183 `(v ~T0 @X0 1 tf1`ul ]
-"12 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\builtins.h
-[v __delay `JF183 ~T0 @X0 0 e ]
-[p i __delay ]
-"1807 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic12f1822.h
+"1807
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic12f1822.h: 1807: extern volatile unsigned char ADRESH __attribute__((address(0x09C)));
 [v _ADRESH `Vuc ~T0 @X0 0 e@156 ]
 "1988
@@ -186,6 +182,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "510
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic12f1822.h: 510: extern volatile PORTAbits_t PORTAbits __attribute__((address(0x00C)));
 [v _PORTAbits `VS33 ~T0 @X0 0 e@12 ]
+[v F183 `(v ~T0 @X0 1 tf1`ul ]
+"12 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\builtins.h
+[v __delay `JF183 ~T0 @X0 0 e ]
+[p i __delay ]
 "13 watchdog.c
 [p x FOSC  =  INTOSC     ]
 "14
@@ -564,307 +564,300 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5034
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic12f1822.h: 5034: __asm("TOSH equ 0FEFh");
 [; <" TOSH equ 0FEFh ;# ">
-"60 watchdog.c
-[; ;watchdog.c: 60: long timer,pintimer;
-[v _timer `l ~T0 @X0 1 e ]
-[v _pintimer `l ~T0 @X0 1 e ]
-"61
-[; ;watchdog.c: 61: unsigned int laststate, actstate,resettimer;
+"58 watchdog.c
+[; ;watchdog.c: 58: unsigned long timer,pintimer;
+[v _timer `ul ~T0 @X0 1 e ]
+[v _pintimer `ul ~T0 @X0 1 e ]
+"59
+[; ;watchdog.c: 59: unsigned int laststate, actstate,resettimer;
 [v _laststate `ui ~T0 @X0 1 e ]
 [v _actstate `ui ~T0 @X0 1 e ]
 [v _resettimer `ui ~T0 @X0 1 e ]
-"62
-[; ;watchdog.c: 62: unsigned char adcreset,pinreset,sendcommands;
-[v _adcreset `uc ~T0 @X0 1 e ]
-[v _pinreset `uc ~T0 @X0 1 e ]
-[v _sendcommands `uc ~T0 @X0 1 e ]
-"63
-[; ;watchdog.c: 63: unsigned char buffer[20];
+"60
+[; ;watchdog.c: 60: unsigned char resetState = 0;
+[v _resetState `uc ~T0 @X0 1 e ]
+[i _resetState
+-> -> 0 `i `uc
+]
+"61
+[; ;watchdog.c: 61: unsigned char buffer[20];
 [v _buffer `uc ~T0 @X0 -> 20 `i e ]
-"66
-[; ;watchdog.c: 66: void WriteSerial(unsigned char *buffer,uint8_t len)
+"64
+[; ;watchdog.c: 64: void WriteSerial(unsigned char *buffer,uint8_t len)
 [v _WriteSerial `(v ~T0 @X0 1 ef2`*uc`uc ]
-"67
-[; ;watchdog.c: 67:     {
+"65
+[; ;watchdog.c: 65:     {
 {
 [e :U _WriteSerial ]
-"66
-[; ;watchdog.c: 66: void WriteSerial(unsigned char *buffer,uint8_t len)
+"64
+[; ;watchdog.c: 64: void WriteSerial(unsigned char *buffer,uint8_t len)
 [v _buffer `*uc ~T0 @X0 1 r1 ]
 [v _len `uc ~T0 @X0 1 r2 ]
-"67
-[; ;watchdog.c: 67:     {
+"65
+[; ;watchdog.c: 65:     {
 [f ]
-"68
-[; ;watchdog.c: 68:     uint8_t i;
+"66
+[; ;watchdog.c: 66:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"69
-[; ;watchdog.c: 69:     for(i = 0;i < len;i++)
+"67
+[; ;watchdog.c: 67:     for(i = 0;i < len;i++)
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 279  ]
 [e :U 276 ]
-"70
-[; ;watchdog.c: 70:     {
+"68
+[; ;watchdog.c: 68:     {
 {
-"71
-[; ;watchdog.c: 71:         TXREG = *buffer++;
+"69
+[; ;watchdog.c: 69:         TXREG = *buffer++;
 [e = _TXREG *U ++ _buffer * -> -> 1 `i `x -> -> # *U _buffer `i `x ]
-"72
-[; ;watchdog.c: 72:         while(TXSTAbits.TRMT == 0);
+"70
+[; ;watchdog.c: 70:         while(TXSTAbits.TRMT == 0);
 [e $U 280  ]
 [e :U 281 ]
 [e :U 280 ]
 [e $ == -> . . _TXSTAbits 0 1 `i -> 0 `i 281  ]
 [e :U 282 ]
-"73
-[; ;watchdog.c: 73:     }
+"71
+[; ;watchdog.c: 71:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 279 ]
 [e $ < -> _i `i -> _len `i 276  ]
 [e :U 277 ]
 }
-"74
-[; ;watchdog.c: 74:     }
+"72
+[; ;watchdog.c: 72:     }
 [e :UE 275 ]
 }
-"75
-[; ;watchdog.c: 75: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2)
+"73
+[; ;watchdog.c: 73: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2)
 [v _SendCommand `(v ~T0 @X0 1 ef3`uc`uc`uc ]
-"76
-[; ;watchdog.c: 76: {
+"74
+[; ;watchdog.c: 74: {
 {
 [e :U _SendCommand ]
-"75
-[; ;watchdog.c: 75: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2)
+"73
+[; ;watchdog.c: 73: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2)
 [v _command `uc ~T0 @X0 1 r1 ]
 [v _par1 `uc ~T0 @X0 1 r2 ]
 [v _par2 `uc ~T0 @X0 1 r3 ]
-"76
-[; ;watchdog.c: 76: {
+"74
+[; ;watchdog.c: 74: {
 [f ]
-"77
-[; ;watchdog.c: 77:     int16_t checksum;
+"75
+[; ;watchdog.c: 75:     int16_t checksum;
 [v _checksum `s ~T0 @X0 1 a ]
-"78
-[; ;watchdog.c: 78:     buffer[0] = 0x7E;
+"76
+[; ;watchdog.c: 76:     buffer[0] = 0x7E;
 [e = *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> -> 126 `i `uc ]
-"79
-[; ;watchdog.c: 79:     buffer[1] = 0xff;
+"77
+[; ;watchdog.c: 77:     buffer[1] = 0xff;
 [e = *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> -> 255 `i `uc ]
-"80
-[; ;watchdog.c: 80:     buffer[2] = 0x06;
+"78
+[; ;watchdog.c: 78:     buffer[2] = 0x06;
 [e = *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> -> 6 `i `uc ]
-"81
-[; ;watchdog.c: 81:     buffer[3] = command;
+"79
+[; ;watchdog.c: 79:     buffer[3] = command;
 [e = *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux _command ]
-"82
-[; ;watchdog.c: 82:     buffer[4] = 0;
+"80
+[; ;watchdog.c: 80:     buffer[4] = 0;
 [e = *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> -> 0 `i `uc ]
-"83
-[; ;watchdog.c: 83:     buffer[5] = par1;
+"81
+[; ;watchdog.c: 81:     buffer[5] = par1;
 [e = *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux _par1 ]
-"84
-[; ;watchdog.c: 84:     buffer[6] = par2;
+"82
+[; ;watchdog.c: 82:     buffer[6] = par2;
 [e = *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux _par2 ]
-"85
-[; ;watchdog.c: 85:     checksum = 1-(buffer[1]+buffer[2]+buffer[3]+buffer[4]+buffer[5]+buffer[6]);
+"83
+[; ;watchdog.c: 83:     checksum = 1-(buffer[1]+buffer[2]+buffer[3]+buffer[4]+buffer[5]+buffer[6]);
 [e = _checksum -> - -> 1 `i + + + + + -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `s ]
-"86
-[; ;watchdog.c: 86:     checksum = checksum-1;
+"84
+[; ;watchdog.c: 84:     checksum = checksum-1;
 [e = _checksum -> - -> _checksum `i -> 1 `i `s ]
-"87
-[; ;watchdog.c: 87:     buffer[7] = checksum>>8;
+"85
+[; ;watchdog.c: 85:     buffer[7] = checksum>>8;
 [e = *U + &U _buffer * -> -> -> 7 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> >> -> _checksum `i -> 8 `i `uc ]
-"88
-[; ;watchdog.c: 88:     buffer[8] = checksum&0xff;
+"86
+[; ;watchdog.c: 86:     buffer[8] = checksum&0xff;
 [e = *U + &U _buffer * -> -> -> 8 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> & -> _checksum `i -> 255 `i `uc ]
-"89
-[; ;watchdog.c: 89:     buffer[9] = 0xEF;
+"87
+[; ;watchdog.c: 87:     buffer[9] = 0xEF;
 [e = *U + &U _buffer * -> -> -> 9 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> -> 239 `i `uc ]
-"90
-[; ;watchdog.c: 90:     WriteSerial(&buffer,10);
+"88
+[; ;watchdog.c: 88:     WriteSerial(&buffer,10);
 [e ( _WriteSerial (2 , -> &U _buffer `*uc -> -> 10 `i `uc ]
-"92
-[; ;watchdog.c: 92: }
+"90
+[; ;watchdog.c: 90: }
 [e :UE 283 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"94
-[; ;watchdog.c: 94: void main(void) {
+"92
+[; ;watchdog.c: 92: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"95
-[; ;watchdog.c: 95:     TRISAbits.TRISA2 = 0;
+"93
+[; ;watchdog.c: 93:     TRISAbits.TRISA2 = 0;
 [e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
-"96
-[; ;watchdog.c: 96:     TRISAbits.TRISA0 = 0;
+"94
+[; ;watchdog.c: 94:     TRISAbits.TRISA0 = 0;
 [e = . . _TRISAbits 0 0 -> -> 0 `i `uc ]
-"97
-[; ;watchdog.c: 97:     TRISAbits.TRISA5 = 0;
+"95
+[; ;watchdog.c: 95:     TRISAbits.TRISA5 = 0;
 [e = . . _TRISAbits 0 5 -> -> 0 `i `uc ]
-"98
-[; ;watchdog.c: 98:     TRISAbits.TRISA1 = 1;
+"96
+[; ;watchdog.c: 96:     TRISAbits.TRISA1 = 1;
 [e = . . _TRISAbits 0 1 -> -> 1 `i `uc ]
-"99
-[; ;watchdog.c: 99:     TRISAbits.TRISA4 = 1;
+"97
+[; ;watchdog.c: 97:     TRISAbits.TRISA4 = 1;
 [e = . . _TRISAbits 0 4 -> -> 1 `i `uc ]
-"100
-[; ;watchdog.c: 100:     ANSELAbits.ANSA1 = 0;
+"98
+[; ;watchdog.c: 98:     ANSELAbits.ANSA1 = 0;
 [e = . . _ANSELAbits 0 1 -> -> 0 `i `uc ]
-"101
-[; ;watchdog.c: 101:     ANSELAbits.ANSA0 = 0;
+"99
+[; ;watchdog.c: 99:     ANSELAbits.ANSA0 = 0;
 [e = . . _ANSELAbits 0 0 -> -> 0 `i `uc ]
-"102
-[; ;watchdog.c: 102:     ADCON0bits.CHS = 0b00011;
+"100
+[; ;watchdog.c: 100:     ADCON0bits.CHS = 0b00011;
 [e = . . _ADCON0bits 1 2 -> -> 3 `i `uc ]
-"103
-[; ;watchdog.c: 103:     ADCON0bits.ADON = 1;
+"101
+[; ;watchdog.c: 101:     ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-"104
-[; ;watchdog.c: 104:     ADCON1bits.ADPREF = 0b11;
+"102
+[; ;watchdog.c: 102:     ADCON1bits.ADPREF = 0b11;
 [e = . . _ADCON1bits 1 0 -> -> 3 `i `uc ]
-"105
-[; ;watchdog.c: 105:     FVRCONbits.ADFVR = 0b10;
+"103
+[; ;watchdog.c: 103:     FVRCONbits.ADFVR = 0b10;
 [e = . . _FVRCONbits 1 0 -> -> 2 `i `uc ]
-"106
-[; ;watchdog.c: 106:     FVRCONbits.FVREN = 1;
+"104
+[; ;watchdog.c: 104:     FVRCONbits.FVREN = 1;
 [e = . . _FVRCONbits 0 7 -> -> 1 `i `uc ]
-"108
-[; ;watchdog.c: 108:     TXSTAbits.BRGH = 1;
+"106
+[; ;watchdog.c: 106:     TXSTAbits.BRGH = 1;
 [e = . . _TXSTAbits 0 2 -> -> 1 `i `uc ]
-"109
-[; ;watchdog.c: 109:     TXSTAbits.TXEN = 1;
+"107
+[; ;watchdog.c: 107:     TXSTAbits.TXEN = 1;
 [e = . . _TXSTAbits 0 5 -> -> 1 `i `uc ]
-"110
-[; ;watchdog.c: 110:     RCSTAbits.SPEN = 1;
+"108
+[; ;watchdog.c: 108:     RCSTAbits.SPEN = 1;
 [e = . . _RCSTAbits 0 7 -> -> 1 `i `uc ]
-"111
-[; ;watchdog.c: 111:     BAUDCONbits.BRG16 = 1;
+"109
+[; ;watchdog.c: 109:     BAUDCONbits.BRG16 = 1;
 [e = . . _BAUDCONbits 0 3 -> -> 1 `i `uc ]
-"112
-[; ;watchdog.c: 112:     SPBRGH = 0;
+"110
+[; ;watchdog.c: 110:     SPBRGH = 0;
 [e = _SPBRGH -> -> 0 `i `uc ]
-"113
-[; ;watchdog.c: 113:     SPBRGL = 12;
+"111
+[; ;watchdog.c: 111:     SPBRGL = 12;
 [e = _SPBRGL -> -> 12 `i `uc ]
-"116
-[; ;watchdog.c: 116:     _delay((unsigned long)((2000)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"117
-[; ;watchdog.c: 117:     SendCommand(0x06,0,16);
-[e ( _SendCommand (3 , , -> -> 6 `i `uc -> -> 0 `i `uc -> -> 16 `i `uc ]
-"118
-[; ;watchdog.c: 118:     _delay((unsigned long)((200)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"119
-[; ;watchdog.c: 119:     SendCommand(0x11,0,1);
-[e ( _SendCommand (3 , , -> -> 17 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc ]
 "120
-[; ;watchdog.c: 120:     _delay((unsigned long)((500)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"121
-[; ;watchdog.c: 121:     SendCommand(0x06,0,16);
-[e ( _SendCommand (3 , , -> -> 6 `i `uc -> -> 0 `i `uc -> -> 16 `i `uc ]
-"122
-[; ;watchdog.c: 122:     pintimer = 0;
-[e = _pintimer -> -> 0 `i `l ]
-"123
-[; ;watchdog.c: 123:     while(1)
+[; ;watchdog.c: 120:     while(1)
 [e :U 286 ]
+"121
+[; ;watchdog.c: 121:     {
+{
+"122
+[; ;watchdog.c: 122:         timer++;
+[e ++ _timer -> -> -> 1 `i `l `ul ]
 "124
-[; ;watchdog.c: 124:     {
-{
+[; ;watchdog.c: 124:         if(timer <100)
+[e $ ! < _timer -> -> -> 100 `i `l `ul 288  ]
 "125
-[; ;watchdog.c: 125:         timer++;
-[e ++ _timer -> -> 1 `i `l ]
-"127
-[; ;watchdog.c: 127:         if(timer >100)
-[e $ ! > _timer -> -> 100 `i `l 288  ]
-"128
-[; ;watchdog.c: 128:         {
+[; ;watchdog.c: 125:         {
 {
-"129
-[; ;watchdog.c: 129:             ADCON0bits.ADGO = 1;
+"126
+[; ;watchdog.c: 126:             ADCON0bits.ADGO = 1;
 [e = . . _ADCON0bits 1 1 -> -> 1 `i `uc ]
-"130
-[; ;watchdog.c: 130:             while (ADCON0bits.nDONE != 0);
+"127
+[; ;watchdog.c: 127:             while (ADCON0bits.nDONE != 0);
 [e $U 289  ]
 [e :U 290 ]
 [e :U 289 ]
 [e $ != -> . . _ADCON0bits 3 1 `i -> 0 `i 290  ]
 [e :U 291 ]
-"131
-[; ;watchdog.c: 131:             if(ADRESH < 125)
-[e $ ! < -> _ADRESH `i -> 125 `i 292  ]
-"132
-[; ;watchdog.c: 132:             {
+"128
+[; ;watchdog.c: 128:             if(ADRESH < (int)((3200/3.2)*(float)(256/2048)))
+[e $ ! < -> _ADRESH `i -> * / -> -> 3200 `i `d .3.2 -> -> / -> 256 `i -> 2048 `i `f `d `i 292  ]
+"129
+[; ;watchdog.c: 129:             {
 {
-"133
-[; ;watchdog.c: 133:                 adcreset = 1;
-[e = _adcreset -> -> 1 `i `uc ]
-"134
-[; ;watchdog.c: 134:             }
+"130
+[; ;watchdog.c: 130:                 resetState = 1;
+[e = _resetState -> -> 1 `i `uc ]
+"131
+[; ;watchdog.c: 131:             }
 }
 [e :U 292 ]
-"135
-[; ;watchdog.c: 135:             if(ADRESH > 146)
-[e $ ! > -> _ADRESH `i -> 146 `i 293  ]
-"136
-[; ;watchdog.c: 136:             {
+"132
+[; ;watchdog.c: 132:             if(ADRESH > (int)((3750/3.2)*(float)(256/2048)))
+[e $ ! > -> _ADRESH `i -> * / -> -> 3750 `i `d .3.2 -> -> / -> 256 `i -> 2048 `i `f `d `i 293  ]
+"133
+[; ;watchdog.c: 133:             {
 {
-"137
-[; ;watchdog.c: 137:                 adcreset = 0;
-[e = _adcreset -> -> 0 `i `uc ]
-"138
-[; ;watchdog.c: 138:             }
+"134
+[; ;watchdog.c: 134:                 resetState = 0;
+[e = _resetState -> -> 0 `i `uc ]
+"135
+[; ;watchdog.c: 135:             }
 }
 [e :U 293 ]
-"139
-[; ;watchdog.c: 139:             if(ADRESH < 160)
+"136
+[; ;watchdog.c: 136:             if(ADRESH < 160)
 [e $ ! < -> _ADRESH `i -> 160 `i 294  ]
-"140
-[; ;watchdog.c: 140:             {
+"137
+[; ;watchdog.c: 137:             {
 {
-"141
-[; ;watchdog.c: 141:                 LATAbits.LATA5 = 1;
-[e = . . _LATAbits 0 5 -> -> 1 `i `uc ]
-"142
-[; ;watchdog.c: 142:             }
+"138
+[; ;watchdog.c: 138:                 LATAbits.LATA5 = 0;
+[e = . . _LATAbits 0 5 -> -> 0 `i `uc ]
+"139
+[; ;watchdog.c: 139:             }
 }
 [e :U 294 ]
-"143
-[; ;watchdog.c: 143:             if(ADRESH > 158)
+"140
+[; ;watchdog.c: 140:             if(ADRESH > 158)
 [e $ ! > -> _ADRESH `i -> 158 `i 295  ]
-"144
-[; ;watchdog.c: 144:             {
+"141
+[; ;watchdog.c: 141:             {
 {
-"145
-[; ;watchdog.c: 145:                 LATAbits.LATA5 = 0;
-[e = . . _LATAbits 0 5 -> -> 0 `i `uc ]
-"146
-[; ;watchdog.c: 146:             }
+"142
+[; ;watchdog.c: 142:                 LATAbits.LATA5 = 1;
+[e = . . _LATAbits 0 5 -> -> 1 `i `uc ]
+"143
+[; ;watchdog.c: 143:             }
 }
 [e :U 295 ]
-"148
-[; ;watchdog.c: 148:             if(PORTAbits.RA1 == 1)
+"144
+[; ;watchdog.c: 144:             if(PORTAbits.RA1 == 1)
 [e $ ! == -> . . _PORTAbits 0 1 `i -> 1 `i 296  ]
+"145
+[; ;watchdog.c: 145:             {
+{
+"146
+[; ;watchdog.c: 146:                pintimer++;
+[e ++ _pintimer -> -> -> 1 `i `l `ul ]
+"147
+[; ;watchdog.c: 147:             }
+}
+[e $U 297  ]
+"148
+[; ;watchdog.c: 148:             else
+[e :U 296 ]
 "149
 [; ;watchdog.c: 149:             {
 {
 "150
-[; ;watchdog.c: 150:                pintimer++;
-[e ++ _pintimer -> -> 1 `i `l ]
+[; ;watchdog.c: 150:                 pintimer = 0;
+[e = _pintimer -> -> -> 0 `i `l `ul ]
 "151
 [; ;watchdog.c: 151:             }
 }
-[e :U 296 ]
+[e :U 297 ]
 "152
 [; ;watchdog.c: 152:             if(pintimer >= 30)
-[e $ ! >= _pintimer -> -> 30 `i `l 297  ]
+[e $ ! >= _pintimer -> -> -> 30 `i `l `ul 298  ]
 "153
 [; ;watchdog.c: 153:             {
 {
@@ -872,18 +865,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;watchdog.c: 154:                 resettimer = 20;
 [e = _resettimer -> -> 20 `i `ui ]
 "155
-[; ;watchdog.c: 155:                 pinreset = 1;
-[e = _pinreset -> -> 1 `i `uc ]
+[; ;watchdog.c: 155:                 resetState = 1;
+[e = _resetState -> -> 1 `i `uc ]
 "156
-[; ;watchdog.c: 156:                 pintimer = -20;
-[e = _pintimer -> -U -> 20 `i `l ]
+[; ;watchdog.c: 156:                 pintimer = 0;
+[e = _pintimer -> -> -> 0 `i `l `ul ]
 "157
 [; ;watchdog.c: 157:             }
 }
-[e :U 297 ]
+[e :U 298 ]
 "158
-[; ;watchdog.c: 158:             if(resettimer > 0 )
-[e $ ! > _resettimer -> -> 0 `i `ui 298  ]
+[; ;watchdog.c: 158:             if(resettimer > 0)
+[e $ ! > _resettimer -> -> 0 `i `ui 299  ]
 "159
 [; ;watchdog.c: 159:             {
 {
@@ -893,100 +886,66 @@ Version 4.0 HI-TECH Software Intermediate Code
 "161
 [; ;watchdog.c: 161:             }
 }
-[e :U 298 ]
+[e :U 299 ]
 "162
 [; ;watchdog.c: 162:             if(resettimer == 0)
-[e $ ! == _resettimer -> -> 0 `i `ui 299  ]
+[e $ ! == _resettimer -> -> 0 `i `ui 300  ]
 "163
-[; ;watchdog.c: 163:             {
+[; ;watchdog.c: 163:                 {
 {
 "164
-[; ;watchdog.c: 164:                 pinreset = 0;
-[e = _pinreset -> -> 0 `i `uc ]
+[; ;watchdog.c: 164:                 resetState = 0;
+[e = _resetState -> -> 0 `i `uc ]
 "165
-[; ;watchdog.c: 165:             }
+[; ;watchdog.c: 165:                 }
 }
-[e :U 299 ]
+[e :U 300 ]
 "166
-[; ;watchdog.c: 166:             if( pinreset || adcreset)
-[e $ ! || != -> _pinreset `i -> 0 `i != -> _adcreset `i -> 0 `i 300  ]
+[; ;watchdog.c: 166:             if( resetState )
+[e $ ! != -> _resetState `i -> 0 `i 301  ]
 "167
 [; ;watchdog.c: 167:             {
 {
 "168
-[; ;watchdog.c: 168:                 LATAbits.LATA2 = 1;
-[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
-"169
-[; ;watchdog.c: 169:                 sendcommands = 1;
-[e = _sendcommands -> -> 1 `i `uc ]
-"170
-[; ;watchdog.c: 170:             }
-}
-[e $U 301  ]
-"171
-[; ;watchdog.c: 171:             else
-[e :U 300 ]
-"172
-[; ;watchdog.c: 172:             {
-{
-"173
-[; ;watchdog.c: 173:                 LATAbits.LATA2 = 0;
+[; ;watchdog.c: 168:                 LATAbits.LATA2 = 0;
 [e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
-"174
-[; ;watchdog.c: 174:                 if(sendcommands)
-[e $ ! != -> _sendcommands `i -> 0 `i 302  ]
-"175
-[; ;watchdog.c: 175:                 {
+"169
+[; ;watchdog.c: 169:             }
+}
+[e $U 302  ]
+"170
+[; ;watchdog.c: 170:             else
+[e :U 301 ]
+"171
+[; ;watchdog.c: 171:             {
 {
-"176
-[; ;watchdog.c: 176:                     _delay((unsigned long)((500)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"177
-[; ;watchdog.c: 177:                     SendCommand(0x06,0,16);
-[e ( _SendCommand (3 , , -> -> 6 `i `uc -> -> 0 `i `uc -> -> 16 `i `uc ]
-"178
-[; ;watchdog.c: 178:                     _delay((unsigned long)((500)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"179
-[; ;watchdog.c: 179:                     SendCommand(0x11,0,1);
-[e ( _SendCommand (3 , , -> -> 17 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc ]
-"180
-[; ;watchdog.c: 180:                     _delay((unsigned long)((500)*(500000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"181
-[; ;watchdog.c: 181:                     SendCommand(0x06,0,16);
-[e ( _SendCommand (3 , , -> -> 6 `i `uc -> -> 0 `i `uc -> -> 16 `i `uc ]
-"182
-[; ;watchdog.c: 182:                     sendcommands = 0;
-[e = _sendcommands -> -> 0 `i `uc ]
-"183
-[; ;watchdog.c: 183:                 }
+"172
+[; ;watchdog.c: 172:                 LATAbits.LATA2 = 1;
+[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
+"173
+[; ;watchdog.c: 173:             }
 }
 [e :U 302 ]
-"184
-[; ;watchdog.c: 184:             }
-}
-[e :U 301 ]
-"185
-[; ;watchdog.c: 185:             timer= 0;
-[e = _timer -> -> 0 `i `l ]
-"186
-[; ;watchdog.c: 186:         }
+"174
+[; ;watchdog.c: 174:             timer= 0;
+[e = _timer -> -> -> 0 `i `l `ul ]
+"175
+[; ;watchdog.c: 175:         }
 }
 [e :U 288 ]
-"187
-[; ;watchdog.c: 187:         _delay((unsigned long)((1)*(500000/4000.0)));
+"176
+[; ;watchdog.c: 176:         _delay((unsigned long)((1)*(500000/4000.0)));
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 500000 `l `d .4000.0 `ul ]
-"188
-[; ;watchdog.c: 188:     }
+"193
+[; ;watchdog.c: 193:     }
 }
 [e :U 285 ]
 [e $U 286  ]
 [e :U 287 ]
-"190
-[; ;watchdog.c: 190:     return;
+"195
+[; ;watchdog.c: 195:     return;
 [e $UE 284  ]
-"191
-[; ;watchdog.c: 191: }
+"196
+[; ;watchdog.c: 196: }
 [e :UE 284 ]
 }

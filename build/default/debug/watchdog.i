@@ -3520,10 +3520,10 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 37 "watchdog.c" 2
-# 60 "watchdog.c"
-long timer,pintimer;
+# 58 "watchdog.c"
+unsigned long timer,pintimer;
 unsigned int laststate, actstate,resettimer;
-unsigned char adcreset,pinreset,sendcommands;
+unsigned char resetState = 0;
 unsigned char buffer[20];
 
 
@@ -3575,80 +3575,65 @@ void main(void) {
     BAUDCONbits.BRG16 = 1;
     SPBRGH = 0;
     SPBRGL = 12;
-
-
-    _delay((unsigned long)((2000)*(500000/4000.0)));
-    SendCommand(0x06,0,16);
-    _delay((unsigned long)((200)*(500000/4000.0)));
-    SendCommand(0x11,0,1);
-    _delay((unsigned long)((500)*(500000/4000.0)));
-    SendCommand(0x06,0,16);
-    pintimer = 0;
+# 120 "watchdog.c"
     while(1)
     {
         timer++;
 
-        if(timer >100)
+        if(timer <100)
         {
             ADCON0bits.ADGO = 1;
             while (ADCON0bits.nDONE != 0);
-            if(ADRESH < 125)
+            if(ADRESH < (int)((3200/3.2)*(float)(256/2048)))
             {
-                adcreset = 1;
+                resetState = 1;
             }
-            if(ADRESH > 146)
+            if(ADRESH > (int)((3750/3.2)*(float)(256/2048)))
             {
-                adcreset = 0;
+                resetState = 0;
             }
             if(ADRESH < 160)
             {
-                LATAbits.LATA5 = 1;
+                LATAbits.LATA5 = 0;
             }
             if(ADRESH > 158)
             {
-                LATAbits.LATA5 = 0;
+                LATAbits.LATA5 = 1;
             }
-
             if(PORTAbits.RA1 == 1)
             {
                pintimer++;
             }
+            else
+            {
+                pintimer = 0;
+            }
             if(pintimer >= 30)
             {
                 resettimer = 20;
-                pinreset = 1;
-                pintimer = -20;
+                resetState = 1;
+                pintimer = 0;
             }
-            if(resettimer > 0 )
+            if(resettimer > 0)
             {
                 resettimer--;
             }
             if(resettimer == 0)
+                {
+                resetState = 0;
+                }
+            if( resetState )
             {
-                pinreset = 0;
-            }
-            if( pinreset || adcreset)
-            {
-                LATAbits.LATA2 = 1;
-                sendcommands = 1;
+                LATAbits.LATA2 = 0;
             }
             else
             {
-                LATAbits.LATA2 = 0;
-                if(sendcommands)
-                {
-                    _delay((unsigned long)((500)*(500000/4000.0)));
-                    SendCommand(0x06,0,16);
-                    _delay((unsigned long)((500)*(500000/4000.0)));
-                    SendCommand(0x11,0,1);
-                    _delay((unsigned long)((500)*(500000/4000.0)));
-                    SendCommand(0x06,0,16);
-                    sendcommands = 0;
-                }
+                LATAbits.LATA2 = 1;
             }
             timer= 0;
         }
         _delay((unsigned long)((1)*(500000/4000.0)));
+# 193 "watchdog.c"
     }
 
     return;

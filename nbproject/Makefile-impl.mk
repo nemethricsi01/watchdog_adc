@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=watchdog_adc.X
+PROJECTNAME=watchdog_adc
 
 # Active Configuration
 DEFAULTCONF=default
