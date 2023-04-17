@@ -34,11 +34,11 @@
 #include <xc.h>
 #include <pic12f1822.h>
 #include <string.h>
-#define _XTAL_FREQ 500000
-#define LOW_TRESH 125//feszultseg csokkenes utan reset
-#define HIGH_TRESH 146
-#define CHARGE_LOW_TRESH 160//4 voltos tolto lekapcsolas
-#define CHARGE_HIGH_TRESH 158
+#define _XTAL_FREQ                500000
+#define LOW_TRESH                 125//feszultseg csokkenes utan reset
+#define HIGH_TRESH                146
+#define CHARGE_LOW_TRESH          160//4 voltos tolto lekapcsolas
+#define CHARGE_HIGH_TRESH         158
 
 //256 érték mellett 160nál lekapcs 158nál visszakapcs
 //3mp nincs low akkor 2mp reset
@@ -53,14 +53,19 @@
 #define PLAY                      0x0D
 #define REPEAT_PLAY               0x11
 
-#define HANGERO 16
+#define HANGERO                   17
+
+#define MIN_VOL                   10
 
 
 
-long timer,pintimer;
+long timer,pintimer,voltimer;
 unsigned int laststate, actstate,resettimer;
 unsigned char adcreset,pinreset,sendcommands;
-unsigned char buffer[20];
+unsigned char buffer[12];
+unsigned long mainreset = 0;
+long average = 0xffff;
+unsigned char buffpointer;
 
 
 void WriteSerial(unsigned char *buffer,uint8_t len)
@@ -97,9 +102,8 @@ void main(void) {
     TRISAbits.TRISA5    = 0;//digital output,CHIP ENABLE, high:tolt, low: nem tolt
     TRISAbits.TRISA1    = 1;//digital input//MP3BUSY
     TRISAbits.TRISA4    = 1;//analog input
-    ANSELAbits.ANSA1    = 0;
+    ANSELAbits.ANSA1    = 1;
     ANSELAbits.ANSA0    = 0;
-    ADCON0bits.CHS      = 0b00011;//an3
     ADCON0bits.ADON     = 1;
     ADCON1bits.ADPREF   = 0b11;
     FVRCONbits.ADFVR    = 0b10;//2048mV
@@ -112,25 +116,43 @@ void main(void) {
     SPBRGH = 0;
     SPBRGL = 12;
     
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIR1bits.TMR2IF = 0;
+    PIE1bits.TMR2IE = 1;
     
+    T2CONbits.T2CKPS = 0b11;
+    T2CONbits.T2OUTPS = 0b1111;
+    T2CONbits.TMR2ON = 1;
+    PR2 = 0xff;
     __delay_ms(2000);
     SendCommand(SPEC_VOL,0,HANGERO);
-    __delay_ms(200);
+    __delay_ms(2000);
     SendCommand(REPEAT_PLAY,0,1);
-    __delay_ms(500);
+    __delay_ms(2000);
     SendCommand(SPEC_VOL,0,HANGERO);
     pintimer = 0;
+    
     while(1)
     {
         timer++;
+        voltimer++;
+        if(voltimer > 60000)
+        {
+            __delay_ms(2000);
+            SendCommand(SPEC_VOL,0,HANGERO);
+            voltimer = 0;
+        }
         
         if(timer >100)
         {
-            ADCON0bits.ADGO = 1;
-            while (ADCON0bits.nDONE != 0);
+        ADCON0bits.CHS      = 3;//an3
+        ADCON0bits.ADGO = 1;
+        while (ADCON0bits.nDONE != 0);
             if(ADRESH < LOW_TRESH)
             {
                 adcreset = 1;
+                
             }
             if(ADRESH > HIGH_TRESH)
             {
@@ -145,16 +167,16 @@ void main(void) {
                 LATAbits.LATA5 = 0;//normal state//CE
             }
             
-            if(PORTAbits.RA1 == 1)//device is not doing anything 
-            {
-               pintimer++; 
-            }
-            if(pintimer >= 30)
-            {
-                resettimer = 20;
-                pinreset = 1;
-                pintimer = -20;
-            }
+//            if(PORTAbits.RA1 == 1)//device is not doing anything 
+//            {
+//               pintimer++; 
+//            }
+//            if(pintimer >= 30)
+//            {
+//                resettimer = 20;
+//                pinreset = 1;
+//                pintimer = -20;
+//            }
             if(resettimer > 0 )
             {
                 resettimer--;
@@ -167,17 +189,21 @@ void main(void) {
             {
                 LATAbits.LATA2 = 1;//reset state//RESET
                 sendcommands = 1;
+                TRISAbits.TRISA0 = 1;
+                RCSTAbits.SPEN = 0;
             }
             else
             {
                 LATAbits.LATA2 = 0;//normal state//RESET
+                TRISAbits.TRISA0 = 0;
+                RCSTAbits.SPEN = 1;
                 if(sendcommands)
                 {
-                    __delay_ms(500);
+                    __delay_ms(2000);
                     SendCommand(SPEC_VOL,0,HANGERO);
-                    __delay_ms(5.00);
+                    __delay_ms(2000);
                     SendCommand(REPEAT_PLAY,0,1);
-                    __delay_ms(500);
+                    __delay_ms(2000);
                     SendCommand(SPEC_VOL,0,HANGERO);
                     sendcommands = 0; 
                 }
@@ -189,40 +215,45 @@ void main(void) {
             
     return;
 }
-//  timer++;
-//        pintimer++;
-//        if(timer > 100)
-//        {
-//            timer = 0;
-//            if(ADRESH > 147)
-//            {
-//                LATAbits.LATA2 = 1;
-//                adcResetState = 0;//no reset from adc
-//            }
-//            if(ADRESH < 125)
-//            {
-//               LATAbits.LATA2 = 0; 
-//               adcResetState = 1;//reset by adc
-//            }
-//            ADCON0bits.ADGO = 1;
-//        }
-//        __delay_ms(1);
-//        actstate = PORTAbits.RA5;
-//        
-//        if(laststate != actstate)
-//        {
-//            if((laststate == 0)&&(actstate == 1))
-//            {
-//                //do something
-//                pintimer = 0;
-//            }
-//            laststate = actstate;
-//        }
-//        if(pintimer > 5000)
-//        {
-//            lastPinState = LATAbits.LATA2;
-//            LATAbits.LATA2 = 0; 
-//            __delay_ms(3000);
-//            LATAbits.LATA2 = lastPinState; 
-//            pintimer = 0;
-//        }
+
+void __interrupt() my_isr_routine(void) {
+    if (PIR1bits.TMR2IF == 1) 
+    {
+        mainreset++;
+        if (mainreset > 7714) 
+        {
+            resettimer = 20;
+            pinreset = 1;
+            mainreset = 0;
+        }
+        if(adcreset == 0)
+        {
+        ADCON0bits.CHS = 1; //an1
+        ADCON0bits.ADGO = 1;
+        while (ADCON0bits.nDONE != 0);
+        uint16_t temp;
+        temp = ADRESH;
+        temp = temp<<2;
+        temp |= ((ADRESL>>6) & 0x03);
+        average += temp;
+        buffpointer++;
+        if (buffpointer > 29) 
+        {
+            
+            average = average / 30;
+            if (average < MIN_VOL) 
+            {
+                resettimer = 20;
+                pinreset = 1;
+                
+            }
+            
+            buffpointer = 0;
+            average = 0;
+        }
+        }
+        TMR2 = 0;
+
+        PIR1bits.TMR2IF = 0;
+    }
+}

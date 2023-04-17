@@ -3520,11 +3520,14 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 37 "watchdog.c" 2
-# 60 "watchdog.c"
-long timer,pintimer;
+# 62 "watchdog.c"
+long timer,pintimer,voltimer;
 unsigned int laststate, actstate,resettimer;
 unsigned char adcreset,pinreset,sendcommands;
-unsigned char buffer[20];
+unsigned char buffer[12];
+unsigned long mainreset = 0;
+long average = 0xffff;
+unsigned char buffpointer;
 
 
 void WriteSerial(unsigned char *buffer,uint8_t len)
@@ -3561,9 +3564,8 @@ void main(void) {
     TRISAbits.TRISA5 = 0;
     TRISAbits.TRISA1 = 1;
     TRISAbits.TRISA4 = 1;
-    ANSELAbits.ANSA1 = 0;
+    ANSELAbits.ANSA1 = 1;
     ANSELAbits.ANSA0 = 0;
-    ADCON0bits.CHS = 0b00011;
     ADCON0bits.ADON = 1;
     ADCON1bits.ADPREF = 0b11;
     FVRCONbits.ADFVR = 0b10;
@@ -3576,25 +3578,43 @@ void main(void) {
     SPBRGH = 0;
     SPBRGL = 12;
 
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIR1bits.TMR2IF = 0;
+    PIE1bits.TMR2IE = 1;
 
+    T2CONbits.T2CKPS = 0b11;
+    T2CONbits.T2OUTPS = 0b1111;
+    T2CONbits.TMR2ON = 1;
+    PR2 = 0xff;
     _delay((unsigned long)((2000)*(500000/4000.0)));
-    SendCommand(0x06,0,16);
-    _delay((unsigned long)((200)*(500000/4000.0)));
+    SendCommand(0x06,0,17);
+    _delay((unsigned long)((2000)*(500000/4000.0)));
     SendCommand(0x11,0,1);
-    _delay((unsigned long)((500)*(500000/4000.0)));
-    SendCommand(0x06,0,16);
+    _delay((unsigned long)((2000)*(500000/4000.0)));
+    SendCommand(0x06,0,17);
     pintimer = 0;
+
     while(1)
     {
         timer++;
+        voltimer++;
+        if(voltimer > 60000)
+        {
+            _delay((unsigned long)((2000)*(500000/4000.0)));
+            SendCommand(0x06,0,17);
+            voltimer = 0;
+        }
 
         if(timer >100)
         {
-            ADCON0bits.ADGO = 1;
-            while (ADCON0bits.nDONE != 0);
+        ADCON0bits.CHS = 3;
+        ADCON0bits.ADGO = 1;
+        while (ADCON0bits.nDONE != 0);
             if(ADRESH < 125)
             {
                 adcreset = 1;
+
             }
             if(ADRESH > 146)
             {
@@ -3608,17 +3628,7 @@ void main(void) {
             {
                 LATAbits.LATA5 = 0;
             }
-
-            if(PORTAbits.RA1 == 1)
-            {
-               pintimer++;
-            }
-            if(pintimer >= 30)
-            {
-                resettimer = 20;
-                pinreset = 1;
-                pintimer = -20;
-            }
+# 180 "watchdog.c"
             if(resettimer > 0 )
             {
                 resettimer--;
@@ -3631,18 +3641,22 @@ void main(void) {
             {
                 LATAbits.LATA2 = 1;
                 sendcommands = 1;
+                TRISAbits.TRISA0 = 1;
+                RCSTAbits.SPEN = 0;
             }
             else
             {
                 LATAbits.LATA2 = 0;
+                TRISAbits.TRISA0 = 0;
+                RCSTAbits.SPEN = 1;
                 if(sendcommands)
                 {
-                    _delay((unsigned long)((500)*(500000/4000.0)));
-                    SendCommand(0x06,0,16);
-                    _delay((unsigned long)((500)*(500000/4000.0)));
+                    _delay((unsigned long)((2000)*(500000/4000.0)));
+                    SendCommand(0x06,0,17);
+                    _delay((unsigned long)((2000)*(500000/4000.0)));
                     SendCommand(0x11,0,1);
-                    _delay((unsigned long)((500)*(500000/4000.0)));
-                    SendCommand(0x06,0,16);
+                    _delay((unsigned long)((2000)*(500000/4000.0)));
+                    SendCommand(0x06,0,17);
                     sendcommands = 0;
                 }
             }
@@ -3652,4 +3666,46 @@ void main(void) {
     }
 
     return;
+}
+
+void __attribute__((picinterrupt(("")))) my_isr_routine(void) {
+    if (PIR1bits.TMR2IF == 1)
+    {
+        mainreset++;
+        if (mainreset > 7714)
+        {
+            resettimer = 20;
+            pinreset = 1;
+            mainreset = 0;
+        }
+        if(adcreset == 0)
+        {
+        ADCON0bits.CHS = 1;
+        ADCON0bits.ADGO = 1;
+        while (ADCON0bits.nDONE != 0);
+        uint16_t temp;
+        temp = ADRESH;
+        temp = temp<<2;
+        temp |= ((ADRESL>>6) & 0x03);
+        average += temp;
+        buffpointer++;
+        if (buffpointer > 29)
+        {
+
+            average = average / 30;
+            if (average < 10)
+            {
+                resettimer = 20;
+                pinreset = 1;
+
+            }
+
+            buffpointer = 0;
+            average = 0;
+        }
+        }
+        TMR2 = 0;
+
+        PIR1bits.TMR2IF = 0;
+    }
 }

@@ -1,1347 +1,2064 @@
 
 
 Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
-                                                                                               Tue Mar 21 18:17:29 2023
+                                                                                               Fri Apr 14 17:59:43 2023
 
 Microchip MPLAB XC8 C Compiler v2.30 (Free license) build 20200825195618 Og1 
      1                           	processor	12F1822
      2                           	pagewidth 120
      3                           	opt	flic
-     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
-     5                           	psect	bssCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     4                           	psect	idataBANK0,global,class=CODE,delta=2,noexec
+     5                           	psect	cinit,global,class=CODE,merge=1,delta=2
      6                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1,noexec
-     7                           	psect	clrtext,global,class=CODE,delta=2
-     8                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
-     9                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,noexec
-    10                           	psect	maintext,global,class=CODE,merge=1,split=1,delta=2
-    11                           	psect	text1,local,class=CODE,merge=1,delta=2
-    12                           	psect	text2,local,class=CODE,merge=1,delta=2
-    13                           	psect	idloc,global,abs,ovrld,class=IDLOC,space=5,delta=2,noexec
-    14                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
-    15                           	dabs	1,0x7E,2
-    16  0000                     
-    17                           ; Version 2.40
-    18                           ; Generated 17/11/2021 GMT
-    19                           ; 
-    20                           ; Copyright © 2021, Microchip Technology Inc. and its subsidiaries ("Microchip")
-    21                           ; All rights reserved.
+     7                           	psect	dataBANK0,global,class=BANK0,space=1,delta=1,noexec
+     8                           	psect	clrtext,global,class=CODE,delta=2
+     9                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+    10                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,noexec
+    11                           	psect	maintext,global,class=CODE,merge=1,split=1,delta=2
+    12                           	psect	text1,local,class=CODE,merge=1,delta=2
+    13                           	psect	text2,local,class=CODE,merge=1,delta=2
+    14                           	psect	intentry,global,class=CODE,delta=2
+    15                           	psect	text4,local,class=CODE,merge=1,delta=2,group=1
+    16                           	psect	idloc,global,abs,ovrld,class=IDLOC,space=5,delta=2,noexec
+    17                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    18                           	dabs	1,0x7E,2
+    19  0000                     
+    20                           ; Version 2.40
+    21                           ; Generated 17/11/2021 GMT
     22                           ; 
-    23                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+    23                           ; Copyright © 2021, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    24                           ; All rights reserved.
+    25                           ; 
+    26                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
       +                          ip").
-    24                           ; 
-    25                           ; Redistribution and use in source and binary forms, with or without modification, are
-    26                           ; permitted provided that the following conditions are met:
     27                           ; 
-    28                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
-      +                          t of
-    29                           ;        conditions and the following disclaimer.
+    28                           ; Redistribution and use in source and binary forms, with or without modification, are
+    29                           ; permitted provided that the following conditions are met:
     30                           ; 
-    31                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+    31                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    32                           ;        conditions and the following disclaimer.
+    33                           ; 
+    34                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
       +                          list
-    32                           ;        of conditions and the following disclaimer in the documentation and/or other
-    33                           ;        materials provided with the distribution. Publication is not required when
-    34                           ;        this file is used in an embedded application.
-    35                           ; 
-    36                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
-      +                          is
-    37                           ;        software without specific prior written permission.
+    35                           ;        of conditions and the following disclaimer in the documentation and/or other
+    36                           ;        materials provided with the distribution. Publication is not required when
+    37                           ;        this file is used in an embedded application.
     38                           ; 
-    39                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-    40                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+    39                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    40                           ;        software without specific prior written permission.
+    41                           ; 
+    42                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    43                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
       +                          OR
-    41                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+    44                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
       +                          T,
-    42                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
-    43                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
-    44                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+    45                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    46                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    47                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
       +                          RICT
-    45                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+    48                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
       +                          SE OF
-    46                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    47                           ; 
-    48                           ; 
-    49                           ; Code-generator required, PIC12F1822 Definitions
+    49                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     50                           ; 
-    51                           ; SFR Addresses
-    52  0000                     	;# 
-    53  0001                     	;# 
-    54  0002                     	;# 
-    55  0003                     	;# 
-    56  0004                     	;# 
-    57  0005                     	;# 
-    58  0006                     	;# 
-    59  0007                     	;# 
-    60  0008                     	;# 
-    61  0009                     	;# 
-    62  000A                     	;# 
-    63  000B                     	;# 
-    64  000C                     	;# 
-    65  0011                     	;# 
-    66  0012                     	;# 
-    67  0015                     	;# 
-    68  0016                     	;# 
-    69  0016                     	;# 
-    70  0017                     	;# 
-    71  0018                     	;# 
-    72  0019                     	;# 
-    73  001A                     	;# 
-    74  001B                     	;# 
-    75  001C                     	;# 
-    76  001E                     	;# 
-    77  001F                     	;# 
-    78  008C                     	;# 
-    79  0091                     	;# 
-    80  0092                     	;# 
-    81  0095                     	;# 
-    82  0096                     	;# 
-    83  0097                     	;# 
-    84  0098                     	;# 
-    85  0099                     	;# 
-    86  009A                     	;# 
-    87  009B                     	;# 
-    88  009B                     	;# 
-    89  009C                     	;# 
-    90  009D                     	;# 
-    91  009E                     	;# 
-    92  010C                     	;# 
-    93  0111                     	;# 
-    94  0112                     	;# 
-    95  0115                     	;# 
-    96  0116                     	;# 
-    97  0117                     	;# 
-    98  0118                     	;# 
-    99  0119                     	;# 
-   100  011A                     	;# 
-   101  011B                     	;# 
-   102  011D                     	;# 
-   103  011D                     	;# 
-   104  018C                     	;# 
-   105  0191                     	;# 
-   106  0191                     	;# 
-   107  0192                     	;# 
-   108  0193                     	;# 
-   109  0193                     	;# 
-   110  0193                     	;# 
-   111  0194                     	;# 
-   112  0195                     	;# 
-   113  0196                     	;# 
-   114  0199                     	;# 
-   115  019A                     	;# 
-   116  019B                     	;# 
-   117  019B                     	;# 
-   118  019B                     	;# 
+    51                           ; 
+    52                           ; Code-generator required, PIC12F1822 Definitions
+    53                           ; 
+    54                           ; SFR Addresses
+    55  0000                     	;# 
+    56  0001                     	;# 
+    57  0002                     	;# 
+    58  0003                     	;# 
+    59  0004                     	;# 
+    60  0005                     	;# 
+    61  0006                     	;# 
+    62  0007                     	;# 
+    63  0008                     	;# 
+    64  0009                     	;# 
+    65  000A                     	;# 
+    66  000B                     	;# 
+    67  000C                     	;# 
+    68  0011                     	;# 
+    69  0012                     	;# 
+    70  0015                     	;# 
+    71  0016                     	;# 
+    72  0016                     	;# 
+    73  0017                     	;# 
+    74  0018                     	;# 
+    75  0019                     	;# 
+    76  001A                     	;# 
+    77  001B                     	;# 
+    78  001C                     	;# 
+    79  001E                     	;# 
+    80  001F                     	;# 
+    81  008C                     	;# 
+    82  0091                     	;# 
+    83  0092                     	;# 
+    84  0095                     	;# 
+    85  0096                     	;# 
+    86  0097                     	;# 
+    87  0098                     	;# 
+    88  0099                     	;# 
+    89  009A                     	;# 
+    90  009B                     	;# 
+    91  009B                     	;# 
+    92  009C                     	;# 
+    93  009D                     	;# 
+    94  009E                     	;# 
+    95  010C                     	;# 
+    96  0111                     	;# 
+    97  0112                     	;# 
+    98  0115                     	;# 
+    99  0116                     	;# 
+   100  0117                     	;# 
+   101  0118                     	;# 
+   102  0119                     	;# 
+   103  011A                     	;# 
+   104  011B                     	;# 
+   105  011D                     	;# 
+   106  011D                     	;# 
+   107  018C                     	;# 
+   108  0191                     	;# 
+   109  0191                     	;# 
+   110  0192                     	;# 
+   111  0193                     	;# 
+   112  0193                     	;# 
+   113  0193                     	;# 
+   114  0194                     	;# 
+   115  0195                     	;# 
+   116  0196                     	;# 
+   117  0199                     	;# 
+   118  019A                     	;# 
    119  019B                     	;# 
-   120  019C                     	;# 
-   121  019C                     	;# 
-   122  019D                     	;# 
-   123  019E                     	;# 
-   124  019F                     	;# 
-   125  020C                     	;# 
-   126  0211                     	;# 
-   127  0211                     	;# 
-   128  0212                     	;# 
-   129  0212                     	;# 
-   130  0213                     	;# 
-   131  0213                     	;# 
-   132  0214                     	;# 
-   133  0214                     	;# 
-   134  0215                     	;# 
-   135  0215                     	;# 
-   136  0215                     	;# 
-   137  0216                     	;# 
-   138  0216                     	;# 
-   139  0217                     	;# 
-   140  0217                     	;# 
-   141  0291                     	;# 
-   142  0291                     	;# 
-   143  0292                     	;# 
-   144  0293                     	;# 
-   145  0294                     	;# 
-   146  0295                     	;# 
-   147  0295                     	;# 
-   148  0296                     	;# 
-   149  0391                     	;# 
-   150  0392                     	;# 
-   151  0393                     	;# 
-   152  039A                     	;# 
-   153  039C                     	;# 
-   154  039D                     	;# 
-   155  039E                     	;# 
-   156  039F                     	;# 
-   157  0FE4                     	;# 
-   158  0FE5                     	;# 
-   159  0FE6                     	;# 
-   160  0FE7                     	;# 
-   161  0FE8                     	;# 
-   162  0FE9                     	;# 
-   163  0FEA                     	;# 
-   164  0FEB                     	;# 
-   165  0FED                     	;# 
-   166  0FEE                     	;# 
-   167  0FEF                     	;# 
-   168  0000                     	;# 
-   169  0001                     	;# 
-   170  0002                     	;# 
-   171  0003                     	;# 
-   172  0004                     	;# 
-   173  0005                     	;# 
-   174  0006                     	;# 
-   175  0007                     	;# 
-   176  0008                     	;# 
-   177  0009                     	;# 
-   178  000A                     	;# 
-   179  000B                     	;# 
-   180  000C                     	;# 
-   181  0011                     	;# 
-   182  0012                     	;# 
-   183  0015                     	;# 
-   184  0016                     	;# 
-   185  0016                     	;# 
-   186  0017                     	;# 
-   187  0018                     	;# 
-   188  0019                     	;# 
-   189  001A                     	;# 
-   190  001B                     	;# 
-   191  001C                     	;# 
-   192  001E                     	;# 
-   193  001F                     	;# 
-   194  008C                     	;# 
-   195  0091                     	;# 
-   196  0092                     	;# 
-   197  0095                     	;# 
-   198  0096                     	;# 
-   199  0097                     	;# 
-   200  0098                     	;# 
-   201  0099                     	;# 
-   202  009A                     	;# 
-   203  009B                     	;# 
-   204  009B                     	;# 
-   205  009C                     	;# 
-   206  009D                     	;# 
-   207  009E                     	;# 
-   208  010C                     	;# 
-   209  0111                     	;# 
-   210  0112                     	;# 
-   211  0115                     	;# 
-   212  0116                     	;# 
-   213  0117                     	;# 
-   214  0118                     	;# 
-   215  0119                     	;# 
-   216  011A                     	;# 
-   217  011B                     	;# 
-   218  011D                     	;# 
-   219  011D                     	;# 
-   220  018C                     	;# 
-   221  0191                     	;# 
-   222  0191                     	;# 
-   223  0192                     	;# 
-   224  0193                     	;# 
-   225  0193                     	;# 
-   226  0193                     	;# 
-   227  0194                     	;# 
-   228  0195                     	;# 
-   229  0196                     	;# 
-   230  0199                     	;# 
-   231  019A                     	;# 
-   232  019B                     	;# 
-   233  019B                     	;# 
-   234  019B                     	;# 
+   120  019B                     	;# 
+   121  019B                     	;# 
+   122  019B                     	;# 
+   123  019C                     	;# 
+   124  019C                     	;# 
+   125  019D                     	;# 
+   126  019E                     	;# 
+   127  019F                     	;# 
+   128  020C                     	;# 
+   129  0211                     	;# 
+   130  0211                     	;# 
+   131  0212                     	;# 
+   132  0212                     	;# 
+   133  0213                     	;# 
+   134  0213                     	;# 
+   135  0214                     	;# 
+   136  0214                     	;# 
+   137  0215                     	;# 
+   138  0215                     	;# 
+   139  0215                     	;# 
+   140  0216                     	;# 
+   141  0216                     	;# 
+   142  0217                     	;# 
+   143  0217                     	;# 
+   144  0291                     	;# 
+   145  0291                     	;# 
+   146  0292                     	;# 
+   147  0293                     	;# 
+   148  0294                     	;# 
+   149  0295                     	;# 
+   150  0295                     	;# 
+   151  0296                     	;# 
+   152  0391                     	;# 
+   153  0392                     	;# 
+   154  0393                     	;# 
+   155  039A                     	;# 
+   156  039C                     	;# 
+   157  039D                     	;# 
+   158  039E                     	;# 
+   159  039F                     	;# 
+   160  0FE4                     	;# 
+   161  0FE5                     	;# 
+   162  0FE6                     	;# 
+   163  0FE7                     	;# 
+   164  0FE8                     	;# 
+   165  0FE9                     	;# 
+   166  0FEA                     	;# 
+   167  0FEB                     	;# 
+   168  0FED                     	;# 
+   169  0FEE                     	;# 
+   170  0FEF                     	;# 
+   171  0000                     	;# 
+   172  0001                     	;# 
+   173  0002                     	;# 
+   174  0003                     	;# 
+   175  0004                     	;# 
+   176  0005                     	;# 
+   177  0006                     	;# 
+   178  0007                     	;# 
+   179  0008                     	;# 
+   180  0009                     	;# 
+   181  000A                     	;# 
+   182  000B                     	;# 
+   183  000C                     	;# 
+   184  0011                     	;# 
+   185  0012                     	;# 
+   186  0015                     	;# 
+   187  0016                     	;# 
+   188  0016                     	;# 
+   189  0017                     	;# 
+   190  0018                     	;# 
+   191  0019                     	;# 
+   192  001A                     	;# 
+   193  001B                     	;# 
+   194  001C                     	;# 
+   195  001E                     	;# 
+   196  001F                     	;# 
+   197  008C                     	;# 
+   198  0091                     	;# 
+   199  0092                     	;# 
+   200  0095                     	;# 
+   201  0096                     	;# 
+   202  0097                     	;# 
+   203  0098                     	;# 
+   204  0099                     	;# 
+   205  009A                     	;# 
+   206  009B                     	;# 
+   207  009B                     	;# 
+   208  009C                     	;# 
+   209  009D                     	;# 
+   210  009E                     	;# 
+   211  010C                     	;# 
+   212  0111                     	;# 
+   213  0112                     	;# 
+   214  0115                     	;# 
+   215  0116                     	;# 
+   216  0117                     	;# 
+   217  0118                     	;# 
+   218  0119                     	;# 
+   219  011A                     	;# 
+   220  011B                     	;# 
+   221  011D                     	;# 
+   222  011D                     	;# 
+   223  018C                     	;# 
+   224  0191                     	;# 
+   225  0191                     	;# 
+   226  0192                     	;# 
+   227  0193                     	;# 
+   228  0193                     	;# 
+   229  0193                     	;# 
+   230  0194                     	;# 
+   231  0195                     	;# 
+   232  0196                     	;# 
+   233  0199                     	;# 
+   234  019A                     	;# 
    235  019B                     	;# 
-   236  019C                     	;# 
-   237  019C                     	;# 
-   238  019D                     	;# 
-   239  019E                     	;# 
-   240  019F                     	;# 
-   241  020C                     	;# 
-   242  0211                     	;# 
-   243  0211                     	;# 
-   244  0212                     	;# 
-   245  0212                     	;# 
-   246  0213                     	;# 
-   247  0213                     	;# 
-   248  0214                     	;# 
-   249  0214                     	;# 
-   250  0215                     	;# 
-   251  0215                     	;# 
-   252  0215                     	;# 
-   253  0216                     	;# 
-   254  0216                     	;# 
-   255  0217                     	;# 
-   256  0217                     	;# 
-   257  0291                     	;# 
-   258  0291                     	;# 
-   259  0292                     	;# 
-   260  0293                     	;# 
-   261  0294                     	;# 
-   262  0295                     	;# 
-   263  0295                     	;# 
-   264  0296                     	;# 
-   265  0391                     	;# 
-   266  0392                     	;# 
-   267  0393                     	;# 
-   268  039A                     	;# 
-   269  039C                     	;# 
-   270  039D                     	;# 
-   271  039E                     	;# 
-   272  039F                     	;# 
-   273  0FE4                     	;# 
-   274  0FE5                     	;# 
-   275  0FE6                     	;# 
-   276  0FE7                     	;# 
-   277  0FE8                     	;# 
-   278  0FE9                     	;# 
-   279  0FEA                     	;# 
-   280  0FEB                     	;# 
-   281  0FED                     	;# 
-   282  0FEE                     	;# 
-   283  0FEF                     	;# 
-   284  000C                     _PORTAbits	set	12
-   285  009C                     _ADRESH	set	156
-   286  009E                     _ADCON1bits	set	158
-   287  009D                     _ADCON0bits	set	157
-   288  008C                     _TRISAbits	set	140
-   289  010C                     _LATAbits	set	268
-   290  0117                     _FVRCONbits	set	279
-   291  019B                     _SPBRGL	set	411
-   292  019C                     _SPBRGH	set	412
-   293  019F                     _BAUDCONbits	set	415
-   294  019D                     _RCSTAbits	set	413
-   295  018C                     _ANSELAbits	set	396
-   296  019E                     _TXSTAbits	set	414
-   297  019A                     _TXREG	set	410
-   298                           
-   299                           	psect	cinit
-   300  07F3                     start_initialization:	
-   301                           ; #config settings
-   302                           
-   303  07F3                     __initialization:
-   304                           
-   305                           ; Clear objects allocated to COMMON
-   306  07F3  01FB               	clrf	__pbssCOMMON& (0+127)
-   307  07F4  01FC               	clrf	(__pbssCOMMON+1)& (0+127)
-   308  07F5  01FD               	clrf	(__pbssCOMMON+2)& (0+127)
-   309                           
-   310                           ; Clear objects allocated to BANK0
-   311  07F6  3020               	movlw	low __pbssBANK0
-   312  07F7  0084               	movwf	4
-   313  07F8  3000               	movlw	high __pbssBANK0
-   314  07F9  0085               	movwf	5
-   315  07FA  3022               	movlw	34
-   316  07FB  3186  263C  3187   	fcall	clear_ram0
-   317  07FE                     end_of_initialization:	
-   318                           ;End of C runtime variable initialization code
-   319                           
-   320  07FE                     __end_of__initialization:
-   321  07FE  0020               	movlb	0
-   322  07FF  2EC5               	ljmp	_main	;jump to C main() function
-   323                           
-   324                           	psect	bssCOMMON
-   325  007B                     __pbssCOMMON:
-   326  007B                     _sendcommands:
-   327  007B                     	ds	1
-   328  007C                     _pinreset:
-   329  007C                     	ds	1
-   330  007D                     _adcreset:
-   331  007D                     	ds	1
+   236  019B                     	;# 
+   237  019B                     	;# 
+   238  019B                     	;# 
+   239  019C                     	;# 
+   240  019C                     	;# 
+   241  019D                     	;# 
+   242  019E                     	;# 
+   243  019F                     	;# 
+   244  020C                     	;# 
+   245  0211                     	;# 
+   246  0211                     	;# 
+   247  0212                     	;# 
+   248  0212                     	;# 
+   249  0213                     	;# 
+   250  0213                     	;# 
+   251  0214                     	;# 
+   252  0214                     	;# 
+   253  0215                     	;# 
+   254  0215                     	;# 
+   255  0215                     	;# 
+   256  0216                     	;# 
+   257  0216                     	;# 
+   258  0217                     	;# 
+   259  0217                     	;# 
+   260  0291                     	;# 
+   261  0291                     	;# 
+   262  0292                     	;# 
+   263  0293                     	;# 
+   264  0294                     	;# 
+   265  0295                     	;# 
+   266  0295                     	;# 
+   267  0296                     	;# 
+   268  0391                     	;# 
+   269  0392                     	;# 
+   270  0393                     	;# 
+   271  039A                     	;# 
+   272  039C                     	;# 
+   273  039D                     	;# 
+   274  039E                     	;# 
+   275  039F                     	;# 
+   276  0FE4                     	;# 
+   277  0FE5                     	;# 
+   278  0FE6                     	;# 
+   279  0FE7                     	;# 
+   280  0FE8                     	;# 
+   281  0FE9                     	;# 
+   282  0FEA                     	;# 
+   283  0FEB                     	;# 
+   284  0FED                     	;# 
+   285  0FEE                     	;# 
+   286  0FEF                     	;# 
+   287                           
+   288                           	psect	idataBANK0
+   289  036A                     __pidataBANK0:
+   290                           
+   291                           ;initializer for _average
+   292  036A  34FF               	retlw	255
+   293  036B  34FF               	retlw	255
+   294  036C  3400               	retlw	0
+   295  036D  3400               	retlw	0
+   296  001A                     _TMR2	set	26
+   297  001B                     _PR2	set	27
+   298  001C                     _T2CONbits	set	28
+   299  0011                     _PIR1bits	set	17
+   300  000B                     _INTCONbits	set	11
+   301  009B                     _ADRESL	set	155
+   302  009C                     _ADRESH	set	156
+   303  0091                     _PIE1bits	set	145
+   304  009E                     _ADCON1bits	set	158
+   305  009D                     _ADCON0bits	set	157
+   306  008C                     _TRISAbits	set	140
+   307  010C                     _LATAbits	set	268
+   308  0117                     _FVRCONbits	set	279
+   309  019B                     _SPBRGL	set	411
+   310  019C                     _SPBRGH	set	412
+   311  019F                     _BAUDCONbits	set	415
+   312  019D                     _RCSTAbits	set	413
+   313  018C                     _ANSELAbits	set	396
+   314  019E                     _TXSTAbits	set	414
+   315  019A                     _TXREG	set	410
+   316                           
+   317                           	psect	cinit
+   318  00B6                     start_initialization:	
+   319                           ; #config settings
+   320                           
+   321  00B6                     __initialization:
+   322                           
+   323                           ; Initialize objects allocated to BANK0
+   324  00B6  3183  236A  3180   	fcall	__pidataBANK0	;fetch initializer
+   325  00B9  00E3               	movwf	__pdataBANK0& (0+127)
+   326  00BA  3183  236B  3180   	fcall	__pidataBANK0+1	;fetch initializer
+   327  00BD  00E4               	movwf	(__pdataBANK0+1)& (0+127)
+   328  00BE  3183  236C  3180   	fcall	__pidataBANK0+2	;fetch initializer
+   329  00C1  00E5               	movwf	(__pdataBANK0+2)& (0+127)
+   330  00C2  3183  236D  3180   	fcall	__pidataBANK0+3	;fetch initializer
+   331  00C5  00E6               	movwf	(__pdataBANK0+3)& (0+127)
    332                           
-   333                           	psect	bssBANK0
-   334  0020                     __pbssBANK0:
-   335  0020                     _pintimer:
-   336  0020                     	ds	4
-   337  0024                     _timer:
-   338  0024                     	ds	4
-   339  0028                     _resettimer:
-   340  0028                     	ds	2
-   341  002A                     _actstate:
-   342  002A                     	ds	2
-   343  002C                     _laststate:
-   344  002C                     	ds	2
-   345  002E                     _buffer:
-   346  002E                     	ds	20
+   333                           ; Clear objects allocated to BANK0
+   334  00C6  3020               	movlw	low __pbssBANK0
+   335  00C7  0084               	movwf	4
+   336  00C8  3000               	movlw	high __pbssBANK0
+   337  00C9  0085               	movwf	5
+   338  00CA  3026               	movlw	38
+   339  00CB  3183  2364  3180   	fcall	clear_ram0
+   340  00CE                     end_of_initialization:	
+   341                           ;End of C runtime variable initialization code
+   342                           
+   343  00CE                     __end_of__initialization:
+   344  00CE  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
+   345  00CF  0020               	movlb	0
+   346  00D0  28D1               	ljmp	_main	;jump to C main() function
    347                           
-   348                           	psect	clrtext
-   349  063C                     clear_ram0:	
-   350                           ;	Called with FSR0 containing the base address, and
-   351                           ;	WREG with the size to clear
-   352                           
-   353  063C  0064               	clrwdt	;clear the watchdog before getting into this loop
-   354  063D                     clrloop0:
-   355  063D  0180               	clrf	0	;clear RAM location pointed to by FSR
-   356  063E  3101               	addfsr 0,1
-   357  063F  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
-   358  0640  2E3D               	goto	clrloop0	;have we reached the end yet?
-   359  0641  3400               	retlw	0	;all done for this memory range, return
-   360                           
-   361                           	psect	cstackCOMMON
-   362  0070                     __pcstackCOMMON:
-   363  0070                     ?_WriteSerial:
-   364  0070                     ?_main:	
-   365                           ; 1 bytes @ 0x0
-   366                           
-   367  0070                     WriteSerial@len:	
-   368                           ; 1 bytes @ 0x0
-   369                           
-   370                           
-   371                           ; 1 bytes @ 0x0
-   372  0070                     	ds	1
-   373  0071                     ??_WriteSerial:
+   348                           	psect	bssBANK0
+   349  0020                     __pbssBANK0:
+   350  0020                     _mainreset:
+   351  0020                     	ds	4
+   352  0024                     _voltimer:
+   353  0024                     	ds	4
+   354  0028                     _pintimer:
+   355  0028                     	ds	4
+   356  002C                     _timer:
+   357  002C                     	ds	4
+   358  0030                     _resettimer:
+   359  0030                     	ds	2
+   360  0032                     _actstate:
+   361  0032                     	ds	2
+   362  0034                     _laststate:
+   363  0034                     	ds	2
+   364  0036                     _buffpointer:
+   365  0036                     	ds	1
+   366  0037                     _sendcommands:
+   367  0037                     	ds	1
+   368  0038                     _pinreset:
+   369  0038                     	ds	1
+   370  0039                     _adcreset:
+   371  0039                     	ds	1
+   372  003A                     _buffer:
+   373  003A                     	ds	12
    374                           
-   375                           ; 1 bytes @ 0x1
-   376  0071                     	ds	1
-   377  0072                     WriteSerial@i:
-   378                           
-   379                           ; 1 bytes @ 0x2
-   380  0072                     	ds	1
-   381  0073                     WriteSerial@buffer:
-   382                           
-   383                           ; 1 bytes @ 0x3
-   384  0073                     	ds	1
-   385  0074                     ?_SendCommand:
-   386  0074                     SendCommand@par1:	
-   387                           ; 1 bytes @ 0x4
-   388                           
-   389                           
-   390                           ; 1 bytes @ 0x4
-   391  0074                     	ds	1
-   392  0075                     SendCommand@par2:
-   393                           
-   394                           ; 1 bytes @ 0x5
-   395  0075                     	ds	1
-   396  0076                     SendCommand@command:
-   397                           
-   398                           ; 1 bytes @ 0x6
-   399  0076                     	ds	1
-   400  0077                     SendCommand@checksum:
+   375                           	psect	dataBANK0
+   376  0063                     __pdataBANK0:
+   377  0063                     _average:
+   378  0063                     	ds	4
+   379                           
+   380                           	psect	clrtext
+   381  0364                     clear_ram0:	
+   382                           ;	Called with FSR0 containing the base address, and
+   383                           ;	WREG with the size to clear
+   384                           
+   385  0364  0064               	clrwdt	;clear the watchdog before getting into this loop
+   386  0365                     clrloop0:
+   387  0365  0180               	clrf	0	;clear RAM location pointed to by FSR
+   388  0366  3101               	addfsr 0,1
+   389  0367  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
+   390  0368  2B65               	goto	clrloop0	;have we reached the end yet?
+   391  0369  3400               	retlw	0	;all done for this memory range, return
+   392                           
+   393                           	psect	cstackCOMMON
+   394  0070                     __pcstackCOMMON:
+   395  0070                     ?_main:
+   396  0070                     ?_my_isr_routine:	
+   397                           ; 1 bytes @ 0x0
+   398                           
+   399  0070                     ?___aldiv:	
+   400                           ; 1 bytes @ 0x0
    401                           
-   402                           ; 2 bytes @ 0x7
-   403  0077                     	ds	2
-   404  0079                     ??_main:
+   402  0070                     ___aldiv@divisor:	
+   403                           ; 4 bytes @ 0x0
+   404                           
    405                           
-   406                           ; 1 bytes @ 0x9
-   407  0079                     	ds	2
-   408                           
-   409                           	psect	cstackBANK0
-   410  0042                     __pcstackBANK0:
-   411  0042                     ??_SendCommand:
-   412                           
-   413                           ; 1 bytes @ 0x0
-   414  0042                     	ds	12
-   415                           
-   416                           	psect	maintext
-   417  06C5                     __pmaintext:	
-   418 ;;
-   419 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
-   420 ;;
-   421 ;; *************** function _main *****************
-   422 ;; Defined at:
-   423 ;;		line 94 in file "watchdog.c"
-   424 ;; Parameters:    Size  Location     Type
-   425 ;;		None
-   426 ;; Auto vars:     Size  Location     Type
-   427 ;;		None
-   428 ;; Return value:  Size  Location     Type
-   429 ;;                  1    wreg      void 
-   430 ;; Registers used:
-   431 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
-   432 ;; Tracked objects:
-   433 ;;		On entry : B1F/0
-   434 ;;		On exit  : 0/0
-   435 ;;		Unchanged: 0/0
-   436 ;; Data sizes:     COMMON   BANK0   BANK1
-   437 ;;      Params:         0       0       0
-   438 ;;      Locals:         0       0       0
-   439 ;;      Temps:          2       0       0
-   440 ;;      Totals:         2       0       0
-   441 ;;Total ram usage:        2 bytes
-   442 ;; Hardware stack levels required when called:    2
-   443 ;; This function calls:
-   444 ;;		_SendCommand
-   445 ;; This function is called by:
-   446 ;;		Startup code after reset
-   447 ;; This function uses a non-reentrant model
-   448 ;;
-   449                           
-   450                           
-   451                           ;psect for function _main
-   452  06C5                     _main:
-   453  06C5                     l843:	
-   454                           ;incstack = 0
-   455                           ; Regs used in _main: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-   456                           
-   457                           
-   458                           ;watchdog.c: 95:     TRISAbits.TRISA2 = 0;
-   459  06C5  0021               	movlb	1	; select bank1
-   460  06C6  110C               	bcf	12,2	;volatile
+   406                           ; 4 bytes @ 0x0
+   407  0070                     	ds	4
+   408  0074                     ___aldiv@dividend:
+   409                           
+   410                           ; 4 bytes @ 0x4
+   411  0074                     	ds	4
+   412  0078                     ??___aldiv:
+   413                           
+   414                           ; 1 bytes @ 0x8
+   415  0078                     	ds	1
+   416  0079                     ??_my_isr_routine:
+   417                           
+   418                           ; 1 bytes @ 0x9
+   419  0079                     	ds	3
+   420  007C                     my_isr_routine@temp:
+   421                           
+   422                           ; 2 bytes @ 0xC
+   423  007C                     	ds	2
+   424                           
+   425                           	psect	cstackBANK0
+   426  0046                     __pcstackBANK0:
+   427  0046                     ___aldiv@counter:
+   428                           
+   429                           ; 1 bytes @ 0x0
+   430  0046                     	ds	1
+   431  0047                     ___aldiv@sign:
+   432                           
+   433                           ; 1 bytes @ 0x1
+   434  0047                     	ds	1
+   435  0048                     ___aldiv@quotient:
+   436                           
+   437                           ; 4 bytes @ 0x2
+   438  0048                     	ds	4
+   439  004C                     ?_WriteSerial:
+   440  004C                     WriteSerial@len:	
+   441                           ; 1 bytes @ 0x6
+   442                           
+   443                           
+   444                           ; 1 bytes @ 0x6
+   445  004C                     	ds	1
+   446  004D                     ??_WriteSerial:
+   447                           
+   448                           ; 1 bytes @ 0x7
+   449  004D                     	ds	1
+   450  004E                     WriteSerial@i:
+   451                           
+   452                           ; 1 bytes @ 0x8
+   453  004E                     	ds	1
+   454  004F                     WriteSerial@buffer:
+   455                           
+   456                           ; 1 bytes @ 0x9
+   457  004F                     	ds	1
+   458  0050                     ?_SendCommand:
+   459  0050                     SendCommand@par1:	
+   460                           ; 1 bytes @ 0xA
    461                           
-   462                           ;watchdog.c: 96:     TRISAbits.TRISA0 = 0;
-   463  06C7  100C               	bcf	12,0	;volatile
-   464                           
-   465                           ;watchdog.c: 97:     TRISAbits.TRISA5 = 0;
-   466  06C8  128C               	bcf	12,5	;volatile
-   467                           
-   468                           ;watchdog.c: 98:     TRISAbits.TRISA1 = 1;
-   469  06C9  148C               	bsf	12,1	;volatile
+   462                           
+   463                           ; 1 bytes @ 0xA
+   464  0050                     	ds	1
+   465  0051                     SendCommand@par2:
+   466                           
+   467                           ; 1 bytes @ 0xB
+   468  0051                     	ds	1
+   469  0052                     ??_SendCommand:
    470                           
-   471                           ;watchdog.c: 99:     TRISAbits.TRISA4 = 1;
-   472  06CA  160C               	bsf	12,4	;volatile
-   473                           
-   474                           ;watchdog.c: 100:     ANSELAbits.ANSA1 = 0;
-   475  06CB  0023               	movlb	3	; select bank3
-   476  06CC  108C               	bcf	12,1	;volatile
-   477                           
-   478                           ;watchdog.c: 101:     ANSELAbits.ANSA0 = 0;
-   479  06CD  100C               	bcf	12,0	;volatile
-   480  06CE                     l845:
-   481                           
-   482                           ;watchdog.c: 102:     ADCON0bits.CHS = 0b00011;
-   483  06CE  0021               	movlb	1	; select bank1
-   484  06CF  081D               	movf	29,w	;volatile
-   485  06D0  3983               	andlw	-125
-   486  06D1  380C               	iorlw	12
-   487  06D2  009D               	movwf	29	;volatile
-   488  06D3                     l847:
-   489                           
-   490                           ;watchdog.c: 103:     ADCON0bits.ADON = 1;
-   491  06D3  141D               	bsf	29,0	;volatile
-   492                           
-   493                           ;watchdog.c: 104:     ADCON1bits.ADPREF = 0b11;
-   494  06D4  3003               	movlw	3
-   495  06D5  049E               	iorwf	30,f	;volatile
-   496                           
-   497                           ;watchdog.c: 105:     FVRCONbits.ADFVR = 0b10;
-   498  06D6  0022               	movlb	2	; select bank2
-   499  06D7  0817               	movf	23,w	;volatile
-   500  06D8  39FC               	andlw	-4
-   501  06D9  3802               	iorlw	2
-   502  06DA  0097               	movwf	23	;volatile
-   503  06DB                     l849:
-   504                           
-   505                           ;watchdog.c: 106:     FVRCONbits.FVREN = 1;
-   506  06DB  1797               	bsf	23,7	;volatile
-   507  06DC                     l851:
-   508                           
-   509                           ;watchdog.c: 108:     TXSTAbits.BRGH = 1;
-   510  06DC  0023               	movlb	3	; select bank3
-   511  06DD  151E               	bsf	30,2	;volatile
-   512  06DE                     l853:
-   513                           
-   514                           ;watchdog.c: 109:     TXSTAbits.TXEN = 1;
-   515  06DE  169E               	bsf	30,5	;volatile
-   516  06DF                     l855:
-   517                           
-   518                           ;watchdog.c: 110:     RCSTAbits.SPEN = 1;
-   519  06DF  179D               	bsf	29,7	;volatile
-   520  06E0                     l857:
-   521                           
-   522                           ;watchdog.c: 111:     BAUDCONbits.BRG16 = 1;
-   523  06E0  159F               	bsf	31,3	;volatile
-   524  06E1                     l859:
-   525                           
-   526                           ;watchdog.c: 112:     SPBRGH = 0;
-   527  06E1  019C               	clrf	28	;volatile
-   528  06E2                     l861:
-   529                           
-   530                           ;watchdog.c: 113:     SPBRGL = 12;
-   531  06E2  300C               	movlw	12
-   532  06E3  009B               	movwf	27	;volatile
-   533  06E4                     l863:
+   471                           ; 1 bytes @ 0xC
+   472  0052                     	ds	12
+   473  005E                     SendCommand@command:
+   474                           
+   475                           ; 1 bytes @ 0x18
+   476  005E                     	ds	1
+   477  005F                     SendCommand@checksum:
+   478                           
+   479                           ; 2 bytes @ 0x19
+   480  005F                     	ds	2
+   481  0061                     ??_main:
+   482                           
+   483                           ; 1 bytes @ 0x1B
+   484  0061                     	ds	2
+   485                           
+   486                           	psect	maintext
+   487  00D1                     __pmaintext:	
+   488 ;;
+   489 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   490 ;;
+   491 ;; *************** function _main *****************
+   492 ;; Defined at:
+   493 ;;		line 99 in file "watchdog.c"
+   494 ;; Parameters:    Size  Location     Type
+   495 ;;		None
+   496 ;; Auto vars:     Size  Location     Type
+   497 ;;		None
+   498 ;; Return value:  Size  Location     Type
+   499 ;;                  1    wreg      void 
+   500 ;; Registers used:
+   501 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+   502 ;; Tracked objects:
+   503 ;;		On entry : B1F/0
+   504 ;;		On exit  : 0/0
+   505 ;;		Unchanged: 0/0
+   506 ;; Data sizes:     COMMON   BANK0   BANK1
+   507 ;;      Params:         0       0       0
+   508 ;;      Locals:         0       0       0
+   509 ;;      Temps:          0       2       0
+   510 ;;      Totals:         0       2       0
+   511 ;;Total ram usage:        2 bytes
+   512 ;; Hardware stack levels required when called:    4
+   513 ;; This function calls:
+   514 ;;		_SendCommand
+   515 ;; This function is called by:
+   516 ;;		Startup code after reset
+   517 ;; This function uses a non-reentrant model
+   518 ;;
+   519                           
+   520                           
+   521                           ;psect for function _main
+   522  00D1                     _main:
+   523  00D1                     l1013:	
+   524                           ;incstack = 0
+   525                           ; Regs used in _main: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+   526                           
+   527                           
+   528                           ;watchdog.c: 100:     TRISAbits.TRISA2 = 0;
+   529  00D1  0021               	movlb	1	; select bank1
+   530  00D2  110C               	bcf	12,2	;volatile
+   531                           
+   532                           ;watchdog.c: 101:     TRISAbits.TRISA0 = 0;
+   533  00D3  100C               	bcf	12,0	;volatile
    534                           
-   535                           ;watchdog.c: 116:     _delay((unsigned long)((2000)*(500000/4000.0)));
-   536  06E4  3002               	movlw	2
-   537  06E5  00FA               	movwf	??_main+1
-   538  06E6  3045               	movlw	69
-   539  06E7  00F9               	movwf	??_main
-   540  06E8  30AA               	movlw	170
-   541  06E9                     u317:
-   542  06E9  0B89               	decfsz	9,f
-   543  06EA  2EE9               	goto	u317
-   544  06EB  0BF9               	decfsz	??_main,f
-   545  06EC  2EE9               	goto	u317
-   546  06ED  0BFA               	decfsz	??_main+1,f
-   547  06EE  2EE9               	goto	u317
-   548  06EF                     l865:
-   549                           
-   550                           ;watchdog.c: 117:     SendCommand(0x06,0,16);
-   551  06EF  01F4               	clrf	SendCommand@par1
-   552  06F0  3010               	movlw	16
-   553  06F1  00F9               	movwf	??_main
-   554  06F2  0879               	movf	??_main,w
-   555  06F3  00F5               	movwf	SendCommand@par2
-   556  06F4  3006               	movlw	6
-   557  06F5  3186  265E  3186   	fcall	_SendCommand
-   558  06F8                     l867:
+   535                           ;watchdog.c: 102:     TRISAbits.TRISA5 = 0;
+   536  00D4  128C               	bcf	12,5	;volatile
+   537                           
+   538                           ;watchdog.c: 103:     TRISAbits.TRISA1 = 1;
+   539  00D5  148C               	bsf	12,1	;volatile
+   540                           
+   541                           ;watchdog.c: 104:     TRISAbits.TRISA4 = 1;
+   542  00D6  160C               	bsf	12,4	;volatile
+   543                           
+   544                           ;watchdog.c: 105:     ANSELAbits.ANSA1 = 1;
+   545  00D7  0023               	movlb	3	; select bank3
+   546  00D8  148C               	bsf	12,1	;volatile
+   547                           
+   548                           ;watchdog.c: 106:     ANSELAbits.ANSA0 = 0;
+   549  00D9  100C               	bcf	12,0	;volatile
+   550                           
+   551                           ;watchdog.c: 107:     ADCON0bits.ADON = 1;
+   552  00DA  0021               	movlb	1	; select bank1
+   553  00DB  141D               	bsf	29,0	;volatile
+   554  00DC                     l1015:
+   555                           
+   556                           ;watchdog.c: 108:     ADCON1bits.ADPREF = 0b11;
+   557  00DC  3003               	movlw	3
+   558  00DD  049E               	iorwf	30,f	;volatile
    559                           
-   560                           ;watchdog.c: 118:     _delay((unsigned long)((200)*(500000/4000.0)));
-   561  06F8  3021               	movlw	33
-   562  06F9  00F9               	movwf	??_main
-   563  06FA  3076               	movlw	118
-   564  06FB                     u327:
-   565  06FB  0B89               	decfsz	9,f
-   566  06FC  2EFB               	goto	u327
-   567  06FD  0BF9               	decfsz	??_main,f
-   568  06FE  2EFB               	goto	u327
-   569  06FF  3200               	nop2
-   570  0700                     l869:
+   560                           ;watchdog.c: 109:     FVRCONbits.ADFVR = 0b10;
+   561  00DE  0022               	movlb	2	; select bank2
+   562  00DF  0817               	movf	23,w	;volatile
+   563  00E0  39FC               	andlw	-4
+   564  00E1  3802               	iorlw	2
+   565  00E2  0097               	movwf	23	;volatile
+   566  00E3                     l1017:
+   567                           
+   568                           ;watchdog.c: 110:     FVRCONbits.FVREN = 1;
+   569  00E3  1797               	bsf	23,7	;volatile
+   570  00E4                     l1019:
    571                           
-   572                           ;watchdog.c: 119:     SendCommand(0x11,0,1);
-   573  0700  01F4               	clrf	SendCommand@par1
-   574  0701  01F5               	clrf	SendCommand@par2
-   575  0702  0AF5               	incf	SendCommand@par2,f
-   576  0703  3011               	movlw	17
-   577  0704  3186  265E  3186   	fcall	_SendCommand
-   578  0707                     l871:
-   579                           
-   580                           ;watchdog.c: 120:     _delay((unsigned long)((500)*(500000/4000.0)));
-   581  0707  3052               	movlw	82
-   582  0708  00F9               	movwf	??_main
-   583  0709  302A               	movlw	42
-   584  070A                     u337:
-   585  070A  0B89               	decfsz	9,f
-   586  070B  2F0A               	goto	u337
-   587  070C  0BF9               	decfsz	??_main,f
-   588  070D  2F0A               	goto	u337
-   589  070E                     l873:
-   590                           
-   591                           ;watchdog.c: 121:     SendCommand(0x06,0,16);
-   592  070E  01F4               	clrf	SendCommand@par1
-   593  070F  3010               	movlw	16
-   594  0710  00F9               	movwf	??_main
-   595  0711  0879               	movf	??_main,w
-   596  0712  00F5               	movwf	SendCommand@par2
-   597  0713  3006               	movlw	6
-   598  0714  3186  265E  3186   	fcall	_SendCommand
-   599  0717                     l875:
-   600                           
-   601                           ;watchdog.c: 122:     pintimer = 0;
-   602  0717  3000               	movlw	0
-   603  0718  0020               	movlb	0	; select bank0
-   604  0719  00A3               	movwf	_pintimer+3
-   605  071A  3000               	movlw	0
-   606  071B  00A2               	movwf	_pintimer+2
-   607  071C  3000               	movlw	0
-   608  071D  00A1               	movwf	_pintimer+1
-   609  071E  3000               	movlw	0
-   610  071F  00A0               	movwf	_pintimer
-   611  0720                     l877:
-   612                           
-   613                           ;watchdog.c: 124:     {;watchdog.c: 125:         timer++;
-   614  0720  3001               	movlw	1
-   615  0721  0020               	movlb	0	; select bank0
-   616  0722  07A4               	addwf	_timer,f
-   617  0723  3000               	movlw	0
-   618  0724  3DA5               	addwfc	_timer+1,f
-   619  0725  3000               	movlw	0
-   620  0726  3DA6               	addwfc	_timer+2,f
-   621  0727  3000               	movlw	0
-   622  0728  3DA7               	addwfc	_timer+3,f
-   623  0729                     l879:
-   624                           
-   625                           ;watchdog.c: 127:         if(timer >100)
-   626  0729  1BA7               	btfsc	_timer+3,7
-   627  072A  2F39               	goto	u181
-   628  072B  0827               	movf	_timer+3,w
-   629  072C  1D03               	btfss	3,2
-   630  072D  2F3A               	goto	u180
-   631  072E  0826               	movf	_timer+2,w
-   632  072F  1D03               	btfss	3,2
-   633  0730  2F3A               	goto	u180
-   634  0731  0825               	movf	_timer+1,w
-   635  0732  1D03               	btfss	3,2
-   636  0733  2F3A               	goto	u180
-   637  0734  3065               	movlw	101
-   638  0735  0224               	subwf	_timer,w
-   639  0736  1C03               	btfss	3,0
-   640  0737  2F39               	goto	u181
-   641  0738  2F3A               	goto	u180
-   642  0739                     u181:
-   643  0739  2FED               	goto	l935
-   644  073A                     u180:
-   645  073A                     l881:
-   646                           
-   647                           ;watchdog.c: 128:         {;watchdog.c: 129:             ADCON0bits.ADGO = 1;
-   648  073A  0021               	movlb	1	; select bank1
-   649  073B  149D               	bsf	29,1	;volatile
-   650  073C                     l67:	
-   651                           ;watchdog.c: 130:             while (ADCON0bits.nDONE != 0);
+   572                           ;watchdog.c: 112:     TXSTAbits.BRGH = 1;
+   573  00E4  0023               	movlb	3	; select bank3
+   574  00E5  151E               	bsf	30,2	;volatile
+   575  00E6                     l1021:
+   576                           
+   577                           ;watchdog.c: 113:     TXSTAbits.TXEN = 1;
+   578  00E6  169E               	bsf	30,5	;volatile
+   579  00E7                     l1023:
+   580                           
+   581                           ;watchdog.c: 114:     RCSTAbits.SPEN = 1;
+   582  00E7  179D               	bsf	29,7	;volatile
+   583  00E8                     l1025:
+   584                           
+   585                           ;watchdog.c: 115:     BAUDCONbits.BRG16 = 1;
+   586  00E8  159F               	bsf	31,3	;volatile
+   587  00E9                     l1027:
+   588                           
+   589                           ;watchdog.c: 116:     SPBRGH = 0;
+   590  00E9  019C               	clrf	28	;volatile
+   591  00EA                     l1029:
+   592                           
+   593                           ;watchdog.c: 117:     SPBRGL = 12;
+   594  00EA  300C               	movlw	12
+   595  00EB  009B               	movwf	27	;volatile
+   596  00EC                     l1031:
+   597                           
+   598                           ;watchdog.c: 119:     INTCONbits.GIE = 1;
+   599  00EC  178B               	bsf	11,7	;volatile
+   600  00ED                     l1033:
+   601                           
+   602                           ;watchdog.c: 120:     INTCONbits.PEIE = 1;
+   603  00ED  170B               	bsf	11,6	;volatile
+   604  00EE                     l1035:
+   605                           
+   606                           ;watchdog.c: 121:     PIR1bits.TMR2IF = 0;
+   607  00EE  0020               	movlb	0	; select bank0
+   608  00EF  1091               	bcf	17,1	;volatile
+   609  00F0                     l1037:
+   610                           
+   611                           ;watchdog.c: 122:     PIE1bits.TMR2IE = 1;
+   612  00F0  0021               	movlb	1	; select bank1
+   613  00F1  1491               	bsf	17,1	;volatile
+   614  00F2                     l1039:
+   615                           
+   616                           ;watchdog.c: 124:     T2CONbits.T2CKPS = 0b11;
+   617  00F2  3003               	movlw	3
+   618  00F3  0020               	movlb	0	; select bank0
+   619  00F4  049C               	iorwf	28,f	;volatile
+   620  00F5                     l1041:
+   621                           
+   622                           ;watchdog.c: 125:     T2CONbits.T2OUTPS = 0b1111;
+   623  00F5  3078               	movlw	120
+   624  00F6  049C               	iorwf	28,f	;volatile
+   625  00F7                     l1043:
+   626                           
+   627                           ;watchdog.c: 126:     T2CONbits.TMR2ON = 1;
+   628  00F7  151C               	bsf	28,2	;volatile
+   629  00F8                     l1045:
+   630                           
+   631                           ;watchdog.c: 127:     PR2 = 0xff;
+   632  00F8  30FF               	movlw	255
+   633  00F9  009B               	movwf	27	;volatile
+   634  00FA                     l1047:
+   635                           
+   636                           ;watchdog.c: 128:     _delay((unsigned long)((2000)*(500000/4000.0)));
+   637  00FA  3002               	movlw	2
+   638  00FB  0020               	movlb	0	; select bank0
+   639  00FC  00E2               	movwf	??_main+1
+   640  00FD  3045               	movlw	69
+   641  00FE  00E1               	movwf	??_main
+   642  00FF  30A9               	movlw	169
+   643  0100                     u637:
+   644  0100  0B89               	decfsz	9,f
+   645  0101  2900               	goto	u637
+   646  0102  0BE1               	decfsz	??_main,f
+   647  0103  2900               	goto	u637
+   648  0104  0BE2               	decfsz	??_main+1,f
+   649  0105  2900               	goto	u637
+   650  0106  3200               	nop2
+   651  0107                     l1049:
    652                           
-   653  073C  189D               	btfsc	29,1	;volatile
-   654  073D  2F3F               	goto	u191
-   655  073E  2F40               	goto	u190
-   656  073F                     u191:
-   657  073F  2F3C               	goto	l67
-   658  0740                     u190:
-   659  0740                     l883:
-   660                           
-   661                           ;watchdog.c: 131:             if(ADRESH < 125)
-   662  0740  307D               	movlw	125
-   663  0741  021C               	subwf	28,w	;volatile
-   664  0742  1803               	skipnc
-   665  0743  2F45               	goto	u201
-   666  0744  2F46               	goto	u200
-   667  0745                     u201:
-   668  0745  2F48               	goto	l887
-   669  0746                     u200:
-   670  0746                     l885:
-   671                           
-   672                           ;watchdog.c: 132:             {;watchdog.c: 133:                 adcreset = 1;
-   673  0746  01FD               	clrf	_adcreset
-   674  0747  0AFD               	incf	_adcreset,f
-   675  0748                     l887:
-   676                           
-   677                           ;watchdog.c: 135:             if(ADRESH > 146)
-   678  0748  3093               	movlw	147
-   679  0749  021C               	subwf	28,w	;volatile
-   680  074A  1C03               	skipc
-   681  074B  2F4D               	goto	u211
-   682  074C  2F4E               	goto	u210
-   683  074D                     u211:
-   684  074D  2F4F               	goto	l891
-   685  074E                     u210:
-   686  074E                     l889:
-   687                           
-   688                           ;watchdog.c: 136:             {;watchdog.c: 137:                 adcreset = 0;
-   689  074E  01FD               	clrf	_adcreset
-   690  074F                     l891:
-   691                           
-   692                           ;watchdog.c: 139:             if(ADRESH < 160)
-   693  074F  30A0               	movlw	160
-   694  0750  021C               	subwf	28,w	;volatile
-   695  0751  1803               	skipnc
-   696  0752  2F54               	goto	u221
-   697  0753  2F55               	goto	u220
-   698  0754                     u221:
-   699  0754  2F57               	goto	l895
-   700  0755                     u220:
-   701  0755                     l893:
-   702                           
-   703                           ;watchdog.c: 140:             {;watchdog.c: 141:                 LATAbits.LATA5 = 1;
-   704  0755  0022               	movlb	2	; select bank2
-   705  0756  168C               	bsf	12,5	;volatile
-   706  0757                     l895:
-   707                           
-   708                           ;watchdog.c: 143:             if(ADRESH > 158)
-   709  0757  309F               	movlw	159
-   710  0758  0021               	movlb	1	; select bank1
-   711  0759  021C               	subwf	28,w	;volatile
-   712  075A  1C03               	skipc
-   713  075B  2F5D               	goto	u231
-   714  075C  2F5E               	goto	u230
-   715  075D                     u231:
-   716  075D  2F60               	goto	l73
-   717  075E                     u230:
-   718  075E                     l897:
-   719                           
-   720                           ;watchdog.c: 144:             {;watchdog.c: 145:                 LATAbits.LATA5 = 0;
-   721  075E  0022               	movlb	2	; select bank2
-   722  075F  128C               	bcf	12,5	;volatile
-   723  0760                     l73:	
-   724                           ;watchdog.c: 146:             }
-   725                           
-   726                           
-   727                           ;watchdog.c: 148:             if(PORTAbits.RA1 == 1)
-   728  0760  0020               	movlb	0	; select bank0
-   729  0761  1C8C               	btfss	12,1	;volatile
-   730  0762  2F64               	goto	u241
-   731  0763  2F65               	goto	u240
-   732  0764                     u241:
-   733  0764  2F6D               	goto	l901
-   734  0765                     u240:
-   735  0765                     l899:
-   736                           
-   737                           ;watchdog.c: 149:             {;watchdog.c: 150:                pintimer++;
-   738  0765  3001               	movlw	1
-   739  0766  07A0               	addwf	_pintimer,f
-   740  0767  3000               	movlw	0
-   741  0768  3DA1               	addwfc	_pintimer+1,f
-   742  0769  3000               	movlw	0
-   743  076A  3DA2               	addwfc	_pintimer+2,f
-   744  076B  3000               	movlw	0
-   745  076C  3DA3               	addwfc	_pintimer+3,f
-   746  076D                     l901:
-   747                           
-   748                           ;watchdog.c: 152:             if(pintimer >= 30)
-   749  076D  1BA3               	btfsc	_pintimer+3,7
-   750  076E  2F7D               	goto	u251
-   751  076F  0823               	movf	_pintimer+3,w
-   752  0770  1D03               	btfss	3,2
-   753  0771  2F7E               	goto	u250
-   754  0772  0822               	movf	_pintimer+2,w
-   755  0773  1D03               	btfss	3,2
-   756  0774  2F7E               	goto	u250
-   757  0775  0821               	movf	_pintimer+1,w
-   758  0776  1D03               	btfss	3,2
-   759  0777  2F7E               	goto	u250
-   760  0778  301E               	movlw	30
-   761  0779  0220               	subwf	_pintimer,w
-   762  077A  1C03               	btfss	3,0
-   763  077B  2F7D               	goto	u251
-   764  077C  2F7E               	goto	u250
-   765  077D                     u251:
-   766  077D  2F8D               	goto	l907
-   767  077E                     u250:
-   768  077E                     l903:
-   769                           
-   770                           ;watchdog.c: 153:             {;watchdog.c: 154:                 resettimer = 20;
-   771  077E  3014               	movlw	20
-   772  077F  0020               	movlb	0	; select bank0
-   773  0780  00A8               	movwf	_resettimer
-   774  0781  3000               	movlw	0
-   775  0782  00A9               	movwf	_resettimer+1
-   776  0783                     l905:
-   777                           
-   778                           ;watchdog.c: 155:                 pinreset = 1;
-   779  0783  01FC               	clrf	_pinreset
-   780  0784  0AFC               	incf	_pinreset,f
-   781                           
-   782                           ;watchdog.c: 156:                 pintimer = -20;
-   783  0785  30FF               	movlw	255
-   784  0786  00A3               	movwf	_pintimer+3
-   785  0787  30FF               	movlw	255
-   786  0788  00A2               	movwf	_pintimer+2
-   787  0789  30FF               	movlw	255
-   788  078A  00A1               	movwf	_pintimer+1
-   789  078B  30EC               	movlw	236
-   790  078C  00A0               	movwf	_pintimer
-   791  078D                     l907:
-   792                           
-   793                           ;watchdog.c: 158:             if(resettimer > 0 )
-   794  078D  0020               	movlb	0	; select bank0
-   795  078E  0828               	movf	_resettimer,w
-   796  078F  0429               	iorwf	_resettimer+1,w
-   797  0790  1903               	btfsc	3,2
-   798  0791  2F93               	goto	u261
-   799  0792  2F94               	goto	u260
-   800  0793                     u261:
-   801  0793  2F98               	goto	l911
-   802  0794                     u260:
-   803  0794                     l909:
-   804                           
-   805                           ;watchdog.c: 159:             {;watchdog.c: 160:                 resettimer--;
-   806  0794  3001               	movlw	1
-   807  0795  02A8               	subwf	_resettimer,f
-   808  0796  3000               	movlw	0
-   809  0797  3BA9               	subwfb	_resettimer+1,f
-   810  0798                     l911:
-   811                           
-   812                           ;watchdog.c: 162:             if(resettimer == 0)
-   813  0798  0828               	movf	_resettimer,w
-   814  0799  0429               	iorwf	_resettimer+1,w
-   815  079A  1D03               	btfss	3,2
-   816  079B  2F9D               	goto	u271
-   817  079C  2F9E               	goto	u270
-   818  079D                     u271:
-   819  079D  2F9F               	goto	l915
-   820  079E                     u270:
-   821  079E                     l913:
-   822                           
-   823                           ;watchdog.c: 163:             {;watchdog.c: 164:                 pinreset = 0;
-   824  079E  01FC               	clrf	_pinreset
-   825  079F                     l915:
-   826                           
-   827                           ;watchdog.c: 166:             if( pinreset || adcreset)
-   828  079F  087C               	movf	_pinreset,w
-   829  07A0  1D03               	btfss	3,2
-   830  07A1  2FA3               	goto	u281
-   831  07A2  2FA4               	goto	u280
-   832  07A3                     u281:
-   833  07A3  2FA9               	goto	l80
-   834  07A4                     u280:
-   835  07A4                     l917:
-   836  07A4  087D               	movf	_adcreset,w
-   837  07A5  1903               	btfsc	3,2
-   838  07A6  2FA8               	goto	u291
-   839  07A7  2FA9               	goto	u290
-   840  07A8                     u291:
-   841  07A8  2FAE               	goto	l78
-   842  07A9                     u290:
-   843  07A9                     l80:
+   653                           ;watchdog.c: 129:     SendCommand(0x06,0,17);
+   654  0107  0020               	movlb	0	; select bank0
+   655  0108  01D0               	clrf	SendCommand@par1
+   656  0109  3011               	movlw	17
+   657  010A  00E1               	movwf	??_main
+   658  010B  0861               	movf	??_main,w
+   659  010C  00D1               	movwf	SendCommand@par2
+   660  010D  3006               	movlw	6
+   661  010E  3182  22DD  3180   	fcall	_SendCommand
+   662  0111                     l1051:
+   663                           
+   664                           ;watchdog.c: 130:     _delay((unsigned long)((2000)*(500000/4000.0)));
+   665  0111  3002               	movlw	2
+   666  0112  0020               	movlb	0	; select bank0
+   667  0113  00E2               	movwf	??_main+1
+   668  0114  3045               	movlw	69
+   669  0115  00E1               	movwf	??_main
+   670  0116  30A9               	movlw	169
+   671  0117                     u647:
+   672  0117  0B89               	decfsz	9,f
+   673  0118  2917               	goto	u647
+   674  0119  0BE1               	decfsz	??_main,f
+   675  011A  2917               	goto	u647
+   676  011B  0BE2               	decfsz	??_main+1,f
+   677  011C  2917               	goto	u647
+   678  011D  3200               	nop2
+   679  011E                     l1053:
+   680                           
+   681                           ;watchdog.c: 131:     SendCommand(0x11,0,1);
+   682  011E  0020               	movlb	0	; select bank0
+   683  011F  01D0               	clrf	SendCommand@par1
+   684  0120  01D1               	clrf	SendCommand@par2
+   685  0121  0AD1               	incf	SendCommand@par2,f
+   686  0122  3011               	movlw	17
+   687  0123  3182  22DD  3180   	fcall	_SendCommand
+   688  0126                     l1055:
+   689                           
+   690                           ;watchdog.c: 132:     _delay((unsigned long)((2000)*(500000/4000.0)));
+   691  0126  3002               	movlw	2
+   692  0127  0020               	movlb	0	; select bank0
+   693  0128  00E2               	movwf	??_main+1
+   694  0129  3045               	movlw	69
+   695  012A  00E1               	movwf	??_main
+   696  012B  30A9               	movlw	169
+   697  012C                     u657:
+   698  012C  0B89               	decfsz	9,f
+   699  012D  292C               	goto	u657
+   700  012E  0BE1               	decfsz	??_main,f
+   701  012F  292C               	goto	u657
+   702  0130  0BE2               	decfsz	??_main+1,f
+   703  0131  292C               	goto	u657
+   704  0132  3200               	nop2
+   705  0133                     l1057:
+   706                           
+   707                           ;watchdog.c: 133:     SendCommand(0x06,0,17);
+   708  0133  0020               	movlb	0	; select bank0
+   709  0134  01D0               	clrf	SendCommand@par1
+   710  0135  3011               	movlw	17
+   711  0136  00E1               	movwf	??_main
+   712  0137  0861               	movf	??_main,w
+   713  0138  00D1               	movwf	SendCommand@par2
+   714  0139  3006               	movlw	6
+   715  013A  3182  22DD  3180   	fcall	_SendCommand
+   716  013D                     l1059:
+   717                           
+   718                           ;watchdog.c: 134:     pintimer = 0;
+   719  013D  3000               	movlw	0
+   720  013E  0020               	movlb	0	; select bank0
+   721  013F  00AB               	movwf	_pintimer+3
+   722  0140  3000               	movlw	0
+   723  0141  00AA               	movwf	_pintimer+2
+   724  0142  3000               	movlw	0
+   725  0143  00A9               	movwf	_pintimer+1
+   726  0144  3000               	movlw	0
+   727  0145  00A8               	movwf	_pintimer
+   728  0146                     l1061:
+   729                           
+   730                           ;watchdog.c: 137:     {;watchdog.c: 138:         timer++;
+   731  0146  3001               	movlw	1
+   732  0147  0020               	movlb	0	; select bank0
+   733  0148  07AC               	addwf	_timer,f
+   734  0149  3000               	movlw	0
+   735  014A  3DAD               	addwfc	_timer+1,f
+   736  014B  3000               	movlw	0
+   737  014C  3DAE               	addwfc	_timer+2,f
+   738  014D  3000               	movlw	0
+   739  014E  3DAF               	addwfc	_timer+3,f
+   740  014F                     l1063:
+   741                           
+   742                           ;watchdog.c: 139:         voltimer++;
+   743  014F  3001               	movlw	1
+   744  0150  07A4               	addwf	_voltimer,f
+   745  0151  3000               	movlw	0
+   746  0152  3DA5               	addwfc	_voltimer+1,f
+   747  0153  3000               	movlw	0
+   748  0154  3DA6               	addwfc	_voltimer+2,f
+   749  0155  3000               	movlw	0
+   750  0156  3DA7               	addwfc	_voltimer+3,f
+   751  0157                     l1065:
+   752                           
+   753                           ;watchdog.c: 140:         if(voltimer > 60000)
+   754  0157  1BA7               	btfsc	_voltimer+3,7
+   755  0158  2966               	goto	u441
+   756  0159  0827               	movf	_voltimer+3,w
+   757  015A  1D03               	btfss	3,2
+   758  015B  2967               	goto	u440
+   759  015C  0826               	movf	_voltimer+2,w
+   760  015D  1D03               	btfss	3,2
+   761  015E  2967               	goto	u440
+   762  015F  3061               	movlw	97
+   763  0160  0224               	subwf	_voltimer,w
+   764  0161  30EA               	movlw	234
+   765  0162  3B25               	subwfb	_voltimer+1,w
+   766  0163  1C03               	btfss	3,0
+   767  0164  2966               	goto	u441
+   768  0165  2967               	goto	u440
+   769  0166                     u441:
+   770  0166  2987               	goto	l1073
+   771  0167                     u440:
+   772  0167                     l1067:
+   773                           
+   774                           ;watchdog.c: 141:         {;watchdog.c: 142:             _delay((unsigned long)((2000)*(
+      +                          500000/4000.0)));
+   775  0167  3002               	movlw	2
+   776  0168  0020               	movlb	0	; select bank0
+   777  0169  00E2               	movwf	??_main+1
+   778  016A  3045               	movlw	69
+   779  016B  00E1               	movwf	??_main
+   780  016C  30A9               	movlw	169
+   781  016D                     u667:
+   782  016D  0B89               	decfsz	9,f
+   783  016E  296D               	goto	u667
+   784  016F  0BE1               	decfsz	??_main,f
+   785  0170  296D               	goto	u667
+   786  0171  0BE2               	decfsz	??_main+1,f
+   787  0172  296D               	goto	u667
+   788  0173  3200               	nop2
+   789  0174                     l1069:
+   790                           
+   791                           ;watchdog.c: 143:             SendCommand(0x06,0,17);
+   792  0174  0020               	movlb	0	; select bank0
+   793  0175  01D0               	clrf	SendCommand@par1
+   794  0176  3011               	movlw	17
+   795  0177  00E1               	movwf	??_main
+   796  0178  0861               	movf	??_main,w
+   797  0179  00D1               	movwf	SendCommand@par2
+   798  017A  3006               	movlw	6
+   799  017B  3182  22DD  3180   	fcall	_SendCommand
+   800  017E                     l1071:
+   801                           
+   802                           ;watchdog.c: 144:             voltimer = 0;
+   803  017E  3000               	movlw	0
+   804  017F  0020               	movlb	0	; select bank0
+   805  0180  00A7               	movwf	_voltimer+3
+   806  0181  3000               	movlw	0
+   807  0182  00A6               	movwf	_voltimer+2
+   808  0183  3000               	movlw	0
+   809  0184  00A5               	movwf	_voltimer+1
+   810  0185  3000               	movlw	0
+   811  0186  00A4               	movwf	_voltimer
+   812  0187                     l1073:
+   813                           
+   814                           ;watchdog.c: 147:         if(timer >100)
+   815  0187  0020               	movlb	0	; select bank0
+   816  0188  1BAF               	btfsc	_timer+3,7
+   817  0189  2998               	goto	u451
+   818  018A  082F               	movf	_timer+3,w
+   819  018B  1D03               	btfss	3,2
+   820  018C  2999               	goto	u450
+   821  018D  082E               	movf	_timer+2,w
+   822  018E  1D03               	btfss	3,2
+   823  018F  2999               	goto	u450
+   824  0190  082D               	movf	_timer+1,w
+   825  0191  1D03               	btfss	3,2
+   826  0192  2999               	goto	u450
+   827  0193  3065               	movlw	101
+   828  0194  022C               	subwf	_timer,w
+   829  0195  1C03               	btfss	3,0
+   830  0196  2998               	goto	u451
+   831  0197  2999               	goto	u450
+   832  0198                     u451:
+   833  0198  2A47               	goto	l1123
+   834  0199                     u450:
+   835  0199                     l1075:
+   836                           
+   837                           ;watchdog.c: 148:         {;watchdog.c: 149:         ADCON0bits.CHS = 3;
+   838  0199  0021               	movlb	1	; select bank1
+   839  019A  081D               	movf	29,w	;volatile
+   840  019B  3983               	andlw	-125
+   841  019C  380C               	iorlw	12
+   842  019D  009D               	movwf	29	;volatile
+   843  019E                     l1077:
    844                           
-   845                           ;watchdog.c: 167:             {;watchdog.c: 168:                 LATAbits.LATA2 = 1;
-   846  07A9  0022               	movlb	2	; select bank2
-   847  07AA  150C               	bsf	12,2	;volatile
-   848                           
-   849                           ;watchdog.c: 169:                 sendcommands = 1;
-   850  07AB  01FB               	clrf	_sendcommands
-   851  07AC  0AFB               	incf	_sendcommands,f
-   852                           
-   853                           ;watchdog.c: 170:             }
-   854  07AD  2FE4               	goto	l933
-   855  07AE                     l78:	
-   856                           ;watchdog.c: 171:             else
+   845                           ;watchdog.c: 150:         ADCON0bits.ADGO = 1;
+   846  019E  149D               	bsf	29,1	;volatile
+   847  019F                     l88:	
+   848                           ;watchdog.c: 151:         while (ADCON0bits.nDONE != 0);
+   849                           
+   850  019F  189D               	btfsc	29,1	;volatile
+   851  01A0  29A2               	goto	u461
+   852  01A1  29A3               	goto	u460
+   853  01A2                     u461:
+   854  01A2  299F               	goto	l88
+   855  01A3                     u460:
+   856  01A3                     l1079:
    857                           
-   858                           
-   859                           ;watchdog.c: 172:             {;watchdog.c: 173:                 LATAbits.LATA2 = 0;
-   860  07AE  0022               	movlb	2	; select bank2
-   861  07AF  110C               	bcf	12,2	;volatile
-   862  07B0                     l919:
-   863                           
-   864                           ;watchdog.c: 174:                 if(sendcommands)
-   865  07B0  087B               	movf	_sendcommands,w
-   866  07B1  1903               	btfsc	3,2
-   867  07B2  2FB4               	goto	u301
-   868  07B3  2FB5               	goto	u300
-   869  07B4                     u301:
-   870  07B4  2FE4               	goto	l933
-   871  07B5                     u300:
-   872  07B5                     l921:
-   873                           
-   874                           ;watchdog.c: 175:                 {;watchdog.c: 176:                     _delay((unsigne
-      +                          d long)((500)*(500000/4000.0)));
-   875  07B5  3052               	movlw	82
-   876  07B6  00F9               	movwf	??_main
-   877  07B7  302A               	movlw	42
-   878  07B8                     u347:
-   879  07B8  0B89               	decfsz	9,f
-   880  07B9  2FB8               	goto	u347
-   881  07BA  0BF9               	decfsz	??_main,f
-   882  07BB  2FB8               	goto	u347
-   883  07BC                     l923:
-   884                           
-   885                           ;watchdog.c: 177:                     SendCommand(0x06,0,16);
-   886  07BC  01F4               	clrf	SendCommand@par1
-   887  07BD  3010               	movlw	16
-   888  07BE  00F9               	movwf	??_main
-   889  07BF  0879               	movf	??_main,w
-   890  07C0  00F5               	movwf	SendCommand@par2
-   891  07C1  3006               	movlw	6
-   892  07C2  3186  265E  3186   	fcall	_SendCommand
-   893  07C5                     l925:
-   894                           
-   895                           ;watchdog.c: 178:                     _delay((unsigned long)((500)*(500000/4000.0)));
-   896  07C5  3052               	movlw	82
-   897  07C6  00F9               	movwf	??_main
-   898  07C7  302A               	movlw	42
-   899  07C8                     u357:
-   900  07C8  0B89               	decfsz	9,f
-   901  07C9  2FC8               	goto	u357
-   902  07CA  0BF9               	decfsz	??_main,f
-   903  07CB  2FC8               	goto	u357
-   904                           
-   905                           ;watchdog.c: 179:                     SendCommand(0x11,0,1);
-   906  07CC  01F4               	clrf	SendCommand@par1
-   907  07CD  01F5               	clrf	SendCommand@par2
-   908  07CE  0AF5               	incf	SendCommand@par2,f
-   909  07CF  3011               	movlw	17
-   910  07D0  3186  265E  3186   	fcall	_SendCommand
-   911  07D3                     l927:
-   912                           
-   913                           ;watchdog.c: 180:                     _delay((unsigned long)((500)*(500000/4000.0)));
-   914  07D3  3052               	movlw	82
-   915  07D4  00F9               	movwf	??_main
-   916  07D5  302A               	movlw	42
-   917  07D6                     u367:
-   918  07D6  0B89               	decfsz	9,f
-   919  07D7  2FD6               	goto	u367
-   920  07D8  0BF9               	decfsz	??_main,f
-   921  07D9  2FD6               	goto	u367
-   922  07DA                     l929:
-   923                           
-   924                           ;watchdog.c: 181:                     SendCommand(0x06,0,16);
-   925  07DA  01F4               	clrf	SendCommand@par1
-   926  07DB  3010               	movlw	16
-   927  07DC  00F9               	movwf	??_main
-   928  07DD  0879               	movf	??_main,w
-   929  07DE  00F5               	movwf	SendCommand@par2
-   930  07DF  3006               	movlw	6
-   931  07E0  3186  265E  3186   	fcall	_SendCommand
-   932  07E3                     l931:
-   933                           
-   934                           ;watchdog.c: 182:                     sendcommands = 0;
-   935  07E3  01FB               	clrf	_sendcommands
-   936  07E4                     l933:
+   858                           ;watchdog.c: 152:             if(ADRESH < 125)
+   859  01A3  307D               	movlw	125
+   860  01A4  021C               	subwf	28,w	;volatile
+   861  01A5  1803               	skipnc
+   862  01A6  29A8               	goto	u471
+   863  01A7  29A9               	goto	u470
+   864  01A8                     u471:
+   865  01A8  29AC               	goto	l1083
+   866  01A9                     u470:
+   867  01A9                     l1081:
+   868                           
+   869                           ;watchdog.c: 153:             {;watchdog.c: 154:                 adcreset = 1;
+   870  01A9  0020               	movlb	0	; select bank0
+   871  01AA  01B9               	clrf	_adcreset
+   872  01AB  0AB9               	incf	_adcreset,f
+   873  01AC                     l1083:
+   874                           
+   875                           ;watchdog.c: 157:             if(ADRESH > 146)
+   876  01AC  3093               	movlw	147
+   877  01AD  0021               	movlb	1	; select bank1
+   878  01AE  021C               	subwf	28,w	;volatile
+   879  01AF  1C03               	skipc
+   880  01B0  29B2               	goto	u481
+   881  01B1  29B3               	goto	u480
+   882  01B2                     u481:
+   883  01B2  29B5               	goto	l1087
+   884  01B3                     u480:
+   885  01B3                     l1085:
+   886                           
+   887                           ;watchdog.c: 158:             {;watchdog.c: 159:                 adcreset = 0;
+   888  01B3  0020               	movlb	0	; select bank0
+   889  01B4  01B9               	clrf	_adcreset
+   890  01B5                     l1087:
+   891                           
+   892                           ;watchdog.c: 161:             if(ADRESH < 160)
+   893  01B5  30A0               	movlw	160
+   894  01B6  0021               	movlb	1	; select bank1
+   895  01B7  021C               	subwf	28,w	;volatile
+   896  01B8  1803               	skipnc
+   897  01B9  29BB               	goto	u491
+   898  01BA  29BC               	goto	u490
+   899  01BB                     u491:
+   900  01BB  29BE               	goto	l1091
+   901  01BC                     u490:
+   902  01BC                     l1089:
+   903                           
+   904                           ;watchdog.c: 162:             {;watchdog.c: 163:                 LATAbits.LATA5 = 1;
+   905  01BC  0022               	movlb	2	; select bank2
+   906  01BD  168C               	bsf	12,5	;volatile
+   907  01BE                     l1091:
+   908                           
+   909                           ;watchdog.c: 165:             if(ADRESH > 158)
+   910  01BE  309F               	movlw	159
+   911  01BF  0021               	movlb	1	; select bank1
+   912  01C0  021C               	subwf	28,w	;volatile
+   913  01C1  1C03               	skipc
+   914  01C2  29C4               	goto	u501
+   915  01C3  29C5               	goto	u500
+   916  01C4                     u501:
+   917  01C4  29C7               	goto	l1095
+   918  01C5                     u500:
+   919  01C5                     l1093:
+   920                           
+   921                           ;watchdog.c: 166:             {;watchdog.c: 167:                 LATAbits.LATA5 = 0;
+   922  01C5  0022               	movlb	2	; select bank2
+   923  01C6  128C               	bcf	12,5	;volatile
+   924  01C7                     l1095:
+   925                           
+   926                           ;watchdog.c: 180:             if(resettimer > 0 )
+   927  01C7  0020               	movlb	0	; select bank0
+   928  01C8  0830               	movf	_resettimer,w
+   929  01C9  0431               	iorwf	_resettimer+1,w
+   930  01CA  1903               	btfsc	3,2
+   931  01CB  29CD               	goto	u511
+   932  01CC  29CE               	goto	u510
+   933  01CD                     u511:
+   934  01CD  29D2               	goto	l1099
+   935  01CE                     u510:
+   936  01CE                     l1097:
    937                           
-   938                           ;watchdog.c: 185:             timer= 0;
-   939  07E4  3000               	movlw	0
-   940  07E5  0020               	movlb	0	; select bank0
-   941  07E6  00A7               	movwf	_timer+3
-   942  07E7  3000               	movlw	0
-   943  07E8  00A6               	movwf	_timer+2
-   944  07E9  3000               	movlw	0
-   945  07EA  00A5               	movwf	_timer+1
-   946  07EB  3000               	movlw	0
-   947  07EC  00A4               	movwf	_timer
-   948  07ED                     l935:
-   949                           
-   950                           ;watchdog.c: 187:         _delay((unsigned long)((1)*(500000/4000.0)));
-   951  07ED  3029               	movlw	41
-   952  07EE                     u377:
-   953  07EE  0B89               	decfsz	9,f
-   954  07EF  2FEE               	goto	u377
-   955  07F0  3200               	nop2
-   956  07F1  2F20               	goto	l877
-   957  07F2  2801               	ljmp	start
-   958  07F3                     __end_of_main:
+   938                           ;watchdog.c: 181:             {;watchdog.c: 182:                 resettimer--;
+   939  01CE  3001               	movlw	1
+   940  01CF  02B0               	subwf	_resettimer,f
+   941  01D0  3000               	movlw	0
+   942  01D1  3BB1               	subwfb	_resettimer+1,f
+   943  01D2                     l1099:
+   944                           
+   945                           ;watchdog.c: 184:             if(resettimer == 0)
+   946  01D2  0830               	movf	_resettimer,w
+   947  01D3  0431               	iorwf	_resettimer+1,w
+   948  01D4  1D03               	btfss	3,2
+   949  01D5  29D7               	goto	u521
+   950  01D6  29D8               	goto	u520
+   951  01D7                     u521:
+   952  01D7  29D9               	goto	l1103
+   953  01D8                     u520:
+   954  01D8                     l1101:
+   955                           
+   956                           ;watchdog.c: 185:             {;watchdog.c: 186:                 pinreset = 0;
+   957  01D8  01B8               	clrf	_pinreset
+   958  01D9                     l1103:
    959                           
-   960                           	psect	text1
-   961  065E                     __ptext1:	
-   962 ;; *************** function _SendCommand *****************
-   963 ;; Defined at:
-   964 ;;		line 75 in file "watchdog.c"
-   965 ;; Parameters:    Size  Location     Type
-   966 ;;  command         1    wreg     unsigned char 
-   967 ;;  par1            1    4[COMMON] unsigned char 
-   968 ;;  par2            1    5[COMMON] unsigned char 
-   969 ;; Auto vars:     Size  Location     Type
-   970 ;;  command         1    6[COMMON] unsigned char 
-   971 ;;  checksum        2    7[COMMON] short 
-   972 ;; Return value:  Size  Location     Type
-   973 ;;                  1    wreg      void 
-   974 ;; Registers used:
-   975 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
-   976 ;; Tracked objects:
-   977 ;;		On entry : 0/0
-   978 ;;		On exit  : 0/0
-   979 ;;		Unchanged: 0/0
-   980 ;; Data sizes:     COMMON   BANK0   BANK1
-   981 ;;      Params:         2       0       0
-   982 ;;      Locals:         3       0       0
-   983 ;;      Temps:          0      12       0
-   984 ;;      Totals:         5      12       0
-   985 ;;Total ram usage:       17 bytes
-   986 ;; Hardware stack levels used:    1
-   987 ;; Hardware stack levels required when called:    1
-   988 ;; This function calls:
-   989 ;;		_WriteSerial
-   990 ;; This function is called by:
-   991 ;;		_main
-   992 ;; This function uses a non-reentrant model
-   993 ;;
+   960                           ;watchdog.c: 188:             if( pinreset || adcreset)
+   961  01D9  0838               	movf	_pinreset,w
+   962  01DA  1D03               	btfss	3,2
+   963  01DB  29DD               	goto	u531
+   964  01DC  29DE               	goto	u530
+   965  01DD                     u531:
+   966  01DD  29E3               	goto	l99
+   967  01DE                     u530:
+   968  01DE                     l1105:
+   969  01DE  0839               	movf	_adcreset,w
+   970  01DF  1903               	btfsc	3,2
+   971  01E0  29E2               	goto	u541
+   972  01E1  29E3               	goto	u540
+   973  01E2                     u541:
+   974  01E2  29ED               	goto	l97
+   975  01E3                     u540:
+   976  01E3                     l99:
+   977                           
+   978                           ;watchdog.c: 189:             {;watchdog.c: 190:                 LATAbits.LATA2 = 1;
+   979  01E3  0022               	movlb	2	; select bank2
+   980  01E4  150C               	bsf	12,2	;volatile
+   981                           
+   982                           ;watchdog.c: 191:                 sendcommands = 1;
+   983  01E5  0020               	movlb	0	; select bank0
+   984  01E6  01B7               	clrf	_sendcommands
+   985  01E7  0AB7               	incf	_sendcommands,f
+   986                           
+   987                           ;watchdog.c: 192:                 TRISAbits.TRISA0 = 1;
+   988  01E8  0021               	movlb	1	; select bank1
+   989  01E9  140C               	bsf	12,0	;volatile
+   990                           
+   991                           ;watchdog.c: 193:                 RCSTAbits.SPEN = 0;
+   992  01EA  0023               	movlb	3	; select bank3
+   993  01EB  139D               	bcf	29,7	;volatile
    994                           
-   995                           
-   996                           ;psect for function _SendCommand
-   997  065E                     _SendCommand:
-   998                           
-   999                           ;incstack = 0
-  1000                           ; Regs used in _SendCommand: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  1001                           ;SendCommand@command stored from wreg
-  1002  065E  00F6               	movwf	SendCommand@command
-  1003  065F                     l825:
+   995                           ;watchdog.c: 194:             }
+   996  01EC  2A3E               	goto	l1121
+   997  01ED                     l97:	
+   998                           ;watchdog.c: 195:             else
+   999                           
+  1000                           
+  1001                           ;watchdog.c: 196:             {;watchdog.c: 197:                 LATAbits.LATA2 = 0;
+  1002  01ED  0022               	movlb	2	; select bank2
+  1003  01EE  110C               	bcf	12,2	;volatile
   1004                           
-  1005                           ;watchdog.c: 75: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2);watchdog.c:
-      +                           76: {;watchdog.c: 77:     int16_t checksum;;watchdog.c: 78:     buffer[0] = 0x7E;
-  1006  065F  307E               	movlw	126
-  1007  0660  0020               	movlb	0	; select bank0
-  1008  0661  00C2               	movwf	??_SendCommand
-  1009  0662  0842               	movf	??_SendCommand,w
-  1010  0663  00AE               	movwf	_buffer
-  1011                           
-  1012                           ;watchdog.c: 79:     buffer[1] = 0xff;
-  1013  0664  30FF               	movlw	255
-  1014  0665  00C2               	movwf	??_SendCommand
-  1015  0666  0842               	movf	??_SendCommand,w
-  1016  0667  00AF               	movwf	_buffer+1
-  1017                           
-  1018                           ;watchdog.c: 80:     buffer[2] = 0x06;
-  1019  0668  3006               	movlw	6
-  1020  0669  00C2               	movwf	??_SendCommand
-  1021  066A  0842               	movf	??_SendCommand,w
-  1022  066B  00B0               	movwf	_buffer+2
-  1023                           
-  1024                           ;watchdog.c: 81:     buffer[3] = command;
-  1025  066C  0876               	movf	SendCommand@command,w
-  1026  066D  00C2               	movwf	??_SendCommand
-  1027  066E  0842               	movf	??_SendCommand,w
-  1028  066F  00B1               	movwf	_buffer+3
-  1029  0670                     l827:
-  1030                           
-  1031                           ;watchdog.c: 82:     buffer[4] = 0;
-  1032  0670  01B2               	clrf	_buffer+4
-  1033  0671                     l829:
-  1034                           
-  1035                           ;watchdog.c: 83:     buffer[5] = par1;
-  1036  0671  0874               	movf	SendCommand@par1,w
-  1037  0672  00C2               	movwf	??_SendCommand
-  1038  0673  0842               	movf	??_SendCommand,w
-  1039  0674  00B3               	movwf	_buffer+5
-  1040  0675                     l831:
+  1005                           ;watchdog.c: 198:                 TRISAbits.TRISA0 = 0;
+  1006  01EF  0021               	movlb	1	; select bank1
+  1007  01F0  100C               	bcf	12,0	;volatile
+  1008                           
+  1009                           ;watchdog.c: 199:                 RCSTAbits.SPEN = 1;
+  1010  01F1  0023               	movlb	3	; select bank3
+  1011  01F2  179D               	bsf	29,7	;volatile
+  1012  01F3                     l1107:
+  1013                           
+  1014                           ;watchdog.c: 200:                 if(sendcommands)
+  1015  01F3  0020               	movlb	0	; select bank0
+  1016  01F4  0837               	movf	_sendcommands,w
+  1017  01F5  1903               	btfsc	3,2
+  1018  01F6  29F8               	goto	u551
+  1019  01F7  29F9               	goto	u550
+  1020  01F8                     u551:
+  1021  01F8  2A3E               	goto	l1121
+  1022  01F9                     u550:
+  1023  01F9                     l1109:
+  1024                           
+  1025                           ;watchdog.c: 201:                 {;watchdog.c: 202:                     _delay((unsigne
+      +                          d long)((2000)*(500000/4000.0)));
+  1026  01F9  3002               	movlw	2
+  1027  01FA  0020               	movlb	0	; select bank0
+  1028  01FB  00E2               	movwf	??_main+1
+  1029  01FC  3045               	movlw	69
+  1030  01FD  00E1               	movwf	??_main
+  1031  01FE  30A9               	movlw	169
+  1032  01FF                     u677:
+  1033  01FF  0B89               	decfsz	9,f
+  1034  0200  29FF               	goto	u677
+  1035  0201  0BE1               	decfsz	??_main,f
+  1036  0202  29FF               	goto	u677
+  1037  0203  0BE2               	decfsz	??_main+1,f
+  1038  0204  29FF               	goto	u677
+  1039  0205  3200               	nop2
+  1040  0206                     l1111:
   1041                           
-  1042                           ;watchdog.c: 84:     buffer[6] = par2;
-  1043  0675  0875               	movf	SendCommand@par2,w
-  1044  0676  00C2               	movwf	??_SendCommand
-  1045  0677  0842               	movf	??_SendCommand,w
-  1046  0678  00B4               	movwf	_buffer+6
-  1047  0679                     l833:
-  1048                           
-  1049                           ;watchdog.c: 85:     checksum = 1-(buffer[1]+buffer[2]+buffer[3]+buffer[4]+buffer[5]+buf
-      +                          fer[6]);
-  1050  0679  082F               	movf	_buffer+1,w
-  1051  067A  00C2               	movwf	??_SendCommand
-  1052  067B  01C3               	clrf	??_SendCommand+1
-  1053  067C  09C2               	comf	??_SendCommand,f
-  1054  067D  09C3               	comf	??_SendCommand+1,f
-  1055  067E  0AC2               	incf	??_SendCommand,f
-  1056  067F  1903               	skipnz
-  1057  0680  0AC3               	incf	??_SendCommand+1,f
-  1058  0681  0843               	movf	??_SendCommand+1,w
-  1059  0682  00C5               	movwf	??_SendCommand+3
-  1060  0683  0830               	movf	_buffer+2,w
-  1061  0684  0242               	subwf	??_SendCommand,w
-  1062  0685  00C4               	movwf	??_SendCommand+2
-  1063  0686  1C03               	skipc
-  1064  0687  03C5               	decf	??_SendCommand+3,f
-  1065  0688  0845               	movf	??_SendCommand+3,w
-  1066  0689  00C7               	movwf	??_SendCommand+5
-  1067  068A  0831               	movf	_buffer+3,w
-  1068  068B  0244               	subwf	??_SendCommand+2,w
-  1069  068C  00C6               	movwf	??_SendCommand+4
-  1070  068D  1C03               	skipc
-  1071  068E  03C7               	decf	??_SendCommand+5,f
-  1072  068F  0847               	movf	??_SendCommand+5,w
-  1073  0690  00C9               	movwf	??_SendCommand+7
-  1074  0691  0832               	movf	_buffer+4,w
-  1075  0692  0246               	subwf	??_SendCommand+4,w
-  1076  0693  00C8               	movwf	??_SendCommand+6
-  1077  0694  1C03               	skipc
-  1078  0695  03C9               	decf	??_SendCommand+7,f
-  1079  0696  0849               	movf	??_SendCommand+7,w
-  1080  0697  00CB               	movwf	??_SendCommand+9
-  1081  0698  0833               	movf	_buffer+5,w
-  1082  0699  0248               	subwf	??_SendCommand+6,w
-  1083  069A  00CA               	movwf	??_SendCommand+8
-  1084  069B  1C03               	skipc
-  1085  069C  03CB               	decf	??_SendCommand+9,f
-  1086  069D  084B               	movf	??_SendCommand+9,w
-  1087  069E  00CD               	movwf	??_SendCommand+11
-  1088  069F  0834               	movf	_buffer+6,w
-  1089  06A0  024A               	subwf	??_SendCommand+8,w
-  1090  06A1  00CC               	movwf	??_SendCommand+10
-  1091  06A2  1C03               	skipc
-  1092  06A3  03CD               	decf	??_SendCommand+11,f
-  1093  06A4  084C               	movf	??_SendCommand+10,w
-  1094  06A5  3E01               	addlw	1
-  1095  06A6  00F7               	movwf	SendCommand@checksum
-  1096  06A7  3000               	movlw	0
-  1097  06A8  3D4D               	addwfc	??_SendCommand+11,w
-  1098  06A9  00F8               	movwf	SendCommand@checksum+1
-  1099  06AA                     l835:
-  1100                           
-  1101                           ;watchdog.c: 86:     checksum = checksum-1;
-  1102  06AA  0877               	movf	SendCommand@checksum,w
-  1103  06AB  3EFF               	addlw	255
-  1104  06AC  00F7               	movwf	SendCommand@checksum
-  1105  06AD  30FF               	movlw	255
-  1106  06AE  3D78               	addwfc	SendCommand@checksum+1,w
-  1107  06AF  00F8               	movwf	SendCommand@checksum+1
-  1108                           
-  1109                           ;watchdog.c: 87:     buffer[7] = checksum>>8;
-  1110  06B0  0878               	movf	SendCommand@checksum+1,w
-  1111  06B1  00C2               	movwf	??_SendCommand
-  1112  06B2  0842               	movf	??_SendCommand,w
-  1113  06B3  00B5               	movwf	_buffer+7
-  1114  06B4                     l837:
-  1115                           
-  1116                           ;watchdog.c: 88:     buffer[8] = checksum&0xff;
-  1117  06B4  0877               	movf	SendCommand@checksum,w
-  1118  06B5  00C2               	movwf	??_SendCommand
-  1119  06B6  0842               	movf	??_SendCommand,w
-  1120  06B7  00B6               	movwf	_buffer+8
-  1121  06B8                     l839:
+  1042                           ;watchdog.c: 203:                     SendCommand(0x06,0,17);
+  1043  0206  0020               	movlb	0	; select bank0
+  1044  0207  01D0               	clrf	SendCommand@par1
+  1045  0208  3011               	movlw	17
+  1046  0209  00E1               	movwf	??_main
+  1047  020A  0861               	movf	??_main,w
+  1048  020B  00D1               	movwf	SendCommand@par2
+  1049  020C  3006               	movlw	6
+  1050  020D  3182  22DD  3180   	fcall	_SendCommand
+  1051  0210                     l1113:
+  1052                           
+  1053                           ;watchdog.c: 204:                     _delay((unsigned long)((2000)*(500000/4000.0)));
+  1054  0210  3002               	movlw	2
+  1055  0211  0020               	movlb	0	; select bank0
+  1056  0212  00E2               	movwf	??_main+1
+  1057  0213  3045               	movlw	69
+  1058  0214  00E1               	movwf	??_main
+  1059  0215  30A9               	movlw	169
+  1060  0216                     u687:
+  1061  0216  0B89               	decfsz	9,f
+  1062  0217  2A16               	goto	u687
+  1063  0218  0BE1               	decfsz	??_main,f
+  1064  0219  2A16               	goto	u687
+  1065  021A  0BE2               	decfsz	??_main+1,f
+  1066  021B  2A16               	goto	u687
+  1067  021C  3200               	nop2
+  1068                           
+  1069                           ;watchdog.c: 205:                     SendCommand(0x11,0,1);
+  1070  021D  0020               	movlb	0	; select bank0
+  1071  021E  01D0               	clrf	SendCommand@par1
+  1072  021F  01D1               	clrf	SendCommand@par2
+  1073  0220  0AD1               	incf	SendCommand@par2,f
+  1074  0221  3011               	movlw	17
+  1075  0222  3182  22DD  3180   	fcall	_SendCommand
+  1076  0225                     l1115:
+  1077                           
+  1078                           ;watchdog.c: 206:                     _delay((unsigned long)((2000)*(500000/4000.0)));
+  1079  0225  3002               	movlw	2
+  1080  0226  0020               	movlb	0	; select bank0
+  1081  0227  00E2               	movwf	??_main+1
+  1082  0228  3045               	movlw	69
+  1083  0229  00E1               	movwf	??_main
+  1084  022A  30A9               	movlw	169
+  1085  022B                     u697:
+  1086  022B  0B89               	decfsz	9,f
+  1087  022C  2A2B               	goto	u697
+  1088  022D  0BE1               	decfsz	??_main,f
+  1089  022E  2A2B               	goto	u697
+  1090  022F  0BE2               	decfsz	??_main+1,f
+  1091  0230  2A2B               	goto	u697
+  1092  0231  3200               	nop2
+  1093  0232                     l1117:
+  1094                           
+  1095                           ;watchdog.c: 207:                     SendCommand(0x06,0,17);
+  1096  0232  0020               	movlb	0	; select bank0
+  1097  0233  01D0               	clrf	SendCommand@par1
+  1098  0234  3011               	movlw	17
+  1099  0235  00E1               	movwf	??_main
+  1100  0236  0861               	movf	??_main,w
+  1101  0237  00D1               	movwf	SendCommand@par2
+  1102  0238  3006               	movlw	6
+  1103  0239  3182  22DD  3180   	fcall	_SendCommand
+  1104  023C                     l1119:
+  1105                           
+  1106                           ;watchdog.c: 208:                     sendcommands = 0;
+  1107  023C  0020               	movlb	0	; select bank0
+  1108  023D  01B7               	clrf	_sendcommands
+  1109  023E                     l1121:
+  1110                           
+  1111                           ;watchdog.c: 211:             timer= 0;
+  1112  023E  3000               	movlw	0
+  1113  023F  0020               	movlb	0	; select bank0
+  1114  0240  00AF               	movwf	_timer+3
+  1115  0241  3000               	movlw	0
+  1116  0242  00AE               	movwf	_timer+2
+  1117  0243  3000               	movlw	0
+  1118  0244  00AD               	movwf	_timer+1
+  1119  0245  3000               	movlw	0
+  1120  0246  00AC               	movwf	_timer
+  1121  0247                     l1123:
   1122                           
-  1123                           ;watchdog.c: 89:     buffer[9] = 0xEF;
-  1124  06B8  30EF               	movlw	239
-  1125  06B9  00C2               	movwf	??_SendCommand
-  1126  06BA  0842               	movf	??_SendCommand,w
-  1127  06BB  00B7               	movwf	_buffer+9
-  1128  06BC                     l841:
-  1129                           
-  1130                           ;watchdog.c: 90:     WriteSerial(&buffer,10);
-  1131  06BC  300A               	movlw	10
-  1132  06BD  00C2               	movwf	??_SendCommand
-  1133  06BE  0842               	movf	??_SendCommand,w
-  1134  06BF  00F0               	movwf	WriteSerial@len
-  1135  06C0  302E               	movlw	(low (_buffer| 0))& (0+255)
-  1136  06C1  3186  2642  3186   	fcall	_WriteSerial
-  1137  06C4                     l60:
-  1138  06C4  0008               	return
-  1139  06C5                     __end_of_SendCommand:
-  1140                           
-  1141                           	psect	text2
-  1142  0642                     __ptext2:	
-  1143 ;; *************** function _WriteSerial *****************
-  1144 ;; Defined at:
-  1145 ;;		line 66 in file "watchdog.c"
-  1146 ;; Parameters:    Size  Location     Type
-  1147 ;;  buffer          1    wreg     PTR unsigned char 
-  1148 ;;		 -> buffer(20), 
-  1149 ;;  len             1    0[COMMON] unsigned char 
-  1150 ;; Auto vars:     Size  Location     Type
-  1151 ;;  buffer          1    3[COMMON] PTR unsigned char 
-  1152 ;;		 -> buffer(20), 
-  1153 ;;  i               1    2[COMMON] unsigned char 
-  1154 ;; Return value:  Size  Location     Type
-  1155 ;;                  1    wreg      void 
-  1156 ;; Registers used:
-  1157 ;;		wreg, fsr1l, fsr1h, status,2, status,0
-  1158 ;; Tracked objects:
-  1159 ;;		On entry : 0/0
-  1160 ;;		On exit  : 0/0
-  1161 ;;		Unchanged: 0/0
-  1162 ;; Data sizes:     COMMON   BANK0   BANK1
-  1163 ;;      Params:         1       0       0
-  1164 ;;      Locals:         2       0       0
-  1165 ;;      Temps:          1       0       0
-  1166 ;;      Totals:         4       0       0
-  1167 ;;Total ram usage:        4 bytes
-  1168 ;; Hardware stack levels used:    1
-  1169 ;; This function calls:
-  1170 ;;		Nothing
-  1171 ;; This function is called by:
-  1172 ;;		_SendCommand
-  1173 ;; This function uses a non-reentrant model
-  1174 ;;
-  1175                           
-  1176                           
-  1177                           ;psect for function _WriteSerial
-  1178  0642                     _WriteSerial:
-  1179                           
-  1180                           ;incstack = 0
-  1181                           ; Regs used in _WriteSerial: [wreg+fsr1l+fsr1h+status,2+status,0]
-  1182                           ;WriteSerial@buffer stored from wreg
-  1183  0642  00F3               	movwf	WriteSerial@buffer
-  1184  0643                     l815:
-  1185                           
-  1186                           ;watchdog.c: 66: void WriteSerial(unsigned char *buffer,uint8_t len);watchdog.c: 67:    
-      +                           {;watchdog.c: 68:     uint8_t i;;watchdog.c: 69:     for(i = 0;i < len;i++)
-  1187  0643  01F2               	clrf	WriteSerial@i
-  1188  0644  2E57               	goto	l823
-  1189  0645                     l817:
+  1123                           ;watchdog.c: 213:         _delay((unsigned long)((1)*(500000/4000.0)));
+  1124  0247  3029               	movlw	41
+  1125  0248                     u707:
+  1126  0248  0B89               	decfsz	9,f
+  1127  0249  2A48               	goto	u707
+  1128  024A  3200               	nop2
+  1129  024B  2946               	goto	l1061
+  1130  024C  28B5               	ljmp	start
+  1131  024D                     __end_of_main:
+  1132                           
+  1133                           	psect	text1
+  1134  02DD                     __ptext1:	
+  1135 ;; *************** function _SendCommand *****************
+  1136 ;; Defined at:
+  1137 ;;		line 80 in file "watchdog.c"
+  1138 ;; Parameters:    Size  Location     Type
+  1139 ;;  command         1    wreg     unsigned char 
+  1140 ;;  par1            1   10[BANK0 ] unsigned char 
+  1141 ;;  par2            1   11[BANK0 ] unsigned char 
+  1142 ;; Auto vars:     Size  Location     Type
+  1143 ;;  command         1   24[BANK0 ] unsigned char 
+  1144 ;;  checksum        2   25[BANK0 ] short 
+  1145 ;; Return value:  Size  Location     Type
+  1146 ;;                  1    wreg      void 
+  1147 ;; Registers used:
+  1148 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+  1149 ;; Tracked objects:
+  1150 ;;		On entry : 0/0
+  1151 ;;		On exit  : 0/0
+  1152 ;;		Unchanged: 0/0
+  1153 ;; Data sizes:     COMMON   BANK0   BANK1
+  1154 ;;      Params:         0       2       0
+  1155 ;;      Locals:         0       3       0
+  1156 ;;      Temps:          0      12       0
+  1157 ;;      Totals:         0      17       0
+  1158 ;;Total ram usage:       17 bytes
+  1159 ;; Hardware stack levels used:    1
+  1160 ;; Hardware stack levels required when called:    3
+  1161 ;; This function calls:
+  1162 ;;		_WriteSerial
+  1163 ;; This function is called by:
+  1164 ;;		_main
+  1165 ;; This function uses a non-reentrant model
+  1166 ;;
+  1167                           
+  1168                           
+  1169                           ;psect for function _SendCommand
+  1170  02DD                     _SendCommand:
+  1171                           
+  1172                           ;incstack = 0
+  1173                           ; Regs used in _SendCommand: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+  1174                           ;SendCommand@command stored from wreg
+  1175  02DD  0020               	movlb	0	; select bank0
+  1176  02DE  00DE               	movwf	SendCommand@command
+  1177  02DF                     l955:
+  1178                           
+  1179                           ;watchdog.c: 80: void SendCommand(uint8_t command,uint8_t par1,uint8_t par2);watchdog.c:
+      +                           81: {;watchdog.c: 82:     int16_t checksum;;watchdog.c: 83:     buffer[0] = 0x7E;
+  1180  02DF  307E               	movlw	126
+  1181  02E0  00D2               	movwf	??_SendCommand
+  1182  02E1  0852               	movf	??_SendCommand,w
+  1183  02E2  00BA               	movwf	_buffer
+  1184                           
+  1185                           ;watchdog.c: 84:     buffer[1] = 0xff;
+  1186  02E3  30FF               	movlw	255
+  1187  02E4  00D2               	movwf	??_SendCommand
+  1188  02E5  0852               	movf	??_SendCommand,w
+  1189  02E6  00BB               	movwf	_buffer+1
   1190                           
-  1191                           ;watchdog.c: 70:     {;watchdog.c: 71:         TXREG = *buffer++;
-  1192  0645  0873               	movf	WriteSerial@buffer,w
-  1193  0646  0086               	movwf	6
-  1194  0647  0187               	clrf	7
-  1195  0648  0801               	movf	1,w
-  1196  0649  0023               	movlb	3	; select bank3
-  1197  064A  009A               	movwf	26	;volatile
-  1198  064B                     l819:
-  1199  064B  3001               	movlw	1
-  1200  064C  00F1               	movwf	??_WriteSerial
-  1201  064D  0871               	movf	??_WriteSerial,w
-  1202  064E  07F3               	addwf	WriteSerial@buffer,f
-  1203  064F                     l53:	
-  1204                           ;watchdog.c: 72:         while(TXSTAbits.TRMT == 0);
-  1205                           
-  1206  064F  1C9E               	btfss	30,1	;volatile
-  1207  0650  2E52               	goto	u161
-  1208  0651  2E53               	goto	u160
-  1209  0652                     u161:
-  1210  0652  2E4F               	goto	l53
-  1211  0653                     u160:
-  1212  0653                     l821:
-  1213                           
-  1214                           ;watchdog.c: 73:     }
-  1215  0653  3001               	movlw	1
-  1216  0654  00F1               	movwf	??_WriteSerial
-  1217  0655  0871               	movf	??_WriteSerial,w
-  1218  0656  07F2               	addwf	WriteSerial@i,f
-  1219  0657                     l823:
-  1220  0657  0870               	movf	WriteSerial@len,w
-  1221  0658  0272               	subwf	WriteSerial@i,w
-  1222  0659  1C03               	skipc
-  1223  065A  2E5C               	goto	u171
-  1224  065B  2E5D               	goto	u170
-  1225  065C                     u171:
-  1226  065C  2E45               	goto	l817
-  1227  065D                     u170:
-  1228  065D                     l57:
-  1229  065D  0008               	return
-  1230  065E                     __end_of_WriteSerial:
-  1231  007E                     btemp	set	126	;btemp
-  1232  007E                     wtemp0	set	126
-  1233                           
-  1234                           	psect	idloc
-  1235                           
-  1236                           ;Config register IDLOC0 @ 0x8000
-  1237                           ;	unspecified, using default values
-  1238  8000                     	org	32768
-  1239  8000  3FFF               	dw	16383
-  1240                           
-  1241                           ;Config register IDLOC1 @ 0x8001
-  1242                           ;	unspecified, using default values
-  1243  8001                     	org	32769
-  1244  8001  3FFF               	dw	16383
-  1245                           
-  1246                           ;Config register IDLOC2 @ 0x8002
-  1247                           ;	unspecified, using default values
-  1248  8002                     	org	32770
-  1249  8002  3FFF               	dw	16383
-  1250                           
-  1251                           ;Config register IDLOC3 @ 0x8003
-  1252                           ;	unspecified, using default values
-  1253  8003                     	org	32771
-  1254  8003  3FFF               	dw	16383
-  1255                           
-  1256                           	psect	config
-  1257                           
-  1258                           ;Config register CONFIG1 @ 0x8007
-  1259                           ;	Oscillator Selection
-  1260                           ;	FOSC = INTOSC, INTOSC oscillator: I/O function on CLKIN pin
-  1261                           ;	Watchdog Timer Enable
-  1262                           ;	WDTE = OFF, WDT disabled
-  1263                           ;	Power-up Timer Enable
-  1264                           ;	PWRTE = OFF, PWRT disabled
-  1265                           ;	MCLR Pin Function Select
-  1266                           ;	MCLRE = ON, MCLR/VPP pin function is MCLR
-  1267                           ;	Flash Program Memory Code Protection
-  1268                           ;	CP = OFF, Program memory code protection is disabled
-  1269                           ;	Data Memory Code Protection
-  1270                           ;	CPD = OFF, Data memory code protection is disabled
-  1271                           ;	Brown-out Reset Enable
-  1272                           ;	BOREN = OFF, Brown-out Reset disabled
-  1273                           ;	Clock Out Enable
-  1274                           ;	CLKOUTEN = OFF, CLKOUT function is disabled. I/O or oscillator function on the CLKOUT 
-      +                          pin
-  1275                           ;	Internal/External Switchover
-  1276                           ;	IESO = ON, Internal/External Switchover mode is enabled
-  1277                           ;	Fail-Safe Clock Monitor Enable
-  1278                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
-  1279  8007                     	org	32775
-  1280  8007  39E4               	dw	14820
+  1191                           ;watchdog.c: 85:     buffer[2] = 0x06;
+  1192  02E7  3006               	movlw	6
+  1193  02E8  00D2               	movwf	??_SendCommand
+  1194  02E9  0852               	movf	??_SendCommand,w
+  1195  02EA  00BC               	movwf	_buffer+2
+  1196                           
+  1197                           ;watchdog.c: 86:     buffer[3] = command;
+  1198  02EB  085E               	movf	SendCommand@command,w
+  1199  02EC  00D2               	movwf	??_SendCommand
+  1200  02ED  0852               	movf	??_SendCommand,w
+  1201  02EE  00BD               	movwf	_buffer+3
+  1202  02EF                     l957:
+  1203                           
+  1204                           ;watchdog.c: 87:     buffer[4] = 0;
+  1205  02EF  01BE               	clrf	_buffer+4
+  1206  02F0                     l959:
+  1207                           
+  1208                           ;watchdog.c: 88:     buffer[5] = par1;
+  1209  02F0  0850               	movf	SendCommand@par1,w
+  1210  02F1  00D2               	movwf	??_SendCommand
+  1211  02F2  0852               	movf	??_SendCommand,w
+  1212  02F3  00BF               	movwf	_buffer+5
+  1213  02F4                     l961:
+  1214                           
+  1215                           ;watchdog.c: 89:     buffer[6] = par2;
+  1216  02F4  0851               	movf	SendCommand@par2,w
+  1217  02F5  00D2               	movwf	??_SendCommand
+  1218  02F6  0852               	movf	??_SendCommand,w
+  1219  02F7  00C0               	movwf	_buffer+6
+  1220  02F8                     l963:
+  1221                           
+  1222                           ;watchdog.c: 90:     checksum = 1-(buffer[1]+buffer[2]+buffer[3]+buffer[4]+buffer[5]+buf
+      +                          fer[6]);
+  1223  02F8  083B               	movf	_buffer+1,w
+  1224  02F9  00D2               	movwf	??_SendCommand
+  1225  02FA  01D3               	clrf	??_SendCommand+1
+  1226  02FB  09D2               	comf	??_SendCommand,f
+  1227  02FC  09D3               	comf	??_SendCommand+1,f
+  1228  02FD  0AD2               	incf	??_SendCommand,f
+  1229  02FE  1903               	skipnz
+  1230  02FF  0AD3               	incf	??_SendCommand+1,f
+  1231  0300  0853               	movf	??_SendCommand+1,w
+  1232  0301  00D5               	movwf	??_SendCommand+3
+  1233  0302  083C               	movf	_buffer+2,w
+  1234  0303  0252               	subwf	??_SendCommand,w
+  1235  0304  00D4               	movwf	??_SendCommand+2
+  1236  0305  1C03               	skipc
+  1237  0306  03D5               	decf	??_SendCommand+3,f
+  1238  0307  0855               	movf	??_SendCommand+3,w
+  1239  0308  00D7               	movwf	??_SendCommand+5
+  1240  0309  083D               	movf	_buffer+3,w
+  1241  030A  0254               	subwf	??_SendCommand+2,w
+  1242  030B  00D6               	movwf	??_SendCommand+4
+  1243  030C  1C03               	skipc
+  1244  030D  03D7               	decf	??_SendCommand+5,f
+  1245  030E  0857               	movf	??_SendCommand+5,w
+  1246  030F  00D9               	movwf	??_SendCommand+7
+  1247  0310  083E               	movf	_buffer+4,w
+  1248  0311  0256               	subwf	??_SendCommand+4,w
+  1249  0312  00D8               	movwf	??_SendCommand+6
+  1250  0313  1C03               	skipc
+  1251  0314  03D9               	decf	??_SendCommand+7,f
+  1252  0315  0859               	movf	??_SendCommand+7,w
+  1253  0316  00DB               	movwf	??_SendCommand+9
+  1254  0317  083F               	movf	_buffer+5,w
+  1255  0318  0258               	subwf	??_SendCommand+6,w
+  1256  0319  00DA               	movwf	??_SendCommand+8
+  1257  031A  1C03               	skipc
+  1258  031B  03DB               	decf	??_SendCommand+9,f
+  1259  031C  085B               	movf	??_SendCommand+9,w
+  1260  031D  00DD               	movwf	??_SendCommand+11
+  1261  031E  0840               	movf	_buffer+6,w
+  1262  031F  025A               	subwf	??_SendCommand+8,w
+  1263  0320  00DC               	movwf	??_SendCommand+10
+  1264  0321  1C03               	skipc
+  1265  0322  03DD               	decf	??_SendCommand+11,f
+  1266  0323  085C               	movf	??_SendCommand+10,w
+  1267  0324  3E01               	addlw	1
+  1268  0325  00DF               	movwf	SendCommand@checksum
+  1269  0326  3000               	movlw	0
+  1270  0327  3D5D               	addwfc	??_SendCommand+11,w
+  1271  0328  00E0               	movwf	SendCommand@checksum+1
+  1272  0329                     l965:
+  1273                           
+  1274                           ;watchdog.c: 91:     checksum = checksum-1;
+  1275  0329  085F               	movf	SendCommand@checksum,w
+  1276  032A  3EFF               	addlw	255
+  1277  032B  00DF               	movwf	SendCommand@checksum
+  1278  032C  30FF               	movlw	255
+  1279  032D  3D60               	addwfc	SendCommand@checksum+1,w
+  1280  032E  00E0               	movwf	SendCommand@checksum+1
   1281                           
-  1282                           ;Config register CONFIG2 @ 0x8008
-  1283                           ;	Flash Memory Self-Write Protection
-  1284                           ;	WRT = OFF, Write protection off
-  1285                           ;	PLL Enable
-  1286                           ;	PLLEN = OFF, 4x PLL disabled
-  1287                           ;	Stack Overflow/Underflow Reset Enable
-  1288                           ;	STVREN = ON, Stack Overflow or Underflow will cause a Reset
-  1289                           ;	Brown-out Reset Voltage Selection
-  1290                           ;	BORV = LO, Brown-out Reset Voltage (Vbor), low trip point selected.
-  1291                           ;	Low-Voltage Programming Enable
-  1292                           ;	LVP = ON, Low-voltage programming enabled
-  1293  8008                     	org	32776
-  1294  8008  3EFF               	dw	16127
+  1282                           ;watchdog.c: 92:     buffer[7] = checksum>>8;
+  1283  032F  0860               	movf	SendCommand@checksum+1,w
+  1284  0330  00D2               	movwf	??_SendCommand
+  1285  0331  0852               	movf	??_SendCommand,w
+  1286  0332  00C1               	movwf	_buffer+7
+  1287  0333                     l967:
+  1288                           
+  1289                           ;watchdog.c: 93:     buffer[8] = checksum&0xff;
+  1290  0333  085F               	movf	SendCommand@checksum,w
+  1291  0334  00D2               	movwf	??_SendCommand
+  1292  0335  0852               	movf	??_SendCommand,w
+  1293  0336  00C2               	movwf	_buffer+8
+  1294  0337                     l969:
+  1295                           
+  1296                           ;watchdog.c: 94:     buffer[9] = 0xEF;
+  1297  0337  30EF               	movlw	239
+  1298  0338  00D2               	movwf	??_SendCommand
+  1299  0339  0852               	movf	??_SendCommand,w
+  1300  033A  00C3               	movwf	_buffer+9
+  1301  033B                     l971:
+  1302                           
+  1303                           ;watchdog.c: 95:     WriteSerial(&buffer,10);
+  1304  033B  300A               	movlw	10
+  1305  033C  00D2               	movwf	??_SendCommand
+  1306  033D  0852               	movf	??_SendCommand,w
+  1307  033E  00CC               	movwf	WriteSerial@len
+  1308  033F  303A               	movlw	(low (_buffer| 0))& (0+255)
+  1309  0340  3183  2344  3182   	fcall	_WriteSerial
+  1310  0343                     l80:
+  1311  0343  0008               	return
+  1312  0344                     __end_of_SendCommand:
+  1313                           
+  1314                           	psect	text2
+  1315  0344                     __ptext2:	
+  1316 ;; *************** function _WriteSerial *****************
+  1317 ;; Defined at:
+  1318 ;;		line 71 in file "watchdog.c"
+  1319 ;; Parameters:    Size  Location     Type
+  1320 ;;  buffer          1    wreg     PTR unsigned char 
+  1321 ;;		 -> buffer(12), 
+  1322 ;;  len             1    6[BANK0 ] unsigned char 
+  1323 ;; Auto vars:     Size  Location     Type
+  1324 ;;  buffer          1    9[BANK0 ] PTR unsigned char 
+  1325 ;;		 -> buffer(12), 
+  1326 ;;  i               1    8[BANK0 ] unsigned char 
+  1327 ;; Return value:  Size  Location     Type
+  1328 ;;                  1    wreg      void 
+  1329 ;; Registers used:
+  1330 ;;		wreg, fsr1l, fsr1h, status,2, status,0
+  1331 ;; Tracked objects:
+  1332 ;;		On entry : 0/0
+  1333 ;;		On exit  : 0/0
+  1334 ;;		Unchanged: 0/0
+  1335 ;; Data sizes:     COMMON   BANK0   BANK1
+  1336 ;;      Params:         0       1       0
+  1337 ;;      Locals:         0       2       0
+  1338 ;;      Temps:          0       1       0
+  1339 ;;      Totals:         0       4       0
+  1340 ;;Total ram usage:        4 bytes
+  1341 ;; Hardware stack levels used:    1
+  1342 ;; Hardware stack levels required when called:    2
+  1343 ;; This function calls:
+  1344 ;;		Nothing
+  1345 ;; This function is called by:
+  1346 ;;		_SendCommand
+  1347 ;; This function uses a non-reentrant model
+  1348 ;;
+  1349                           
+  1350                           
+  1351                           ;psect for function _WriteSerial
+  1352  0344                     _WriteSerial:
+  1353                           
+  1354                           ;incstack = 0
+  1355                           ; Regs used in _WriteSerial: [wreg+fsr1l+fsr1h+status,2+status,0]
+  1356                           ;WriteSerial@buffer stored from wreg
+  1357  0344  0020               	movlb	0	; select bank0
+  1358  0345  00CF               	movwf	WriteSerial@buffer
+  1359  0346                     l945:
+  1360                           
+  1361                           ;watchdog.c: 71: void WriteSerial(unsigned char *buffer,uint8_t len);watchdog.c: 72:    
+      +                           {;watchdog.c: 73:     uint8_t i;;watchdog.c: 74:     for(i = 0;i < len;i++)
+  1362  0346  01CE               	clrf	WriteSerial@i
+  1363  0347  2B5D               	goto	l953
+  1364  0348                     l947:
+  1365                           
+  1366                           ;watchdog.c: 75:     {;watchdog.c: 76:         TXREG = *buffer++;
+  1367  0348  084F               	movf	WriteSerial@buffer,w
+  1368  0349  0086               	movwf	6
+  1369  034A  0187               	clrf	7
+  1370  034B  0801               	movf	1,w
+  1371  034C  0023               	movlb	3	; select bank3
+  1372  034D  009A               	movwf	26	;volatile
+  1373  034E                     l949:
+  1374  034E  3001               	movlw	1
+  1375  034F  0020               	movlb	0	; select bank0
+  1376  0350  00CD               	movwf	??_WriteSerial
+  1377  0351  084D               	movf	??_WriteSerial,w
+  1378  0352  07CF               	addwf	WriteSerial@buffer,f
+  1379  0353                     l73:	
+  1380                           ;watchdog.c: 77:         while(TXSTAbits.TRMT == 0);
+  1381                           
+  1382  0353  0023               	movlb	3	; select bank3
+  1383  0354  1C9E               	btfss	30,1	;volatile
+  1384  0355  2B57               	goto	u321
+  1385  0356  2B58               	goto	u320
+  1386  0357                     u321:
+  1387  0357  2B53               	goto	l73
+  1388  0358                     u320:
+  1389  0358                     l951:
+  1390                           
+  1391                           ;watchdog.c: 78:     }
+  1392  0358  3001               	movlw	1
+  1393  0359  0020               	movlb	0	; select bank0
+  1394  035A  00CD               	movwf	??_WriteSerial
+  1395  035B  084D               	movf	??_WriteSerial,w
+  1396  035C  07CE               	addwf	WriteSerial@i,f
+  1397  035D                     l953:
+  1398  035D  084C               	movf	WriteSerial@len,w
+  1399  035E  024E               	subwf	WriteSerial@i,w
+  1400  035F  1C03               	skipc
+  1401  0360  2B62               	goto	u331
+  1402  0361  2B63               	goto	u330
+  1403  0362                     u331:
+  1404  0362  2B48               	goto	l947
+  1405  0363                     u330:
+  1406  0363                     l77:
+  1407  0363  0008               	return
+  1408  0364                     __end_of_WriteSerial:
+  1409                           
+  1410                           	psect	intentry
+  1411  0004                     __pintentry:	
+  1412 ;; *************** function _my_isr_routine *****************
+  1413 ;; Defined at:
+  1414 ;;		line 219 in file "watchdog.c"
+  1415 ;; Parameters:    Size  Location     Type
+  1416 ;;		None
+  1417 ;; Auto vars:     Size  Location     Type
+  1418 ;;  temp            2   12[COMMON] unsigned short 
+  1419 ;; Return value:  Size  Location     Type
+  1420 ;;                  1    wreg      void 
+  1421 ;; Registers used:
+  1422 ;;		wreg, status,2, status,0, pclath, cstack
+  1423 ;; Tracked objects:
+  1424 ;;		On entry : 0/0
+  1425 ;;		On exit  : 0/0
+  1426 ;;		Unchanged: 0/0
+  1427 ;; Data sizes:     COMMON   BANK0   BANK1
+  1428 ;;      Params:         0       0       0
+  1429 ;;      Locals:         2       0       0
+  1430 ;;      Temps:          3       0       0
+  1431 ;;      Totals:         5       0       0
+  1432 ;;Total ram usage:        5 bytes
+  1433 ;; Hardware stack levels used:    1
+  1434 ;; Hardware stack levels required when called:    1
+  1435 ;; This function calls:
+  1436 ;;		___aldiv
+  1437 ;; This function is called by:
+  1438 ;;		Interrupt level 1
+  1439 ;; This function uses a non-reentrant model
+  1440 ;;
+  1441                           
+  1442  0004                     _my_isr_routine:
+  1443                           
+  1444                           ;incstack = 0
+  1445  0004  147E               	bsf	int$flags,0	;set compiler interrupt flag (level 1)
+  1446                           
+  1447                           ; Regs used in _my_isr_routine: [wreg+status,2+status,0+pclath+cstack]
+  1448  0005  3180               	pagesel	$
+  1449  0006                     i1l1125:
+  1450                           
+  1451                           ;watchdog.c: 220:     if (PIR1bits.TMR2IF == 1)
+  1452  0006  0020               	movlb	0	; select bank0
+  1453  0007  1C91               	btfss	17,1	;volatile
+  1454  0008  280A               	goto	u56_21
+  1455  0009  280B               	goto	u56_20
+  1456  000A                     u56_21:
+  1457  000A  28B3               	goto	i1l117
+  1458  000B                     u56_20:
+  1459  000B                     i1l1127:
+  1460                           
+  1461                           ;watchdog.c: 221:     {;watchdog.c: 222:         mainreset++;
+  1462  000B  3001               	movlw	1
+  1463  000C  07A0               	addwf	_mainreset,f
+  1464  000D  3000               	movlw	0
+  1465  000E  3DA1               	addwfc	_mainreset+1,f
+  1466  000F  3000               	movlw	0
+  1467  0010  3DA2               	addwfc	_mainreset+2,f
+  1468  0011  3000               	movlw	0
+  1469  0012  3DA3               	addwfc	_mainreset+3,f
+  1470  0013                     i1l1129:
+  1471                           
+  1472                           ;watchdog.c: 223:         if (mainreset > 7714)
+  1473  0013  0823               	movf	_mainreset+3,w
+  1474  0014  1D03               	btfss	3,2
+  1475  0015  2821               	goto	u57_20
+  1476  0016  0822               	movf	_mainreset+2,w
+  1477  0017  1D03               	btfss	3,2
+  1478  0018  2821               	goto	u57_20
+  1479  0019  3023               	movlw	35
+  1480  001A  0220               	subwf	_mainreset,w
+  1481  001B  301E               	movlw	30
+  1482  001C  3B21               	subwfb	_mainreset+1,w
+  1483  001D  1C03               	btfss	3,0
+  1484  001E  2820               	goto	u57_21
+  1485  001F  2821               	goto	u57_20
+  1486  0020                     u57_21:
+  1487  0020  2830               	goto	i1l1135
+  1488  0021                     u57_20:
+  1489  0021                     i1l1131:
+  1490                           
+  1491                           ;watchdog.c: 224:         {;watchdog.c: 225:             resettimer = 20;
+  1492  0021  3014               	movlw	20
+  1493  0022  0020               	movlb	0	; select bank0
+  1494  0023  00B0               	movwf	_resettimer
+  1495  0024  3000               	movlw	0
+  1496  0025  00B1               	movwf	_resettimer+1
+  1497  0026                     i1l1133:
+  1498                           
+  1499                           ;watchdog.c: 226:             pinreset = 1;
+  1500  0026  01B8               	clrf	_pinreset
+  1501  0027  0AB8               	incf	_pinreset,f
+  1502                           
+  1503                           ;watchdog.c: 227:             mainreset = 0;
+  1504  0028  3000               	movlw	0
+  1505  0029  00A3               	movwf	_mainreset+3
+  1506  002A  3000               	movlw	0
+  1507  002B  00A2               	movwf	_mainreset+2
+  1508  002C  3000               	movlw	0
+  1509  002D  00A1               	movwf	_mainreset+1
+  1510  002E  3000               	movlw	0
+  1511  002F  00A0               	movwf	_mainreset
+  1512  0030                     i1l1135:
+  1513                           
+  1514                           ;watchdog.c: 229:         if(adcreset == 0)
+  1515  0030  0020               	movlb	0	; select bank0
+  1516  0031  0839               	movf	_adcreset,w
+  1517  0032  1D03               	btfss	3,2
+  1518  0033  2835               	goto	u58_21
+  1519  0034  2836               	goto	u58_20
+  1520  0035                     u58_21:
+  1521  0035  28B1               	goto	i1l111
+  1522  0036                     u58_20:
+  1523  0036                     i1l1137:
+  1524                           
+  1525                           ;watchdog.c: 230:         {;watchdog.c: 231:         ADCON0bits.CHS = 1;
+  1526  0036  0021               	movlb	1	; select bank1
+  1527  0037  081D               	movf	29,w	;volatile
+  1528  0038  3983               	andlw	-125
+  1529  0039  3804               	iorlw	4
+  1530  003A  009D               	movwf	29	;volatile
+  1531  003B                     i1l1139:
+  1532                           
+  1533                           ;watchdog.c: 232:         ADCON0bits.ADGO = 1;
+  1534  003B  149D               	bsf	29,1	;volatile
+  1535  003C                     i1l112:	
+  1536                           ;watchdog.c: 233:         while (ADCON0bits.nDONE != 0);
+  1537                           
+  1538  003C  189D               	btfsc	29,1	;volatile
+  1539  003D  283F               	goto	u59_21
+  1540  003E  2840               	goto	u59_20
+  1541  003F                     u59_21:
+  1542  003F  283C               	goto	i1l112
+  1543  0040                     u59_20:
+  1544  0040                     i1l1141:
+  1545                           
+  1546                           ;watchdog.c: 234:         uint16_t temp;;watchdog.c: 235:         temp = ADRESH;
+  1547  0040  081C               	movf	28,w	;volatile
+  1548  0041  00F9               	movwf	??_my_isr_routine
+  1549  0042  01FA               	clrf	??_my_isr_routine+1
+  1550  0043  0879               	movf	??_my_isr_routine,w
+  1551  0044  00FC               	movwf	my_isr_routine@temp
+  1552  0045  087A               	movf	??_my_isr_routine+1,w
+  1553  0046  00FD               	movwf	my_isr_routine@temp+1
+  1554  0047                     i1l1143:
+  1555                           
+  1556                           ;watchdog.c: 236:         temp = temp<<2;
+  1557  0047  087D               	movf	my_isr_routine@temp+1,w
+  1558  0048  00FA               	movwf	??_my_isr_routine+1
+  1559  0049  087C               	movf	my_isr_routine@temp,w
+  1560  004A  00F9               	movwf	??_my_isr_routine
+  1561  004B  35F9               	lslf	??_my_isr_routine,f
+  1562  004C  0DFA               	rlf	??_my_isr_routine+1,f
+  1563  004D  35F9               	lslf	??_my_isr_routine,f
+  1564  004E  0DFA               	rlf	??_my_isr_routine+1,f
+  1565  004F  0879               	movf	??_my_isr_routine,w
+  1566  0050  00FC               	movwf	my_isr_routine@temp
+  1567  0051  087A               	movf	??_my_isr_routine+1,w
+  1568  0052  00FD               	movwf	my_isr_routine@temp+1
+  1569  0053                     i1l1145:
+  1570                           
+  1571                           ;watchdog.c: 237:         temp |= ((ADRESL>>6) & 0x03);
+  1572  0053  081B               	movf	27,w	;volatile
+  1573  0054  00F9               	movwf	??_my_isr_routine
+  1574  0055  3006               	movlw	6
+  1575  0056                     u60_25:
+  1576  0056  36F9               	lsrf	??_my_isr_routine,f
+  1577  0057  0B89               	decfsz	9,f
+  1578  0058  2856               	goto	u60_25
+  1579  0059  0879               	movf	??_my_isr_routine,w
+  1580  005A  3903               	andlw	3
+  1581  005B  00FA               	movwf	??_my_isr_routine+1
+  1582  005C  01FB               	clrf	??_my_isr_routine+2
+  1583  005D  087A               	movf	??_my_isr_routine+1,w
+  1584  005E  04FC               	iorwf	my_isr_routine@temp,f
+  1585  005F  087B               	movf	??_my_isr_routine+2,w
+  1586  0060  04FD               	iorwf	my_isr_routine@temp+1,f
+  1587                           
+  1588                           ;watchdog.c: 238:         average += temp;
+  1589  0061  087C               	movf	my_isr_routine@temp,w
+  1590  0062  0020               	movlb	0	; select bank0
+  1591  0063  07E3               	addwf	_average,f
+  1592  0064  087D               	movf	my_isr_routine@temp+1,w
+  1593  0065  3DE4               	addwfc	_average+1,f
+  1594  0066  3000               	movlw	0
+  1595  0067  3DE5               	addwfc	_average+2,f
+  1596  0068  3DE6               	addwfc	_average+3,f
+  1597  0069                     i1l1147:
+  1598                           
+  1599                           ;watchdog.c: 239:         buffpointer++;
+  1600  0069  3001               	movlw	1
+  1601  006A  00F9               	movwf	??_my_isr_routine
+  1602  006B  0879               	movf	??_my_isr_routine,w
+  1603  006C  07B6               	addwf	_buffpointer,f
+  1604  006D                     i1l1149:
+  1605                           
+  1606                           ;watchdog.c: 240:         if (buffpointer > 29)
+  1607  006D  301E               	movlw	30
+  1608  006E  0236               	subwf	_buffpointer,w
+  1609  006F  1C03               	skipc
+  1610  0070  2872               	goto	u61_21
+  1611  0071  2873               	goto	u61_20
+  1612  0072                     u61_21:
+  1613  0072  28B1               	goto	i1l111
+  1614  0073                     u61_20:
+  1615  0073                     i1l1151:
+  1616                           
+  1617                           ;watchdog.c: 241:         {;watchdog.c: 243:             average = average / 30;
+  1618  0073  3000               	movlw	0
+  1619  0074  00F3               	movwf	___aldiv@divisor+3
+  1620  0075  3000               	movlw	0
+  1621  0076  00F2               	movwf	___aldiv@divisor+2
+  1622  0077  3000               	movlw	0
+  1623  0078  00F1               	movwf	___aldiv@divisor+1
+  1624  0079  301E               	movlw	30
+  1625  007A  00F0               	movwf	___aldiv@divisor
+  1626  007B  0866               	movf	_average+3,w
+  1627  007C  00F7               	movwf	___aldiv@dividend+3
+  1628  007D  0865               	movf	_average+2,w
+  1629  007E  00F6               	movwf	___aldiv@dividend+2
+  1630  007F  0864               	movf	_average+1,w
+  1631  0080  00F5               	movwf	___aldiv@dividend+1
+  1632  0081  0863               	movf	_average,w
+  1633  0082  00F4               	movwf	___aldiv@dividend
+  1634  0083  3182  224D  3180   	fcall	___aldiv
+  1635  0086  0873               	movf	?___aldiv+3,w
+  1636  0087  0020               	movlb	0	; select bank0
+  1637  0088  00E6               	movwf	_average+3
+  1638  0089  0872               	movf	?___aldiv+2,w
+  1639  008A  00E5               	movwf	_average+2
+  1640  008B  0871               	movf	?___aldiv+1,w
+  1641  008C  00E4               	movwf	_average+1
+  1642  008D  0870               	movf	?___aldiv,w
+  1643  008E  00E3               	movwf	_average
+  1644  008F                     i1l1153:
+  1645                           
+  1646                           ;watchdog.c: 244:             if (average < 10)
+  1647  008F  1BE6               	btfsc	_average+3,7
+  1648  0090  28A0               	goto	u62_20
+  1649  0091  0866               	movf	_average+3,w
+  1650  0092  1D03               	btfss	3,2
+  1651  0093  289F               	goto	u62_21
+  1652  0094  0865               	movf	_average+2,w
+  1653  0095  1D03               	btfss	3,2
+  1654  0096  289F               	goto	u62_21
+  1655  0097  0864               	movf	_average+1,w
+  1656  0098  1D03               	btfss	3,2
+  1657  0099  289F               	goto	u62_21
+  1658  009A  300A               	movlw	10
+  1659  009B  0263               	subwf	_average,w
+  1660  009C  1803               	btfsc	3,0
+  1661  009D  289F               	goto	u62_21
+  1662  009E  28A0               	goto	u62_20
+  1663  009F                     u62_21:
+  1664  009F  28A7               	goto	i1l1159
+  1665  00A0                     u62_20:
+  1666  00A0                     i1l1155:
+  1667                           
+  1668                           ;watchdog.c: 245:             {;watchdog.c: 246:                 resettimer = 20;
+  1669  00A0  3014               	movlw	20
+  1670  00A1  0020               	movlb	0	; select bank0
+  1671  00A2  00B0               	movwf	_resettimer
+  1672  00A3  3000               	movlw	0
+  1673  00A4  00B1               	movwf	_resettimer+1
+  1674  00A5                     i1l1157:
+  1675                           
+  1676                           ;watchdog.c: 247:                 pinreset = 1;
+  1677  00A5  01B8               	clrf	_pinreset
+  1678  00A6  0AB8               	incf	_pinreset,f
+  1679  00A7                     i1l1159:
+  1680                           
+  1681                           ;watchdog.c: 251:             buffpointer = 0;
+  1682  00A7  0020               	movlb	0	; select bank0
+  1683  00A8  01B6               	clrf	_buffpointer
+  1684  00A9                     i1l1161:
+  1685                           
+  1686                           ;watchdog.c: 252:             average = 0;
+  1687  00A9  3000               	movlw	0
+  1688  00AA  00E6               	movwf	_average+3
+  1689  00AB  3000               	movlw	0
+  1690  00AC  00E5               	movwf	_average+2
+  1691  00AD  3000               	movlw	0
+  1692  00AE  00E4               	movwf	_average+1
+  1693  00AF  3000               	movlw	0
+  1694  00B0  00E3               	movwf	_average
+  1695  00B1                     i1l111:	
+  1696                           ;watchdog.c: 254:         }
+  1697                           
+  1698                           
+  1699                           ;watchdog.c: 255:         TMR2 = 0;
+  1700  00B1  019A               	clrf	26	;volatile
+  1701  00B2                     i1l1163:
+  1702                           
+  1703                           ;watchdog.c: 257:         PIR1bits.TMR2IF = 0;
+  1704  00B2  1091               	bcf	17,1	;volatile
+  1705  00B3                     i1l117:
+  1706  00B3  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
+  1707  00B4  0009               	retfie
+  1708  00B5                     __end_of_my_isr_routine:
+  1709                           
+  1710                           	psect	text4
+  1711  024D                     __ptext4:	
+  1712 ;; *************** function ___aldiv *****************
+  1713 ;; Defined at:
+  1714 ;;		line 5 in file "C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c"
+  1715 ;; Parameters:    Size  Location     Type
+  1716 ;;  divisor         4    0[COMMON] long 
+  1717 ;;  dividend        4    4[COMMON] long 
+  1718 ;; Auto vars:     Size  Location     Type
+  1719 ;;  quotient        4    2[BANK0 ] long 
+  1720 ;;  sign            1    1[BANK0 ] unsigned char 
+  1721 ;;  counter         1    0[BANK0 ] unsigned char 
+  1722 ;; Return value:  Size  Location     Type
+  1723 ;;                  4    0[COMMON] long 
+  1724 ;; Registers used:
+  1725 ;;		wreg, status,2, status,0
+  1726 ;; Tracked objects:
+  1727 ;;		On entry : 0/0
+  1728 ;;		On exit  : 0/0
+  1729 ;;		Unchanged: 0/0
+  1730 ;; Data sizes:     COMMON   BANK0   BANK1
+  1731 ;;      Params:         8       0       0
+  1732 ;;      Locals:         0       6       0
+  1733 ;;      Temps:          1       0       0
+  1734 ;;      Totals:         9       6       0
+  1735 ;;Total ram usage:       15 bytes
+  1736 ;; Hardware stack levels used:    1
+  1737 ;; This function calls:
+  1738 ;;		Nothing
+  1739 ;; This function is called by:
+  1740 ;;		_my_isr_routine
+  1741 ;; This function uses a non-reentrant model
+  1742 ;;
+  1743                           
+  1744                           
+  1745                           ;psect for function ___aldiv
+  1746  024D                     ___aldiv:
+  1747  024D                     i1l973:	
+  1748                           ;incstack = 0
+  1749                           ; Regs used in ___aldiv: [wreg+status,2+status,0]
+  1750                           
+  1751  024D  0020               	movlb	0	; select bank0
+  1752  024E  01C7               	clrf	___aldiv@sign
+  1753  024F                     i1l975:
+  1754  024F  1FF3               	btfss	___aldiv@divisor+3,7
+  1755  0250  2A52               	goto	u34_21
+  1756  0251  2A53               	goto	u34_20
+  1757  0252                     u34_21:
+  1758  0252  2A60               	goto	i1l332
+  1759  0253                     u34_20:
+  1760  0253                     i1l977:
+  1761  0253  09F0               	comf	___aldiv@divisor,f
+  1762  0254  09F1               	comf	___aldiv@divisor+1,f
+  1763  0255  09F2               	comf	___aldiv@divisor+2,f
+  1764  0256  09F3               	comf	___aldiv@divisor+3,f
+  1765  0257  0AF0               	incf	___aldiv@divisor,f
+  1766  0258  1903               	skipnz
+  1767  0259  0AF1               	incf	___aldiv@divisor+1,f
+  1768  025A  1903               	skipnz
+  1769  025B  0AF2               	incf	___aldiv@divisor+2,f
+  1770  025C  1903               	skipnz
+  1771  025D  0AF3               	incf	___aldiv@divisor+3,f
+  1772  025E  01C7               	clrf	___aldiv@sign
+  1773  025F  0AC7               	incf	___aldiv@sign,f
+  1774  0260                     i1l332:
+  1775  0260  1FF7               	btfss	___aldiv@dividend+3,7
+  1776  0261  2A63               	goto	u35_21
+  1777  0262  2A64               	goto	u35_20
+  1778  0263                     u35_21:
+  1779  0263  2A73               	goto	i1l983
+  1780  0264                     u35_20:
+  1781  0264                     i1l979:
+  1782  0264  09F4               	comf	___aldiv@dividend,f
+  1783  0265  09F5               	comf	___aldiv@dividend+1,f
+  1784  0266  09F6               	comf	___aldiv@dividend+2,f
+  1785  0267  09F7               	comf	___aldiv@dividend+3,f
+  1786  0268  0AF4               	incf	___aldiv@dividend,f
+  1787  0269  1903               	skipnz
+  1788  026A  0AF5               	incf	___aldiv@dividend+1,f
+  1789  026B  1903               	skipnz
+  1790  026C  0AF6               	incf	___aldiv@dividend+2,f
+  1791  026D  1903               	skipnz
+  1792  026E  0AF7               	incf	___aldiv@dividend+3,f
+  1793  026F                     i1l981:
+  1794  026F  3001               	movlw	1
+  1795  0270  00F8               	movwf	??___aldiv
+  1796  0271  0878               	movf	??___aldiv,w
+  1797  0272  06C7               	xorwf	___aldiv@sign,f
+  1798  0273                     i1l983:
+  1799  0273  3000               	movlw	0
+  1800  0274  00CB               	movwf	___aldiv@quotient+3
+  1801  0275  3000               	movlw	0
+  1802  0276  00CA               	movwf	___aldiv@quotient+2
+  1803  0277  3000               	movlw	0
+  1804  0278  00C9               	movwf	___aldiv@quotient+1
+  1805  0279  3000               	movlw	0
+  1806  027A  00C8               	movwf	___aldiv@quotient
+  1807  027B                     i1l985:
+  1808  027B  0873               	movf	___aldiv@divisor+3,w
+  1809  027C  0472               	iorwf	___aldiv@divisor+2,w
+  1810  027D  0471               	iorwf	___aldiv@divisor+1,w
+  1811  027E  0470               	iorwf	___aldiv@divisor,w
+  1812  027F  1903               	skipnz
+  1813  0280  2A82               	goto	u36_21
+  1814  0281  2A83               	goto	u36_20
+  1815  0282                     u36_21:
+  1816  0282  2AC4               	goto	i1l1005
+  1817  0283                     u36_20:
+  1818  0283                     i1l987:
+  1819  0283  01C6               	clrf	___aldiv@counter
+  1820  0284  0AC6               	incf	___aldiv@counter,f
+  1821  0285  2A91               	goto	i1l991
+  1822  0286                     i1l989:
+  1823  0286  3001               	movlw	1
+  1824  0287                     u37_25:
+  1825  0287  35F0               	lslf	___aldiv@divisor,f
+  1826  0288  0DF1               	rlf	___aldiv@divisor+1,f
+  1827  0289  0DF2               	rlf	___aldiv@divisor+2,f
+  1828  028A  0DF3               	rlf	___aldiv@divisor+3,f
+  1829  028B  0B89               	decfsz	9,f
+  1830  028C  2A87               	goto	u37_25
+  1831  028D  3001               	movlw	1
+  1832  028E  00F8               	movwf	??___aldiv
+  1833  028F  0878               	movf	??___aldiv,w
+  1834  0290  07C6               	addwf	___aldiv@counter,f
+  1835  0291                     i1l991:
+  1836  0291  1FF3               	btfss	___aldiv@divisor+3,7
+  1837  0292  2A94               	goto	u38_21
+  1838  0293  2A95               	goto	u38_20
+  1839  0294                     u38_21:
+  1840  0294  2A86               	goto	i1l989
+  1841  0295                     u38_20:
+  1842  0295                     i1l993:
+  1843  0295  3001               	movlw	1
+  1844  0296                     u39_25:
+  1845  0296  35C8               	lslf	___aldiv@quotient,f
+  1846  0297  0DC9               	rlf	___aldiv@quotient+1,f
+  1847  0298  0DCA               	rlf	___aldiv@quotient+2,f
+  1848  0299  0DCB               	rlf	___aldiv@quotient+3,f
+  1849  029A  0B89               	decfsz	9,f
+  1850  029B  2A96               	goto	u39_25
+  1851  029C                     i1l995:
+  1852  029C  0873               	movf	___aldiv@divisor+3,w
+  1853  029D  0277               	subwf	___aldiv@dividend+3,w
+  1854  029E  1D03               	skipz
+  1855  029F  2AAA               	goto	u40_25
+  1856  02A0  0872               	movf	___aldiv@divisor+2,w
+  1857  02A1  0276               	subwf	___aldiv@dividend+2,w
+  1858  02A2  1D03               	skipz
+  1859  02A3  2AAA               	goto	u40_25
+  1860  02A4  0871               	movf	___aldiv@divisor+1,w
+  1861  02A5  0275               	subwf	___aldiv@dividend+1,w
+  1862  02A6  1D03               	skipz
+  1863  02A7  2AAA               	goto	u40_25
+  1864  02A8  0870               	movf	___aldiv@divisor,w
+  1865  02A9  0274               	subwf	___aldiv@dividend,w
+  1866  02AA                     u40_25:
+  1867  02AA  1C03               	skipc
+  1868  02AB  2AAD               	goto	u40_21
+  1869  02AC  2AAE               	goto	u40_20
+  1870  02AD                     u40_21:
+  1871  02AD  2AB7               	goto	i1l1001
+  1872  02AE                     u40_20:
+  1873  02AE                     i1l997:
+  1874  02AE  0870               	movf	___aldiv@divisor,w
+  1875  02AF  02F4               	subwf	___aldiv@dividend,f
+  1876  02B0  0871               	movf	___aldiv@divisor+1,w
+  1877  02B1  3BF5               	subwfb	___aldiv@dividend+1,f
+  1878  02B2  0872               	movf	___aldiv@divisor+2,w
+  1879  02B3  3BF6               	subwfb	___aldiv@dividend+2,f
+  1880  02B4  0873               	movf	___aldiv@divisor+3,w
+  1881  02B5  3BF7               	subwfb	___aldiv@dividend+3,f
+  1882  02B6                     i1l999:
+  1883  02B6  1448               	bsf	___aldiv@quotient,0
+  1884  02B7                     i1l1001:
+  1885  02B7  3001               	movlw	1
+  1886  02B8                     u41_25:
+  1887  02B8  36F3               	lsrf	___aldiv@divisor+3,f
+  1888  02B9  0CF2               	rrf	___aldiv@divisor+2,f
+  1889  02BA  0CF1               	rrf	___aldiv@divisor+1,f
+  1890  02BB  0CF0               	rrf	___aldiv@divisor,f
+  1891  02BC  0B89               	decfsz	9,f
+  1892  02BD  2AB8               	goto	u41_25
+  1893  02BE                     i1l1003:
+  1894  02BE  3001               	movlw	1
+  1895  02BF  02C6               	subwf	___aldiv@counter,f
+  1896  02C0  1D03               	btfss	3,2
+  1897  02C1  2AC3               	goto	u42_21
+  1898  02C2  2AC4               	goto	u42_20
+  1899  02C3                     u42_21:
+  1900  02C3  2A95               	goto	i1l993
+  1901  02C4                     u42_20:
+  1902  02C4                     i1l1005:
+  1903  02C4  0847               	movf	___aldiv@sign,w
+  1904  02C5  1903               	btfsc	3,2
+  1905  02C6  2AC8               	goto	u43_21
+  1906  02C7  2AC9               	goto	u43_20
+  1907  02C8                     u43_21:
+  1908  02C8  2AD4               	goto	i1l1009
+  1909  02C9                     u43_20:
+  1910  02C9                     i1l1007:
+  1911  02C9  09C8               	comf	___aldiv@quotient,f
+  1912  02CA  09C9               	comf	___aldiv@quotient+1,f
+  1913  02CB  09CA               	comf	___aldiv@quotient+2,f
+  1914  02CC  09CB               	comf	___aldiv@quotient+3,f
+  1915  02CD  0AC8               	incf	___aldiv@quotient,f
+  1916  02CE  1903               	skipnz
+  1917  02CF  0AC9               	incf	___aldiv@quotient+1,f
+  1918  02D0  1903               	skipnz
+  1919  02D1  0ACA               	incf	___aldiv@quotient+2,f
+  1920  02D2  1903               	skipnz
+  1921  02D3  0ACB               	incf	___aldiv@quotient+3,f
+  1922  02D4                     i1l1009:
+  1923  02D4  084B               	movf	___aldiv@quotient+3,w
+  1924  02D5  00F3               	movwf	?___aldiv+3
+  1925  02D6  084A               	movf	___aldiv@quotient+2,w
+  1926  02D7  00F2               	movwf	?___aldiv+2
+  1927  02D8  0849               	movf	___aldiv@quotient+1,w
+  1928  02D9  00F1               	movwf	?___aldiv+1
+  1929  02DA  0848               	movf	___aldiv@quotient,w
+  1930  02DB  00F0               	movwf	?___aldiv
+  1931  02DC                     i1l342:
+  1932  02DC  0008               	return
+  1933  02DD                     __end_of___aldiv:
+  1934  007E                     btemp	set	126	;btemp
+  1935  007E                     int$flags	set	126
+  1936  007E                     wtemp0	set	126
+  1937                           
+  1938                           	psect	idloc
+  1939                           
+  1940                           ;Config register IDLOC0 @ 0x8000
+  1941                           ;	unspecified, using default values
+  1942  8000                     	org	32768
+  1943  8000  3FFF               	dw	16383
+  1944                           
+  1945                           ;Config register IDLOC1 @ 0x8001
+  1946                           ;	unspecified, using default values
+  1947  8001                     	org	32769
+  1948  8001  3FFF               	dw	16383
+  1949                           
+  1950                           ;Config register IDLOC2 @ 0x8002
+  1951                           ;	unspecified, using default values
+  1952  8002                     	org	32770
+  1953  8002  3FFF               	dw	16383
+  1954                           
+  1955                           ;Config register IDLOC3 @ 0x8003
+  1956                           ;	unspecified, using default values
+  1957  8003                     	org	32771
+  1958  8003  3FFF               	dw	16383
+  1959                           
+  1960                           	psect	config
+  1961                           
+  1962                           ;Config register CONFIG1 @ 0x8007
+  1963                           ;	Oscillator Selection
+  1964                           ;	FOSC = INTOSC, INTOSC oscillator: I/O function on CLKIN pin
+  1965                           ;	Watchdog Timer Enable
+  1966                           ;	WDTE = OFF, WDT disabled
+  1967                           ;	Power-up Timer Enable
+  1968                           ;	PWRTE = OFF, PWRT disabled
+  1969                           ;	MCLR Pin Function Select
+  1970                           ;	MCLRE = ON, MCLR/VPP pin function is MCLR
+  1971                           ;	Flash Program Memory Code Protection
+  1972                           ;	CP = OFF, Program memory code protection is disabled
+  1973                           ;	Data Memory Code Protection
+  1974                           ;	CPD = OFF, Data memory code protection is disabled
+  1975                           ;	Brown-out Reset Enable
+  1976                           ;	BOREN = OFF, Brown-out Reset disabled
+  1977                           ;	Clock Out Enable
+  1978                           ;	CLKOUTEN = OFF, CLKOUT function is disabled. I/O or oscillator function on the CLKOUT 
+      +                          pin
+  1979                           ;	Internal/External Switchover
+  1980                           ;	IESO = ON, Internal/External Switchover mode is enabled
+  1981                           ;	Fail-Safe Clock Monitor Enable
+  1982                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
+  1983  8007                     	org	32775
+  1984  8007  39E4               	dw	14820
+  1985                           
+  1986                           ;Config register CONFIG2 @ 0x8008
+  1987                           ;	Flash Memory Self-Write Protection
+  1988                           ;	WRT = OFF, Write protection off
+  1989                           ;	PLL Enable
+  1990                           ;	PLLEN = OFF, 4x PLL disabled
+  1991                           ;	Stack Overflow/Underflow Reset Enable
+  1992                           ;	STVREN = ON, Stack Overflow or Underflow will cause a Reset
+  1993                           ;	Brown-out Reset Voltage Selection
+  1994                           ;	BORV = LO, Brown-out Reset Voltage (Vbor), low trip point selected.
+  1995                           ;	Low-Voltage Programming Enable
+  1996                           ;	LVP = ON, Low-voltage programming enabled
+  1997  8008                     	org	32776
+  1998  8008  3EFF               	dw	16127
 
 Data Sizes:
     Strings     0
     Constant    0
-    Data        0
-    BSS         37
+    Data        4
+    BSS         38
     Persistent  32
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
-    COMMON           14     11      14
-    BANK0            80     12      46
+    COMMON           14     14      14
+    BANK0            80     29      71
     BANK1            32      0       0
 
 Pointer List with Targets:
 
-    WriteSerial@buffer	PTR unsigned char  size(1) Largest target is 20
-		 -> buffer(BANK0[20]), 
+    WriteSerial@buffer	PTR unsigned char  size(1) Largest target is 12
+		 -> buffer(BANK0[12]), 
 
 
 Critical Paths under _main in COMMON
 
-    _main->_SendCommand
-    _SendCommand->_WriteSerial
+    None.
+
+Critical Paths under _my_isr_routine in COMMON
+
+    _my_isr_routine->___aldiv
 
 Critical Paths under _main in BANK0
 
     _main->_SendCommand
+    _SendCommand->_WriteSerial
+
+Critical Paths under _my_isr_routine in BANK0
+
+    _my_isr_routine->___aldiv
 
 Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _my_isr_routine in BANK1
 
     None.
 
@@ -1350,19 +2067,30 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 2     2      0    1224
-                                              9 COMMON     2     2      0
+ (0) _main                                                 2     2      0    1376
+                                             27 BANK0      2     2      0
                         _SendCommand
  ---------------------------------------------------------------------------------
- (1) _SendCommand                                         17    15      2    1224
-                                              4 COMMON     5     3      2
-                                              0 BANK0     12    12      0
+ (1) _SendCommand                                         17    15      2    1376
+                                             10 BANK0     17    15      2
                         _WriteSerial
  ---------------------------------------------------------------------------------
  (2) _WriteSerial                                          4     3      1     178
-                                              0 COMMON     4     3      1
+                                              6 BANK0      4     3      1
  ---------------------------------------------------------------------------------
  Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (3) _my_isr_routine                                       5     5      0     499
+                                              9 COMMON     5     5      0
+                            ___aldiv
+ ---------------------------------------------------------------------------------
+ (4) ___aldiv                                             15     7      8     452
+                                              0 COMMON     9     1      8
+                                              0 BANK0      6     6      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 4
  ---------------------------------------------------------------------------------
 
  Call Graph Graphs:
@@ -1370,6 +2098,9 @@ Call Graph Tables:
  _main (ROOT)
    _SendCommand
      _WriteSerial
+
+ _my_isr_routine (ROOT)
+   ___aldiv
 
  Address spaces:
 Name               Size   Autos  Total    Cost      Usage
@@ -1380,7 +2111,7 @@ CODE                 0      0       0       0        0.0%
 BITCOMMON            E      0       0       1        0.0%
 BITSFR0              0      0       0       1        0.0%
 SFR0                 0      0       0       1        0.0%
-COMMON               E      B       E       2      100.0%
+COMMON               E      E       E       2      100.0%
 BITSFR1              0      0       0       2        0.0%
 SFR1                 0      0       0       2        0.0%
 BITSFR2              0      0       0       3        0.0%
@@ -1388,11 +2119,11 @@ SFR2                 0      0       0       3        0.0%
 STACK                0      0       0       3        0.0%
 BITSFR3              0      0       0       4        0.0%
 SFR3                 0      0       0       4        0.0%
-ABS                  0      0      3C       4        0.0%
+ABS                  0      0      55       4        0.0%
 BITBANK0            50      0       0       5        0.0%
 BITSFR4              0      0       0       5        0.0%
 SFR4                 0      0       0       5        0.0%
-BANK0               50      C      2E       6       57.5%
+BANK0               50     1D      47       6       88.8%
 BITSFR5              0      0       0       6        0.0%
 SFR5                 0      0       0       6        0.0%
 BITBANK1            20      0       0       7        0.0%
@@ -1403,7 +2134,7 @@ BITSFR7              0      0       0       8        0.0%
 SFR7                 0      0       0       8        0.0%
 BITSFR8              0      0       0       9        0.0%
 SFR8                 0      0       0       9        0.0%
-DATA                 0      0      3C       9        0.0%
+DATA                 0      0      55       9        0.0%
 BITSFR9              0      0       0      10        0.0%
 SFR9                 0      0       0      10        0.0%
 BITSFR10             0      0       0      11        0.0%
@@ -1453,64 +2184,101 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.30 build 20200825195618 
-Symbol Table                                                                                   Tue Mar 21 18:17:29 2023
+Symbol Table                                                                                   Fri Apr 14 17:59:43 2023
 
-                     l60 06C4                       l53 064F                       l80 07A9  
-                     l57 065D                       l73 0760                       l67 073C  
-                     l78 07AE                      l821 0653                      l901 076D  
-                    l823 0657                      l815 0643                      l831 0675  
-                    l911 0798                      l903 077E                      l817 0645  
-                    l841 06BC                      l833 0679                      l825 065F  
-                    l921 07B5                      l913 079E                      l905 0783  
-                    l819 064B                      l835 06AA                      l827 0670  
-                    l931 07E3                      l923 07BC                      l915 079F  
-                    l907 078D                      l851 06DC                      l843 06C5  
-                    l837 06B4                      l829 0671                      l925 07C5  
-                    l933 07E4                      l917 07A4                      l909 0794  
-                    l861 06E2                      l853 06DE                      l845 06CE  
-                    l839 06B8                      l927 07D3                      l919 07B0  
-                    l935 07ED                      l871 0707                      l863 06E4  
-                    l855 06DF                      l847 06D3                      l929 07DA  
-                    l881 073A                      l873 070E                      l865 06EF  
-                    l857 06E0                      l849 06DB                      l891 074F  
-                    l883 0740                      l875 0717                      l867 06F8  
-                    l859 06E1                      l893 0755                      l885 0746  
-                    l877 0720                      l869 0700                      l895 0757  
-                    l887 0748                      l879 0729                      l897 075E  
-                    l889 074E                      l899 0765                      u200 0746  
-                    u201 0745                      u210 074E                      u211 074D  
-                    u300 07B5                      u220 0755                      u301 07B4  
-                    u221 0754                      u230 075E                      u231 075D  
-                    u160 0653                      u240 0765                      u161 0652  
-                    u241 0764                      u170 065D                      u250 077E  
-                    u171 065C                      u251 077D                      u260 0794  
-                    u180 073A                      u261 0793                      u181 0739  
-                    u317 06E9                      u270 079E                      u190 0740  
-                    u271 079D                      u191 073F                      u327 06FB  
-                    u280 07A4                      u281 07A3                      u337 070A  
-                    u290 07A9                      u347 07B8                      u291 07A8  
-                    u357 07C8                      u367 07D6                      u377 07EE  
-   __size_of_WriteSerial 001C                      wreg 0009                     _main 06C5  
+                     l80 0343                       l73 0353                       l77 0363  
+                     l88 019F                       l97 01ED                       l99 01E3  
+                    l951 0358                      l953 035D                      l945 0346  
+                    l961 02F4                      l947 0348                      l971 033B  
+                    l963 02F8                      l955 02DF                      l949 034E  
+                    l965 0329                      l957 02EF                      l967 0333  
+                    l959 02F0                      l969 0337                      u320 0358  
+                    u321 0357                      u330 0363                      u331 0362  
+                    u500 01C5                      u501 01C4                      u510 01CE  
+                    _PR2 001B                      u511 01CD                      u520 01D8  
+                    u440 0167                      u521 01D7                      u441 0166  
+                    u530 01DE                      u450 0199                      u531 01DD  
+                    u451 0198                      u540 01E3                      u460 01A3  
+                    u541 01E2                      u461 01A2                      u550 01F9  
+                    u470 01A9                      u551 01F8                      u471 01A8  
+                    u480 01B3                      u481 01B2                      u490 01BC  
+                    u707 0248                      u491 01BB                      u637 0100  
+                    u647 0117                      u657 012C                      u667 016D  
+                    u677 01FF                      u687 0216                      u697 022B  
+   __size_of_WriteSerial 0020                      wreg 0009                     l1101 01D8  
+                   l1021 00E6                     l1013 00D1                     l1111 0206  
+                   l1103 01D9                     l1031 00EC                     l1023 00E7  
+                   l1015 00DC                     l1113 0210                     l1121 023E  
+                   l1105 01DE                     l1041 00F5                     l1033 00ED  
+                   l1025 00E8                     l1017 00E3                     l1115 0225  
+                   l1107 01F3                     l1123 0247                     l1051 0111  
+                   l1043 00F7                     l1035 00EE                     l1027 00E9  
+                   l1019 00E4                     l1117 0232                     l1109 01F9  
+                   l1061 0146                     l1053 011E                     l1045 00F8  
+                   l1037 00F0                     l1029 00EA                     l1119 023C  
+                   l1071 017E                     l1063 014F                     l1055 0126  
+                   l1047 00FA                     l1039 00F2                     l1081 01A9  
+                   l1073 0187                     l1065 0157                     l1057 0133  
+                   l1049 0107                     l1091 01BE                     l1083 01AC  
+                   l1075 0199                     l1067 0167                     l1059 013D  
+                   l1093 01C5                     l1085 01B3                     l1077 019E  
+                   l1069 0174                     l1095 01C7                     l1087 01B5  
+                   l1079 01A3                     l1097 01CE                     l1089 01BC  
+                   l1099 01D2                     _TMR2 001A                     _main 00D1  
                    fsr0h 0005                     fsr1h 0007                     indf0 0000  
                    fsr0l 0004                     indf1 0001                     fsr1l 0006  
-                   btemp 007E                     start 0001                    ?_main 0070  
-                  _TXREG 019A                    _timer 0024                    status 0003  
-                  wtemp0 007E          __initialization 07F3            ??_SendCommand 0042  
-           __end_of_main 07F3                   ??_main 0079                   _ADRESH 009C  
-                 _SPBRGH 019C                   _SPBRGL 019B                   _buffer 002E  
-    __end_of_SendCommand 06C5  __end_of__initialization 07FE           __pcstackCOMMON 0070  
-             __pbssBANK0 0020           WriteSerial@len 0070             WriteSerial@i 0072  
-             __pmaintext 06C5              _SendCommand 065E            ??_WriteSerial 0071  
-                __ptext1 065E                  __ptext2 0642      __end_of_WriteSerial 065E  
-                clrloop0 063D     end_of_initialization 07FE       SendCommand@command 0076  
-              _RCSTAbits 019D               _resettimer 0028                _PORTAbits 000C  
-              _TRISAbits 008C                _TXSTAbits 019E              _BAUDCONbits 019F  
-            _WriteSerial 0642      start_initialization 07F3             ?_SendCommand 0074  
-            __pbssCOMMON 007B                ___latbits 0000            __pcstackBANK0 0042  
-      WriteSerial@buffer 0073                _laststate 002C                 _LATAbits 010C  
-              clear_ram0 063C               _ADCON0bits 009D               _ADCON1bits 009E  
-   __size_of_SendCommand 0067             ?_WriteSerial 0070               _ANSELAbits 018C  
-               _adcreset 007D             _sendcommands 007B                 _actstate 002A  
-          __size_of_main 012E                 _pinreset 007C                 _pintimer 0020  
-             _FVRCONbits 0117      SendCommand@checksum 0077          SendCommand@par1 0074  
-        SendCommand@par2 0075  
+                   btemp 007E                     start 00B5          __end_of___aldiv 02DD  
+                  ?_main 0070                    i1l111 00B1                    i1l112 003C  
+                  i1l117 00B3                    i1l332 0260                    i1l342 02DC  
+                  i1l981 026F                    i1l973 024D                    i1l991 0291  
+                  i1l983 0273                    i1l975 024F                    i1l993 0295  
+                  i1l985 027B                    i1l977 0253                    i1l995 029C  
+                  i1l987 0283                    i1l979 0264                    i1l997 02AE  
+                  i1l989 0286                    i1l999 02B6                    u40_20 02AE  
+                  u40_21 02AD                    u40_25 02AA                    u41_25 02B8  
+                  u42_20 02C4                    u34_20 0253                    u42_21 02C3  
+                  u34_21 0252                    u43_20 02C9                    u35_20 0264  
+                  u43_21 02C8                    u35_21 0263                    u36_20 0283  
+                  u36_21 0282                    u60_25 0056                    u61_20 0073  
+                  u61_21 0072                    u37_25 0287                    u38_20 0295  
+                  u62_20 00A0                    u38_21 0294                    u62_21 009F  
+                  u39_25 0296                    u56_20 000B                    u56_21 000A  
+                  u57_20 0021                    u57_21 0020                    u58_20 0036  
+                  u58_21 0035                    u59_20 0040                    u59_21 003F  
+                  _TXREG 019A                    _timer 002C                    status 0003  
+                  wtemp0 007E          __initialization 00B6            ??_SendCommand 0052  
+           __end_of_main 024D                   ??_main 0061                   _ADRESH 009C  
+                 _ADRESL 009B                   i1l1001 02B7                   i1l1003 02BE  
+                 i1l1005 02C4                   i1l1007 02C9                   i1l1009 02D4  
+                 i1l1131 0021                   i1l1141 0040                   i1l1133 0026  
+                 i1l1125 0006                   i1l1151 0073                   i1l1143 0047  
+                 i1l1135 0030                   i1l1127 000B                   i1l1161 00A9  
+                 i1l1153 008F                   i1l1145 0053                   i1l1137 0036  
+                 i1l1129 0013                   i1l1163 00B2                   i1l1155 00A0  
+                 i1l1147 0069                   i1l1139 003B                   i1l1157 00A5  
+                 i1l1149 006D                   i1l1159 00A7                   _SPBRGH 019C  
+                 _SPBRGL 019B                ??___aldiv 0078                   _buffer 003A  
+    __end_of_SendCommand 0344  __end_of__initialization 00CE           __pcstackCOMMON 0070  
+           __pidataBANK0 036A               __pbssBANK0 0020           WriteSerial@len 004C  
+           WriteSerial@i 004E               __pmaintext 00D1              _SendCommand 02DD  
+             __pintentry 0004            ??_WriteSerial 004D  __size_of_my_isr_routine 00B1  
+                ___aldiv 024D                  __ptext1 02DD                  __ptext2 0344  
+                __ptext4 024D                  _average 0063                _T2CONbits 001C  
+       ___aldiv@dividend 0074      __end_of_WriteSerial 0364                  clrloop0 0365  
+   end_of_initialization 00CE       SendCommand@command 005E                _RCSTAbits 019D  
+       ___aldiv@quotient 0048               _resettimer 0030                _TRISAbits 008C  
+              _TXSTAbits 019E              _BAUDCONbits 019F              _WriteSerial 0344  
+    start_initialization 00B6           _my_isr_routine 0004             ?_SendCommand 0050  
+            __pdataBANK0 0063                ___latbits 0000            __pcstackBANK0 0046  
+ __end_of_my_isr_routine 00B5        WriteSerial@buffer 004F                 ?___aldiv 0070  
+              _mainreset 0020          ?_my_isr_routine 0070                _laststate 0034  
+        ___aldiv@divisor 0070          ___aldiv@counter 0046                 _LATAbits 010C  
+              clear_ram0 0364                 _PIE1bits 0091                 _PIR1bits 0011  
+            _buffpointer 0036               _ADCON0bits 009D               _ADCON1bits 009E  
+       __size_of___aldiv 0090     __size_of_SendCommand 0067             ?_WriteSerial 004C  
+             _ANSELAbits 018C                 _adcreset 0039             _sendcommands 0037  
+               _actstate 0032            __size_of_main 017C                 _pinreset 0038  
+               _pintimer 0028                 int$flags 007E                 _voltimer 0024  
+             _INTCONbits 000B               _FVRCONbits 0117      SendCommand@checksum 005F  
+               intlevel1 0000          SendCommand@par1 0050          SendCommand@par2 0051  
+       ??_my_isr_routine 0079             ___aldiv@sign 0047       my_isr_routine@temp 007C  

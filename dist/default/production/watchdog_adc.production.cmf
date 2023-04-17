@@ -11,22 +11,25 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$C:\Users\nemet\AppData\Local\Temp\sl54xe.o
+$C:\Users\nemet\AppData\Local\Temp\shg4xe.o
 idloc IDLOC 5 8000 8000 4 2
 reset_vec CODE 0 0 0 1 2
-end_init CODE 0 1 1 1 2
+end_init CODE 0 B5 B5 1 2
 config CONFIG 4 8007 8007 2 2
 $dist/default/production\watchdog_adc.production.o
-cinit CODE 0 7F3 7F3 D 2
+cinit CODE 0 B6 B6 1B 2
 idloc IDLOC 5 8000 8000 4 2
-text1 CODE 0 65E 65E 67 2
-text2 CODE 0 642 642 1C 2
-maintext CODE 0 6C5 6C5 12E 2
-cstackCOMMON COMMON 1 70 70 B 1
-cstackBANK0 BANK0 1 42 42 C 1
-bssBANK0 BANK0 1 20 20 22 1
-clrtext CODE 0 63C 63C 6 2
-bssCOMMON COMMON 1 7B 7B 3 1
+text1 CODE 0 2DD 2DD 67 2
+text2 CODE 0 344 344 20 2
+text4 CODE 0 24D 24D 90 2
+maintext CODE 0 D1 D1 17C 2
+cstackCOMMON COMMON 1 70 70 E 1
+cstackBANK0 BANK0 1 46 46 1D 1
+intentry CODE 0 4 4 B1 2
+bssBANK0 BANK0 1 20 20 26 1
+idataBANK0 CODE 0 36A 36A 4 2
+dataBANK0 BANK0 1 63 63 4 1
+clrtext CODE 0 364 364 6 2
 config CONFIG 4 8007 8007 2 2
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -34,12 +37,14 @@ config CONFIG 4 8007 8007 2 2
 #    <class name> <range> <delta>
 # Addresses given in the range are in hexadecimal and units of delta.
 %UNUSED
-RAM 4E-6F 1
+RAM 67-6F 1
 RAM A0-BF 1
-BANK0 4E-6F 1
+BANK0 67-6F 1
 BANK1 A0-BF 1
-CONST 2-63B 2
-ENTRY 2-63B 2
+CONST 1-3 2
+CONST 36E-7FF 2
+ENTRY 1-3 2
+ENTRY 36E-7FF 2
 SFR10 500-56F 1
 SFR11 580-5EF 1
 SFR12 600-66F 1
@@ -62,8 +67,9 @@ SFR28 E00-E6F 1
 SFR29 E80-EEF 1
 SFR30 F00-F6F 1
 SFR31 F80-FEF 1
-STACK 202E-206F 1
-CODE 2-63B 2
+STACK 2047-206F 1
+CODE 1-3 2
+CODE 36E-7FF 2
 SFR0 0-1F 1
 SFR1 80-9F 1
 SFR2 100-16F 1
@@ -76,8 +82,10 @@ SFR8 400-46F 1
 SFR9 480-4EF 1
 BIGRAM 2000-206F 1
 EEDATA F000-F0FF 2
-STRCODE 2-63B 2
-STRING 2-63B 2
+STRCODE 1-3 2
+STRCODE 36E-7FF 2
+STRING 1-3 2
+STRING 36E-7FF 2
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -92,114 +100,183 @@ STRING 2-63B 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\watchdog_adc.production.o
-7F3 cinit CODE >621:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F3 cinit CODE >624:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F3 cinit CODE >675:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F4 cinit CODE >676:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F5 cinit CODE >677:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F6 cinit CODE >681:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F7 cinit CODE >682:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F8 cinit CODE >683:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7F9 cinit CODE >684:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7FA cinit CODE >685:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7FB cinit CODE >686:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7FE cinit CODE >692:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7FE cinit CODE >694:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-7FF cinit CODE >695:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-642 text2 CODE >66:D:\mplabx_projektek\watchdog_adc\watchdog.c
-643 text2 CODE >69:D:\mplabx_projektek\watchdog_adc\watchdog.c
-645 text2 CODE >71:D:\mplabx_projektek\watchdog_adc\watchdog.c
-64F text2 CODE >72:D:\mplabx_projektek\watchdog_adc\watchdog.c
-653 text2 CODE >73:D:\mplabx_projektek\watchdog_adc\watchdog.c
-65D text2 CODE >74:D:\mplabx_projektek\watchdog_adc\watchdog.c
-65E text1 CODE >75:D:\mplabx_projektek\watchdog_adc\watchdog.c
-65F text1 CODE >78:D:\mplabx_projektek\watchdog_adc\watchdog.c
-664 text1 CODE >79:D:\mplabx_projektek\watchdog_adc\watchdog.c
-668 text1 CODE >80:D:\mplabx_projektek\watchdog_adc\watchdog.c
-66C text1 CODE >81:D:\mplabx_projektek\watchdog_adc\watchdog.c
-670 text1 CODE >82:D:\mplabx_projektek\watchdog_adc\watchdog.c
-671 text1 CODE >83:D:\mplabx_projektek\watchdog_adc\watchdog.c
-675 text1 CODE >84:D:\mplabx_projektek\watchdog_adc\watchdog.c
-679 text1 CODE >85:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6AA text1 CODE >86:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6B0 text1 CODE >87:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6B4 text1 CODE >88:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6B8 text1 CODE >89:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6BC text1 CODE >90:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C4 text1 CODE >92:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C5 maintext CODE >94:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C5 maintext CODE >95:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C7 maintext CODE >96:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C8 maintext CODE >97:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6C9 maintext CODE >98:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6CA maintext CODE >99:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6CB maintext CODE >100:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6CD maintext CODE >101:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6CE maintext CODE >102:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6D3 maintext CODE >103:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6D4 maintext CODE >104:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6D6 maintext CODE >105:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6DB maintext CODE >106:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6DC maintext CODE >108:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6DE maintext CODE >109:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6DF maintext CODE >110:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6E0 maintext CODE >111:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6E1 maintext CODE >112:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6E2 maintext CODE >113:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6E4 maintext CODE >116:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6EF maintext CODE >117:D:\mplabx_projektek\watchdog_adc\watchdog.c
-6F8 maintext CODE >118:D:\mplabx_projektek\watchdog_adc\watchdog.c
-700 maintext CODE >119:D:\mplabx_projektek\watchdog_adc\watchdog.c
-707 maintext CODE >120:D:\mplabx_projektek\watchdog_adc\watchdog.c
-70E maintext CODE >121:D:\mplabx_projektek\watchdog_adc\watchdog.c
-717 maintext CODE >122:D:\mplabx_projektek\watchdog_adc\watchdog.c
-720 maintext CODE >125:D:\mplabx_projektek\watchdog_adc\watchdog.c
-729 maintext CODE >127:D:\mplabx_projektek\watchdog_adc\watchdog.c
-73A maintext CODE >129:D:\mplabx_projektek\watchdog_adc\watchdog.c
-73C maintext CODE >130:D:\mplabx_projektek\watchdog_adc\watchdog.c
-740 maintext CODE >131:D:\mplabx_projektek\watchdog_adc\watchdog.c
-746 maintext CODE >133:D:\mplabx_projektek\watchdog_adc\watchdog.c
-748 maintext CODE >135:D:\mplabx_projektek\watchdog_adc\watchdog.c
-74E maintext CODE >137:D:\mplabx_projektek\watchdog_adc\watchdog.c
-74F maintext CODE >139:D:\mplabx_projektek\watchdog_adc\watchdog.c
-755 maintext CODE >141:D:\mplabx_projektek\watchdog_adc\watchdog.c
-757 maintext CODE >143:D:\mplabx_projektek\watchdog_adc\watchdog.c
-75E maintext CODE >145:D:\mplabx_projektek\watchdog_adc\watchdog.c
-760 maintext CODE >146:D:\mplabx_projektek\watchdog_adc\watchdog.c
-760 maintext CODE >148:D:\mplabx_projektek\watchdog_adc\watchdog.c
-765 maintext CODE >150:D:\mplabx_projektek\watchdog_adc\watchdog.c
-76D maintext CODE >152:D:\mplabx_projektek\watchdog_adc\watchdog.c
-77E maintext CODE >154:D:\mplabx_projektek\watchdog_adc\watchdog.c
-783 maintext CODE >155:D:\mplabx_projektek\watchdog_adc\watchdog.c
-785 maintext CODE >156:D:\mplabx_projektek\watchdog_adc\watchdog.c
-78D maintext CODE >158:D:\mplabx_projektek\watchdog_adc\watchdog.c
-794 maintext CODE >160:D:\mplabx_projektek\watchdog_adc\watchdog.c
-798 maintext CODE >162:D:\mplabx_projektek\watchdog_adc\watchdog.c
-79E maintext CODE >164:D:\mplabx_projektek\watchdog_adc\watchdog.c
-79F maintext CODE >166:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7A9 maintext CODE >168:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7AB maintext CODE >169:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7AD maintext CODE >170:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7AE maintext CODE >171:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7AE maintext CODE >173:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7B0 maintext CODE >174:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7B5 maintext CODE >176:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7BC maintext CODE >177:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7C5 maintext CODE >178:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7CC maintext CODE >179:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7D3 maintext CODE >180:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7DA maintext CODE >181:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7E3 maintext CODE >182:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7E4 maintext CODE >185:D:\mplabx_projektek\watchdog_adc\watchdog.c
-7ED maintext CODE >187:D:\mplabx_projektek\watchdog_adc\watchdog.c
-63C clrtext CODE >664:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-63C clrtext CODE >665:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-63D clrtext CODE >666:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-63D clrtext CODE >667:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-63E clrtext CODE >668:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-63F clrtext CODE >669:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-640 clrtext CODE >670:C:\Users\nemet\AppData\Local\Temp\sl54x.s
-641 clrtext CODE >671:C:\Users\nemet\AppData\Local\Temp\sl54x.s
+B6 cinit CODE >653:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+B6 cinit CODE >656:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+B6 cinit CODE >709:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+B9 cinit CODE >710:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+BA cinit CODE >711:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+BD cinit CODE >712:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+BE cinit CODE >713:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C1 cinit CODE >714:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C2 cinit CODE >715:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C5 cinit CODE >716:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C6 cinit CODE >733:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C7 cinit CODE >734:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C8 cinit CODE >735:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+C9 cinit CODE >736:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+CA cinit CODE >737:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+CB cinit CODE >738:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+CE cinit CODE >744:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+CE cinit CODE >746:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+CF cinit CODE >747:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+D0 cinit CODE >748:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+4 intentry CODE >219:D:\mplabx_projektek\watchdog_adc\watchdog.c
+6 intentry CODE >220:D:\mplabx_projektek\watchdog_adc\watchdog.c
+B intentry CODE >222:D:\mplabx_projektek\watchdog_adc\watchdog.c
+13 intentry CODE >223:D:\mplabx_projektek\watchdog_adc\watchdog.c
+21 intentry CODE >225:D:\mplabx_projektek\watchdog_adc\watchdog.c
+26 intentry CODE >226:D:\mplabx_projektek\watchdog_adc\watchdog.c
+28 intentry CODE >227:D:\mplabx_projektek\watchdog_adc\watchdog.c
+30 intentry CODE >229:D:\mplabx_projektek\watchdog_adc\watchdog.c
+36 intentry CODE >231:D:\mplabx_projektek\watchdog_adc\watchdog.c
+3B intentry CODE >232:D:\mplabx_projektek\watchdog_adc\watchdog.c
+3C intentry CODE >233:D:\mplabx_projektek\watchdog_adc\watchdog.c
+40 intentry CODE >235:D:\mplabx_projektek\watchdog_adc\watchdog.c
+47 intentry CODE >236:D:\mplabx_projektek\watchdog_adc\watchdog.c
+53 intentry CODE >237:D:\mplabx_projektek\watchdog_adc\watchdog.c
+61 intentry CODE >238:D:\mplabx_projektek\watchdog_adc\watchdog.c
+69 intentry CODE >239:D:\mplabx_projektek\watchdog_adc\watchdog.c
+6D intentry CODE >240:D:\mplabx_projektek\watchdog_adc\watchdog.c
+73 intentry CODE >243:D:\mplabx_projektek\watchdog_adc\watchdog.c
+8F intentry CODE >244:D:\mplabx_projektek\watchdog_adc\watchdog.c
+A0 intentry CODE >246:D:\mplabx_projektek\watchdog_adc\watchdog.c
+A5 intentry CODE >247:D:\mplabx_projektek\watchdog_adc\watchdog.c
+A7 intentry CODE >251:D:\mplabx_projektek\watchdog_adc\watchdog.c
+A9 intentry CODE >252:D:\mplabx_projektek\watchdog_adc\watchdog.c
+B1 intentry CODE >254:D:\mplabx_projektek\watchdog_adc\watchdog.c
+B1 intentry CODE >255:D:\mplabx_projektek\watchdog_adc\watchdog.c
+B2 intentry CODE >257:D:\mplabx_projektek\watchdog_adc\watchdog.c
+B3 intentry CODE >259:D:\mplabx_projektek\watchdog_adc\watchdog.c
+24D text4 CODE >5:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+24D text4 CODE >13:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+24F text4 CODE >14:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+253 text4 CODE >15:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+25E text4 CODE >16:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+260 text4 CODE >17:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+260 text4 CODE >18:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+264 text4 CODE >19:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+26F text4 CODE >20:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+273 text4 CODE >22:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+27B text4 CODE >23:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+283 text4 CODE >24:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+285 text4 CODE >25:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+286 text4 CODE >26:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+28D text4 CODE >27:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+291 text4 CODE >25:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+295 text4 CODE >30:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+29C text4 CODE >31:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2AE text4 CODE >32:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2B6 text4 CODE >33:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2B7 text4 CODE >35:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2BE text4 CODE >36:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2C4 text4 CODE >38:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2C9 text4 CODE >39:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2D4 text4 CODE >40:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+2DC text4 CODE >41:C:\Program Files\Microchip\xc8\v2.30\pic\sources\c99\common\aldiv.c
+344 text2 CODE >71:D:\mplabx_projektek\watchdog_adc\watchdog.c
+346 text2 CODE >74:D:\mplabx_projektek\watchdog_adc\watchdog.c
+348 text2 CODE >76:D:\mplabx_projektek\watchdog_adc\watchdog.c
+353 text2 CODE >77:D:\mplabx_projektek\watchdog_adc\watchdog.c
+358 text2 CODE >78:D:\mplabx_projektek\watchdog_adc\watchdog.c
+363 text2 CODE >79:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2DD text1 CODE >80:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2DF text1 CODE >83:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2E3 text1 CODE >84:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2E7 text1 CODE >85:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2EB text1 CODE >86:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2EF text1 CODE >87:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2F0 text1 CODE >88:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2F4 text1 CODE >89:D:\mplabx_projektek\watchdog_adc\watchdog.c
+2F8 text1 CODE >90:D:\mplabx_projektek\watchdog_adc\watchdog.c
+329 text1 CODE >91:D:\mplabx_projektek\watchdog_adc\watchdog.c
+32F text1 CODE >92:D:\mplabx_projektek\watchdog_adc\watchdog.c
+333 text1 CODE >93:D:\mplabx_projektek\watchdog_adc\watchdog.c
+337 text1 CODE >94:D:\mplabx_projektek\watchdog_adc\watchdog.c
+33B text1 CODE >95:D:\mplabx_projektek\watchdog_adc\watchdog.c
+343 text1 CODE >97:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D1 maintext CODE >99:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D1 maintext CODE >100:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D3 maintext CODE >101:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D4 maintext CODE >102:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D5 maintext CODE >103:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D6 maintext CODE >104:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D7 maintext CODE >105:D:\mplabx_projektek\watchdog_adc\watchdog.c
+D9 maintext CODE >106:D:\mplabx_projektek\watchdog_adc\watchdog.c
+DA maintext CODE >107:D:\mplabx_projektek\watchdog_adc\watchdog.c
+DC maintext CODE >108:D:\mplabx_projektek\watchdog_adc\watchdog.c
+DE maintext CODE >109:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E3 maintext CODE >110:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E4 maintext CODE >112:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E6 maintext CODE >113:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E7 maintext CODE >114:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E8 maintext CODE >115:D:\mplabx_projektek\watchdog_adc\watchdog.c
+E9 maintext CODE >116:D:\mplabx_projektek\watchdog_adc\watchdog.c
+EA maintext CODE >117:D:\mplabx_projektek\watchdog_adc\watchdog.c
+EC maintext CODE >119:D:\mplabx_projektek\watchdog_adc\watchdog.c
+ED maintext CODE >120:D:\mplabx_projektek\watchdog_adc\watchdog.c
+EE maintext CODE >121:D:\mplabx_projektek\watchdog_adc\watchdog.c
+F0 maintext CODE >122:D:\mplabx_projektek\watchdog_adc\watchdog.c
+F2 maintext CODE >124:D:\mplabx_projektek\watchdog_adc\watchdog.c
+F5 maintext CODE >125:D:\mplabx_projektek\watchdog_adc\watchdog.c
+F7 maintext CODE >126:D:\mplabx_projektek\watchdog_adc\watchdog.c
+F8 maintext CODE >127:D:\mplabx_projektek\watchdog_adc\watchdog.c
+FA maintext CODE >128:D:\mplabx_projektek\watchdog_adc\watchdog.c
+107 maintext CODE >129:D:\mplabx_projektek\watchdog_adc\watchdog.c
+111 maintext CODE >130:D:\mplabx_projektek\watchdog_adc\watchdog.c
+11E maintext CODE >131:D:\mplabx_projektek\watchdog_adc\watchdog.c
+126 maintext CODE >132:D:\mplabx_projektek\watchdog_adc\watchdog.c
+133 maintext CODE >133:D:\mplabx_projektek\watchdog_adc\watchdog.c
+13D maintext CODE >134:D:\mplabx_projektek\watchdog_adc\watchdog.c
+146 maintext CODE >138:D:\mplabx_projektek\watchdog_adc\watchdog.c
+14F maintext CODE >139:D:\mplabx_projektek\watchdog_adc\watchdog.c
+157 maintext CODE >140:D:\mplabx_projektek\watchdog_adc\watchdog.c
+167 maintext CODE >142:D:\mplabx_projektek\watchdog_adc\watchdog.c
+174 maintext CODE >143:D:\mplabx_projektek\watchdog_adc\watchdog.c
+17E maintext CODE >144:D:\mplabx_projektek\watchdog_adc\watchdog.c
+187 maintext CODE >147:D:\mplabx_projektek\watchdog_adc\watchdog.c
+199 maintext CODE >149:D:\mplabx_projektek\watchdog_adc\watchdog.c
+19E maintext CODE >150:D:\mplabx_projektek\watchdog_adc\watchdog.c
+19F maintext CODE >151:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1A3 maintext CODE >152:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1A9 maintext CODE >154:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1AC maintext CODE >157:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1B3 maintext CODE >159:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1B5 maintext CODE >161:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1BC maintext CODE >163:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1BE maintext CODE >165:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1C5 maintext CODE >167:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1C7 maintext CODE >180:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1CE maintext CODE >182:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1D2 maintext CODE >184:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1D8 maintext CODE >186:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1D9 maintext CODE >188:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1E3 maintext CODE >190:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1E5 maintext CODE >191:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1E8 maintext CODE >192:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1EA maintext CODE >193:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1EC maintext CODE >194:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1ED maintext CODE >195:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1ED maintext CODE >197:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1EF maintext CODE >198:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1F1 maintext CODE >199:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1F3 maintext CODE >200:D:\mplabx_projektek\watchdog_adc\watchdog.c
+1F9 maintext CODE >202:D:\mplabx_projektek\watchdog_adc\watchdog.c
+206 maintext CODE >203:D:\mplabx_projektek\watchdog_adc\watchdog.c
+210 maintext CODE >204:D:\mplabx_projektek\watchdog_adc\watchdog.c
+21D maintext CODE >205:D:\mplabx_projektek\watchdog_adc\watchdog.c
+225 maintext CODE >206:D:\mplabx_projektek\watchdog_adc\watchdog.c
+232 maintext CODE >207:D:\mplabx_projektek\watchdog_adc\watchdog.c
+23C maintext CODE >208:D:\mplabx_projektek\watchdog_adc\watchdog.c
+23E maintext CODE >211:D:\mplabx_projektek\watchdog_adc\watchdog.c
+247 maintext CODE >213:D:\mplabx_projektek\watchdog_adc\watchdog.c
+364 clrtext CODE >722:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+364 clrtext CODE >723:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+365 clrtext CODE >724:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+365 clrtext CODE >725:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+366 clrtext CODE >726:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+367 clrtext CODE >727:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+368 clrtext CODE >728:C:\Users\nemet\AppData\Local\Temp\shg4x.s
+369 clrtext CODE >729:C:\Users\nemet\AppData\Local\Temp\shg4x.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -213,52 +290,61 @@ $dist/default/production\watchdog_adc.production.o
 # is the name of the object file in which the symbol was defined.
 %SYMTAB
 ___latbits 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__Hspace_0 800 0 ABS 0 - -
+__LdataBANK0 0 0 ABS 0 dataBANK0 -
+__Hspace_0 36E 0 ABS 0 - -
 __Hspace_1 7E 0 ABS 0 - -
 __Hspace_2 0 0 ABS 0 - -
 __Hspace_3 0 0 ABS 0 - -
 __Hspace_4 10010 0 ABS 0 - -
-__end_of_WriteSerial CBC 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
+__HidataBANK0 0 0 ABS 0 idataBANK0 -
+__end_of_WriteSerial 6C8 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
+__size_of_my_isr_routine 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __Heeprom_data 0 0 EEDATA 3 eeprom_data -
-SendCommand@command 76 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
+SendCommand@command 5E 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
 __Hstrings 0 0 ABS 0 strings -
-___sp 0 0 STACK 2 stack C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-_main D8A 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
+_TMR2 1A 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+___sp 0 0 STACK 2 stack C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+_main 1A2 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
 btemp 7E 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-SendCommand@par1 74 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
-SendCommand@par2 75 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
-start 2 0 CODE 0 init C:\Users\nemet\AppData\Local\Temp\sl54xe.o
+SendCommand@par1 50 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+SendCommand@par2 51 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+start 16A 0 CODE 0 init C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+__size_of___aldiv 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __size_of_main 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__HbssCOMMON 0 0 ABS 0 bssCOMMON -
+__LidataBANK0 0 0 ABS 0 idataBANK0 -
 __Hpowerup 0 0 CODE 0 powerup -
-WriteSerial@buffer 73 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
-intlevel0 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-intlevel1 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-intlevel2 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-intlevel3 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-intlevel4 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-intlevel5 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-__LbssCOMMON 0 0 ABS 0 bssCOMMON -
-_pinreset 7C 0 COMMON 1 bssCOMMON dist/default/production\watchdog_adc.production.o
-_pintimer 20 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+WriteSerial@buffer 4F 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+_pinreset 38 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+_pintimer 28 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+___aldiv@divisor 70 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
 wtemp0 7E 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __Hfunctab 0 0 ENTRY 0 functab -
+___aldiv@sign 47 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
 __Hclrtext 0 0 ABS 0 clrtext -
 _ADRESH 9C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+_ADRESL 9B 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 _FVRCONbits 117 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __Lmaintext 0 0 ABS 0 maintext -
 _BAUDCONbits 19F 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__end_of_SendCommand D8A 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
-___stackhi 206F 0 ABS 0 - C:\Users\nemet\AppData\Local\Temp\sl54xe.o
-___stacklo 202E 0 ABS 0 - C:\Users\nemet\AppData\Local\Temp\sl54xe.o
+__end_of___aldiv 5BA 0 CODE 0 text4 dist/default/production\watchdog_adc.production.o
+__end_of_SendCommand 688 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
+___stackhi 206F 0 ABS 0 - C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+___stacklo 2047 0 ABS 0 - C:\Users\nemet\AppData\Local\Temp\shg4xe.o
 __size_of_WriteSerial 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-start_initialization FE6 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
+start_initialization 16C 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
 _TRISAbits 8C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-clear_ram0 C78 0 CODE 0 clrtext dist/default/production\watchdog_adc.production.o
+___aldiv@quotient 48 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+clear_ram0 6C8 0 CODE 0 clrtext dist/default/production\watchdog_adc.production.o
 _SPBRGH 19C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 _SPBRGL 19B 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__pcstackBANK0 42 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
-___int_sp 0 0 STACK 2 stack C:\Users\nemet\AppData\Local\Temp\sl54xe.o
+__pcstackBANK0 46 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+___int_sp 0 0 STACK 2 stack C:\Users\nemet\AppData\Local\Temp\shg4xe.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 BANK2 1 bank2 -
@@ -269,7 +355,7 @@ __Hbank6 0 0 BANK6 1 bank6 -
 __Hbank7 0 0 BANK7 1 bank7 -
 __Hbank8 0 0 BANK8 1 bank8 -
 __Hbank9 0 0 BANK9 1 bank9 -
-__Hcinit 1000 0 CODE 0 cinit -
+__Hcinit 1A2 0 CODE 0 cinit -
 __Hidloc 10008 0 IDLOC 5 idloc -
 __Hsfr10 0 0 ABS 0 sfr10 -
 __Hsfr11 0 0 ABS 0 sfr11 -
@@ -318,9 +404,11 @@ __Hbank30 0 0 BANK30 1 bank30 -
 __Hbank31 0 0 BANK31 1 bank31 -
 __Hbigram 0 0 ABS 0 bigram -
 __Hmaintext 0 0 ABS 0 maintext -
+_average 63 0 BANK0 1 dataBANK0 dist/default/production\watchdog_adc.production.o
 __Hcommon 0 0 ABS 0 common -
 __Hconfig 10012 0 CONFIG 4 config -
-SendCommand@checksum 77 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
+SendCommand@checksum 5F 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+_mainreset 20 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 __Lbank0 0 0 ABS 0 bank0 -
 __Lbank1 0 0 ABS 0 bank1 -
 __Lbank2 0 0 BANK2 1 bank2 -
@@ -331,7 +419,7 @@ __Lbank6 0 0 BANK6 1 bank6 -
 __Lbank7 0 0 BANK7 1 bank7 -
 __Lbank8 0 0 BANK8 1 bank8 -
 __Lbank9 0 0 BANK9 1 bank9 -
-__Lcinit FE6 0 CODE 0 cinit -
+__Lcinit 16C 0 CODE 0 cinit -
 __Lidloc 0 0 IDLOC 5 idloc -
 __Lsfr10 0 0 ABS 0 sfr10 -
 __Lsfr11 0 0 ABS 0 sfr11 -
@@ -356,10 +444,11 @@ __Lsfr29 0 0 ABS 0 sfr29 -
 __Lsfr30 0 0 ABS 0 sfr30 -
 __Lsfr31 0 0 ABS 0 sfr31 -
 __Lstack 0 0 STACK 2 stack -
-_PORTAbits C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+_INTCONbits B 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+_voltimer 24 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 __Habs1 0 0 ABS 0 abs1 -
 __Hcode 0 0 ABS 0 code -
-__Hinit 2 0 CODE 0 init -
+__Hinit 16A 0 CODE 0 init -
 __Hsfr0 0 0 ABS 0 sfr0 -
 __Hsfr1 0 0 ABS 0 sfr1 -
 __Hsfr2 0 0 ABS 0 sfr2 -
@@ -373,7 +462,7 @@ __Hsfr9 0 0 ABS 0 sfr9 -
 __Htext 0 0 ABS 0 text -
 __Labs1 0 0 ABS 0 abs1 -
 __Lcode 0 0 ABS 0 code -
-__Linit 2 0 CODE 0 init -
+__Linit 16A 0 CODE 0 init -
 __Lsfr0 0 0 ABS 0 sfr0 -
 __Lsfr1 0 0 ABS 0 sfr1 -
 __Lsfr2 0 0 ABS 0 sfr2 -
@@ -386,18 +475,25 @@ __Lsfr8 0 0 ABS 0 sfr8 -
 __Lsfr9 0 0 ABS 0 sfr9 -
 __Ltext 0 0 ABS 0 text -
 __LcstackBANK0 0 0 ABS 0 cstackBANK0 -
+int$flags 7E 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
-__S0 800 0 ABS 0 - -
+_my_isr_routine 8 0 CODE 0 intentry dist/default/production\watchdog_adc.production.o
+_PR2 1B 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+__S0 36E 0 ABS 0 - -
 __S1 7E 0 ABS 0 - -
 __S2 0 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
-_sendcommands 7B 0 COMMON 1 bssCOMMON dist/default/production\watchdog_adc.production.o
-_buffer 2E 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+_sendcommands 37 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+_buffer 3A 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 __size_of_SendCommand 0 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__Lintentry 2 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec C:\Users\nemet\AppData\Local\Temp\sl54xe.o
+__Lintentry 8 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec C:\Users\nemet\AppData\Local\Temp\shg4xe.o
+__pdataBANK0 63 0 BANK0 1 dataBANK0 dist/default/production\watchdog_adc.production.o
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 _RCSTAbits 19D 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+_PIE1bits 91 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+__end_of_my_isr_routine 16A 0 CODE 0 intentry dist/default/production\watchdog_adc.production.o
+___aldiv 49A 0 CODE 0 text4 dist/default/production\watchdog_adc.production.o
 __Lbank10 0 0 BANK10 1 bank10 -
 __Lbank11 0 0 BANK11 1 bank11 -
 __Lbank12 0 0 BANK12 1 bank12 -
@@ -420,51 +516,61 @@ __Lbank28 0 0 BANK28 1 bank28 -
 __Lbank29 0 0 BANK29 1 bank29 -
 __Lbank30 0 0 BANK30 1 bank30 -
 __Lbank31 0 0 BANK31 1 bank31 -
-_WriteSerial C84 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
-__pmaintext D8A 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
+_WriteSerial 688 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
+__pmaintext 1A2 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
 __Lbigram 0 0 ABS 0 bigram -
 __Lcommon 0 0 ABS 0 common -
 __Lconfig 0 0 CONFIG 4 config -
 _LATAbits 10C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+_buffpointer 36 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 _ADCON0bits 9D 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 _ADCON1bits 9E 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-_adcreset 7D 0 COMMON 1 bssCOMMON dist/default/production\watchdog_adc.production.o
+_adcreset 39 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
 __Lspace_2 0 0 ABS 0 - -
 __Lspace_3 0 0 ABS 0 - -
 __Lspace_4 0 0 ABS 0 - -
-__pbssCOMMON 7B 0 COMMON 1 bssCOMMON dist/default/production\watchdog_adc.production.o
 __HcstackBANK0 0 0 ABS 0 cstackBANK0 -
-__Lend_init 2 0 CODE 0 end_init -
+_PIR1bits 11 0 ABS 0 - dist/default/production\watchdog_adc.production.o
+__Lend_init 16A 0 CODE 0 end_init -
 __LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
-WriteSerial@i 72 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
-end_of_initialization FFC 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
-__Hintentry 2 0 CODE 0 intentry -
+WriteSerial@i 4E 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+end_of_initialization 19C 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
+__Hintentry 16A 0 CODE 0 intentry -
 __Lstrings 0 0 ABS 0 strings -
+?___aldiv 70 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
 __Hreset_vec 2 0 CODE 0 reset_vec -
-_resettimer 28 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+_resettimer 30 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
 __HbssBANK0 0 0 ABS 0 bssBANK0 -
-__ptext1 CBC 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
-__ptext2 C84 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
-WriteSerial@len 70 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
+__ptext1 5BA 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
+__ptext2 688 0 CODE 0 text2 dist/default/production\watchdog_adc.production.o
+__ptext4 49A 0 CODE 0 text4 dist/default/production\watchdog_adc.production.o
+WriteSerial@len 4C 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+___aldiv@dividend 74 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
 __Lpowerup 0 0 CODE 0 powerup -
 __Leeprom_data 0 0 EEDATA 3 eeprom_data -
 __Lreset_vec 0 0 CODE 0 reset_vec -
-__end_of__initialization FFC 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
+__end_of__initialization 19C 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
 __Lfunctab 0 0 ENTRY 0 functab -
+__pidataBANK0 6D4 0 CODE 0 idataBANK0 dist/default/production\watchdog_adc.production.o
 __Lclrtext 0 0 ABS 0 clrtext -
-_SendCommand CBC 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
+_SendCommand 5BA 0 CODE 0 text1 dist/default/production\watchdog_adc.production.o
 __pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
 _TXSTAbits 19E 0 ABS 0 - dist/default/production\watchdog_adc.production.o
-__Hend_init 4 0 CODE 0 end_init -
-__end_of_main FE6 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
+my_isr_routine@temp 7C 0 COMMON 1 cstackCOMMON dist/default/production\watchdog_adc.production.o
+__Hend_init 16C 0 CODE 0 end_init -
+___aldiv@counter 46 0 BANK0 1 cstackBANK0 dist/default/production\watchdog_adc.production.o
+__end_of_main 49A 0 CODE 0 maintext dist/default/production\watchdog_adc.production.o
 _TXREG 19A 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 __Hram 0 0 ABS 0 ram -
 __Lram 0 0 ABS 0 ram -
-_timer 24 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
-__initialization FE6 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
+_timer 2C 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+__pintentry 8 0 CODE 0 intentry dist/default/production\watchdog_adc.production.o
+__HdataBANK0 0 0 ABS 0 dataBANK0 -
+__initialization 16C 0 CODE 0 cinit dist/default/production\watchdog_adc.production.o
 __pbssBANK0 20 0 BANK0 1 bssBANK0 dist/default/production\watchdog_adc.production.o
+_T2CONbits 1C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 _ANSELAbits 18C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
@@ -491,14 +597,10 @@ _ANSELAbits 18C 0 ABS 0 - dist/default/production\watchdog_adc.production.o
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-cinit 0 7F3 FE6 D 2
-text1 0 65E CBC 67 2
-text2 0 642 C84 1C 2
-maintext 0 6C5 D8A 12E 2
 cstackCOMMON 1 70 70 E 1
-reset_vec 0 0 0 2 2
-bssBANK0 1 20 20 2E 1
-clrtext 0 63C C78 6 2
+intentry 0 4 8 36A 2
+reset_vec 0 0 0 1 2
+bssBANK0 1 20 20 47 1
 # %NOTES Section
 # This section contains data of all the note-psects.  The beginning of the section
 # is indicated by %NOTES. The first line indicates the name and decimal
